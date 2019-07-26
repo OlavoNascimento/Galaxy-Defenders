@@ -5,9 +5,9 @@
 #include <stdio.h>
 
 // Comprimento da tela
-#define SCREEN_WIDTH 1920
+#define SCREEN_WIDTH 1366
 // Altura da tela
-#define SCREEN_HEIGHT 1080
+#define SCREEN_HEIGHT 766
 // Taxa de atualização da tela 
 #define FPS 60
 
@@ -32,6 +32,8 @@
 
 // Teclas de movimento do jogador
 enum keys {
+    UP,
+    DOWN,
     LEFT,
     RIGHT,
     SPACE

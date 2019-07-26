@@ -13,6 +13,14 @@ void process_key_down_event(ALLEGRO_EVENT *event, GameState *game, PlayerShip *p
             // marca o jogo como finalizado
             player->alive = false;
             break;
+        case ALLEGRO_KEY_UP:
+            // Marca a seta pra cima como pressionada
+            game->keys_pressed[UP] = true;
+            break;
+        case ALLEGRO_KEY_DOWN:
+            // Marca a seta pra baixo como pressionada
+            game->keys_pressed[DOWN] = true;
+            break;
         case ALLEGRO_KEY_LEFT:
             // Marca a seta esquerda como pressionada
             game->keys_pressed[LEFT] = true;
@@ -30,6 +38,12 @@ void process_key_down_event(ALLEGRO_EVENT *event, GameState *game, PlayerShip *p
 // Marca as teclas de ação do jogador como soltas
 void process_key_up_event(ALLEGRO_EVENT *event, GameState *game, PlayerShip *player) {
     switch(event->keyboard.keycode) {
+        case ALLEGRO_KEY_UP:
+            game->keys_pressed[UP] = false;
+            break;
+        case ALLEGRO_KEY_DOWN:
+            game->keys_pressed[DOWN] = false;
+            break;
         case ALLEGRO_KEY_LEFT:
             game->keys_pressed[LEFT] = false;
             break;
@@ -44,6 +58,22 @@ void process_key_up_event(ALLEGRO_EVENT *event, GameState *game, PlayerShip *pla
 
 // Modifica a posição dos sprites na tela
 void process_timer_event(GameState *game, PlayerShip *player) {
+    // Move o jogador para cima
+    if(game->keys_pressed[UP]) {
+        // Impede que a nave suba mais alto que as barreiras
+        if(player->pos_y - PLAYER_SPEED > SCREEN_HEIGHT/1.3) {
+            player->pos_y -= PLAYER_SPEED;
+            game->draw = true;
+        }
+    }
+    // Move o jogador para baixo
+    if(game->keys_pressed[DOWN]) {
+        // Impede que a nave do jogador saia da tela
+        if(player->pos_y + PLAYER_SPEED <= SCREEN_HEIGHT - player->sprite.height) {
+            player->pos_y += PLAYER_SPEED;
+            game->draw = true;
+        }
+    }
     // Move o jogador para esquerda
     if(game->keys_pressed[LEFT]) {
         // Impede que a nave do jogador saia da tela

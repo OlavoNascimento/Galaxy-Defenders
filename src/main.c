@@ -52,15 +52,14 @@ bool init_game_state(GameState *game) {
     al_register_event_source(game->event_queue, al_get_keyboard_event_source());
     // Adiciona eventos do teclado a fila de eventos
     al_register_event_source(game->event_queue, al_get_display_event_source(game->display));
-    // Adiciona eventos do timer que atualiza a tela a fila de eventos
+    // Adiciona eventos do 6imer que atualiza a tela a fila de eventos
     al_register_event_source(game->event_queue, al_get_timer_event_source(game->screen_timer));
 
     // Boolean usado para saber quando atualizar a tela
     game->draw = true;
 
-    // Inicializa o array das teclas pressionadas com 
-    // seta esquerda e direita sendo falso(0)
-    game->keys_pressed = (bool*) calloc(sizeof(bool) * 2, 2);
+    // Inicializa o array das teclas como não pressionadas
+    game->keys_pressed = (bool*) calloc(sizeof(bool) * 5, 5);
     if(game->keys_pressed == NULL) {
         fprintf(stderr, "Failed to allocate memory for keys array!\n");
         return false;
@@ -75,6 +74,9 @@ void free_resources(GameState *game, PlayerShip *player) {
     al_destroy_bitmap(player->lasers.sprite.bitmap);
     free(player->lasers.fired);
     player->lasers.fired = NULL;
+
+    free(game->keys_pressed);
+    game->keys_pressed = NULL;
     al_destroy_timer(game->screen_timer);
     al_destroy_event_queue(game->event_queue);
     al_destroy_display(game->display);
