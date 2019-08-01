@@ -7,6 +7,7 @@
 #include "events.h"
 #include "player_ship.h"
 #include "enemies.h"
+#include "alien_explosion.h"
 
 //resoluçao da tela:
 #define gDISPLAYw 1280
@@ -19,13 +20,15 @@
 
 //variaveis basicas do programa:
 ALLEGRO_DISPLAY *display;
+ALLEGRO_TIMER *timer;
+ALLEGRO_EVENT_QUEUE *eventQ;
 ALLEGRO_BITMAP *ship;
 ALLEGRO_BITMAP *bimg;
 ALLEGRO_BITMAP *alien1img;
 ALLEGRO_BITMAP *alien2img;
 ALLEGRO_BITMAP *alien3img;
-ALLEGRO_EVENT_QUEUE *eventQ;
-ALLEGRO_TIMER *timer;
+ALLEGRO_BITMAP *exp_img;
+
 
 //objetos do programa:
 spaceship Pship;

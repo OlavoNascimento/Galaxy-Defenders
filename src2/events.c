@@ -81,6 +81,14 @@ void timer_event_dealing(void){  //OBS: (aqui ficam as açoes que precisam ser pe
     detectBulletCollision_alien3(alien3, 2, bullets, NUM_BULLETS);
 
 
+    update_explosion_alien1();
+
+    update_explosion_alien2();
+
+    update_explosion_alien3();
+
+
+
     //limitando o movimento horizontal dos aliens e movimentando-os verticalmente:
     limitXmoveY_alien1(alien1, NUM_ALIEN);
 

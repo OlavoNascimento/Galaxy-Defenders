@@ -67,6 +67,10 @@ int main(void){
             draw_alien2(alien2img, alien2, 2);
             draw_alien3(alien3img, alien3, 2);
 
+            draw_explosion_alien1();
+            draw_explosion_alien2();
+            draw_explosion_alien3();
+
             al_flip_display();
         }
 
@@ -172,6 +176,22 @@ bool init_basic_resources(void){
         return false;
     }
     al_convert_mask_to_alpha(alien3img, al_map_rgb(0, 0 ,0));
+
+    exp_img = al_load_bitmap("images/exp.png");
+    if(!exp_img){
+        fprintf(stderr, "Error: could not load explosion bitmap");
+        al_destroy_event_queue(eventQ);
+        al_destroy_timer(timer);
+        al_destroy_bitmap(ship);
+        al_destroy_bitmap(bimg);
+        al_destroy_bitmap(alien1img);
+        al_destroy_bitmap(alien2img);
+        al_destroy_bitmap(alien3img);
+        return false;
+    }
+    al_convert_mask_to_alpha(exp_img, al_map_rgb(255, 255 , 255));
+
+
 
     //ligando as fontes de eventos do teclado e do timer a fila de eventos criada:
     al_register_event_source(eventQ, al_get_keyboard_event_source());

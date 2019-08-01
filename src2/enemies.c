@@ -19,6 +19,14 @@ void InitAlien1(enemy alien1[], const int NUMALIEN){
         alien1[i].framewidth = 65;
         alien1[i].frameheight = 52;
 
+        alien1[i].exp.totalframes = 7;
+        alien1[i].exp.currentframe = 0;
+        alien1[i].exp.framedelay = 5;
+        alien1[i].exp.framecounter = 0;
+        alien1[i].exp.framewidth = 65;
+        alien1[i].exp.start = false;
+
+
 
     }
 
@@ -38,6 +46,13 @@ void InitAlien2(enemy alien2[][NUM_ALIEN], const int x){
             alien2[i][j].framecounter = 0;
             alien2[i][j].framewidth = 65;
             alien2[i][j].frameheight = 52;
+
+            alien2[i][j].exp.totalframes = 7;
+            alien2[i][j].exp.currentframe = 0;
+            alien2[i][j].exp.framedelay = 5;
+            alien2[i][j].exp.framecounter = 0;
+            alien2[i][j].exp.framewidth = 65;
+            alien2[i][j].exp.start = false;
 
         }
     }
@@ -59,6 +74,13 @@ void InitAlien3(enemy alien3[][NUM_ALIEN], const int x){
             alien3[i][j].framecounter = 0;
             alien3[i][j].framewidth = 65;
             alien3[i][j].frameheight = 52;
+
+            alien3[i][j].exp.totalframes = 7;
+            alien3[i][j].exp.currentframe = 0;
+            alien3[i][j].exp.framedelay = 5;
+            alien3[i][j].exp.framecounter = 0;
+            alien3[i][j].exp.framewidth = 65;
+            alien3[i][j].exp.start = false;
 
         }
     }
@@ -231,7 +253,6 @@ void draw_alien3(ALLEGRO_BITMAP *alien3img, enemy alien3[][NUM_ALIEN], const int
 
 
 
-
 void detectBulletCollision_alien1(enemy alien1[], const int NUMALIEN, bullet bullets[], const int bulletquantity){
     for(int i = 0; i<NUMALIEN; ++i){
         if(alien1[i].live){
@@ -243,6 +264,7 @@ void detectBulletCollision_alien1(enemy alien1[], const int NUMALIEN, bullet bul
                        bullets[j].y + bullets[j].height >= alien1[i].y + 2){
                         bullets[j].live = false;
                         alien1[i].live = false;
+                        alien1[i].exp.start = true;
                     }
                }
             }
@@ -264,6 +286,7 @@ void detectBulletCollision_alien2(enemy alien2[][NUM_ALIEN], const int x, bullet
                            bullets[k].y + bullets[k].height >= alien2[i][j].y + 2){
                             bullets[k].live = false;
                             alien2[i][j].live = false;
+                            alien2[i][j].exp.start = true;
                         }
                     }
                 }
@@ -285,6 +308,7 @@ void detectBulletCollision_alien3(enemy alien3[][NUM_ALIEN], const int x, bullet
                            bullets[k].y + bullets[k].height >= alien3[i][j].y + 2){
                             bullets[k].live = false;
                             alien3[i][j].live = false;
+                            alien3[i][j].exp.start = true;
                         }
                     }
                 }
@@ -293,3 +317,4 @@ void detectBulletCollision_alien3(enemy alien3[][NUM_ALIEN], const int x, bullet
     }
 
 }
+

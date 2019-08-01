@@ -3,9 +3,11 @@
 
 #include <allegro5/allegro.h>
 #include "main.h"
+#include "alien_explosion.h"
 
 //numero de aliens em cada fileira:
 #define NUM_ALIEN 10
+
 
 //struct com as informaçoes de cada alien:
 typedef struct{
@@ -20,9 +22,10 @@ typedef struct{
     int framecounter;
     int framewidth;
     int frameheight;
-    bool explosion;
-
+    explosion exp;
 }enemy;
+
+
 
 //atribuindo valores iniciais as informaçoes de cada alien:
 void InitAlien1(enemy alien1[], int NUMALIEN);
