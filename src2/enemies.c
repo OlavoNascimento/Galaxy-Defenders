@@ -5,6 +5,7 @@
 #include "main.h"
 
 
+
 void InitAlien1(enemy alien1[], const int NUMALIEN){
     for(int i = 0; i<NUMALIEN; ++i){
         alien1[i].x = 256 + i*75;
@@ -313,6 +314,145 @@ void detectBulletCollision_alien3(enemy alien3[][NUM_ALIEN], const int x, bullet
                     }
                 }
             }
+        }
+    }
+
+}
+
+//escolhe um alien aleatorio para disparar(apenas os aliens que sao os ultimos de sua coluna podem ser candidatos a disparar):
+void choose_shooter_alien(void){
+    //devemos limpar as variaves antes de começar para evitar lixo:
+    for(int i = 0; i<NUM_ALIEN; ++i){
+        check_array[i] = false;
+        alien_shooter[i] = NULL;
+    }
+
+    for(int i = 1; i>-1; --i){
+        for(int j = 0; j<NUM_ALIEN; ++j){
+            if(alien3[i][j].live && !check_array[j]){
+                check_array[j] = true;
+                alien_shooter[j] = &alien3[i][j];
+            }
+
+        }
+    }
+
+    for(int i = 1; i>-1; --i){
+        for(int j = 0; j<NUM_ALIEN; ++j){
+            if(alien2[i][j].live && !check_array[j]){
+                check_array[j] = true;
+                alien_shooter[j] = &alien2[i][j];
+            }
+        }
+    }
+
+    for(int i = 0; i<NUM_ALIEN; ++i){
+        if(alien1[i].live && !check_array[i]){
+            check_array[i] = true;
+            alien_shooter[i] = &alien1[i];
+        }
+    }
+
+    all_aliens_Rdead = 0;
+
+    for(int i = 0; i< NUM_ALIEN; ++i){
+        if(!check_array[i]){
+            ++all_aliens_Rdead;
+        }
+    }
+    srand(time(NULL));
+
+    k = rand () % 9;
+
+    if(!check_array[k]){
+        for(int i = 1; i>-1; --i){
+            for(int j = 0; j<NUM_ALIEN; ++j){
+                if(alien3[i][j].live){
+                    alien_shooter[k] = &alien3[i][j];
+                    break;
+                }else if(alien2[i][j].live){
+                    alien_shooter[k] = &alien2[i][j];
+                    break;
+                }else if(alien1[j].live){
+                   alien_shooter[k] = &alien1[j];
+                   break;
+                }
+            }
+        }
+
+    }
+
+
+}
+
+int alien_shot_delay = 0;
+
+void Init_aBullet(void){
+    for(int i = 0; i<NUM_aBULLETS; ++i){
+        aBullet[i].live = false;
+        aBullet[i].speed = 5;
+        aBullet[i].width = 18;
+        aBullet[i].height = 23;
+        //aBullet[i].totalframes = 11;
+        //aBullet[i].currentframe = 0;
+        //aBullet[i].framedelay = 10;
+        //aBullet[i].framecounter = 0;
+
+    }
+
+}
+
+
+
+void fire_aBullet (void){
+    for(int i = 0; i<NUM_aBULLETS; ++i){
+        if(all_aliens_Rdead < 10){
+            if(!aBullet[i].live){
+                aBullet[i].x = (*alien_shooter[k]).x + 32;
+                aBullet[i].y = (*alien_shooter[k]).y + 57;
+                aBullet[i].live = true;
+                break;
+            }
+        }
+    }
+
+}
+
+
+void update_aBullet(void){
+    for(int i = 0; i<NUM_aBULLETS; ++i){
+        if(aBullet[i].live){
+            aBullet[i].y += aBullet[i].speed;
+            if(aBullet[i].y > 720){
+                aBullet[i].live = false;
+                //aBullet[i].currentframe = 0;
+            }
+        }
+    }
+
+}
+
+/*
+void aBullet_sprite(void){
+    for(int i = 0; i<NUM_aBULLETS; ++i){
+        if(aBullet[i].live){
+            if(aBullet[i].currentframe < aBullet[i].totalframes){
+                if(++aBullet[i].framecounter >= aBullet[i].framedelay){
+                    ++aBullet[i].currentframe;
+                    aBullet[i].framecounter = 0;
+                }
+            }
+        }
+
+    }
+
+}*/
+
+
+void draw_aBullet (void){
+    for(int i = 0; i<NUM_aBULLETS; ++i){
+        if(aBullet[i].live){
+            al_draw_bitmap(alien_bullet_img, aBullet[i].x , aBullet[i].y , 0);
         }
     }
 

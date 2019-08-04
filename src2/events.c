@@ -59,58 +59,89 @@ void key_pressed_up_event_dealing(ALLEGRO_EVENT *event){       //OBS: (aqui fica
 void timer_event_dealing(void){  //OBS: (aqui ficam as açoes que precisam ser performadas a todo momento)
     redraw = true;
 
-    //verifica se alguma das setas foi pressionada. Se sim move a nave nessa direçao:
-    if(keys[UP])
-        moveshipUP(&Pship);
-    if(keys[DOWN])
-        moveshipDOWN(&Pship);
-    if(keys[LEFT])
-        moveshipLEFT(&Pship);
-    if(keys[RIGHT])
-        moveshipRIGHT(&Pship);
+    //nave{
+        //verifica se alguma das setas foi pressionada. Se sim move a nave nessa direçao:
+        if(keys[UP])
+            moveshipUP(&Pship);
+        if(keys[DOWN])
+            moveshipDOWN(&Pship);
+        if(keys[LEFT])
+            moveshipLEFT(&Pship);
+        if(keys[RIGHT])
+            moveshipRIGHT(&Pship);
 
-    //movimentação das balas da nave:
-    updateBullet(bullets, NUM_BULLETS);
+        //movimentação das balas da nave:
+        updateBullet(bullets, NUM_BULLETS);
 
-
-    //verificando se houve a colisao entre as balas e os inimigos. Se sim, apaga o inimigo e a bala.
-    detectBulletCollision_alien1(alien1, NUM_ALIEN, bullets, NUM_BULLETS);
-
-    detectBulletCollision_alien2(alien2, 2, bullets, NUM_BULLETS);
-
-    detectBulletCollision_alien3(alien3, 2, bullets, NUM_BULLETS);
-
-
-    update_explosion_alien1();
-
-    update_explosion_alien2();
-
-    update_explosion_alien3();
+        //}
 
 
 
-    //limitando o movimento horizontal dos aliens e movimentando-os verticalmente:
-    limitXmoveY_alien1(alien1, NUM_ALIEN);
-
-    limitXmoveY_alien2(alien2, 2);
-
-    limitXmoveY_alien3(alien3, 2);
 
 
-    //movimentando os aliens horizontalmente:
-    moveX_alien1(alien1, NUM_ALIEN);
+    //colisao dos aliens com balas{
 
-    moveX_alien2(alien2, 2);
+        //verificando se houve a colisao entre as balas e os inimigos. Se sim, apaga o inimigo e a bala.
+        detectBulletCollision_alien1(alien1, NUM_ALIEN, bullets, NUM_BULLETS);
 
-    moveX_alien3(alien3, 2);
+        detectBulletCollision_alien2(alien2, 2, bullets, NUM_BULLETS);
+
+        detectBulletCollision_alien3(alien3, 2, bullets, NUM_BULLETS);
 
 
-    //atualizando os sprites dos inimigos constantemente:
-    updateSprite_alien1(alien1, NUM_ALIEN);
+        update_explosion_alien1();
 
-    updateSprite_alien2(alien2, 2);
+        update_explosion_alien2();
 
-    updateSprite_alien3(alien3, 2);
+        update_explosion_alien3();
+
+    //}
+
+
+
+    //Movimento dos aliens{
+
+        //limitando o movimento horizontal dos aliens e movimentando-os verticalmente:
+        limitXmoveY_alien1(alien1, NUM_ALIEN);
+
+        limitXmoveY_alien2(alien2, 2);
+
+        limitXmoveY_alien3(alien3, 2);
+
+
+        //movimentando os aliens horizontalmente:
+        moveX_alien1(alien1, NUM_ALIEN);
+
+        moveX_alien2(alien2, 2);
+
+        moveX_alien3(alien3, 2);
+
+
+        //atualizando os sprites dos inimigos constantemente:
+        updateSprite_alien1(alien1, NUM_ALIEN);
+
+        updateSprite_alien2(alien2, 2);
+
+        updateSprite_alien3(alien3, 2);
+    //}
+
+
+    //Disparo dos aliens{
+
+        //delay para impedir que os aliens disparem muito rapido(a cada estouro do timer):
+        if(++alien_shot_delay >= 50){
+
+            choose_shooter_alien();
+
+            fire_aBullet();
+
+            alien_shot_delay = 0;
+        }
+
+        update_aBullet();
+
+    //}
+
 
 }
 

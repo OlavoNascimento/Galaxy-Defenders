@@ -25,8 +25,6 @@ typedef struct{
     explosion exp;
 }enemy;
 
-
-
 //atribuindo valores iniciais as informaçoes de cada alien:
 void InitAlien1(enemy alien1[], int NUMALIEN);
 
@@ -73,6 +71,62 @@ void detectBulletCollision_alien1(enemy alien1[], const int NUMALIEN, bullet bul
 void detectBulletCollision_alien2(enemy alien2[][NUM_ALIEN], const int x, bullet bullets[], const int bulletquantity);
 
 void detectBulletCollision_alien3(enemy alien3[][NUM_ALIEN], const int x, bullet bullets[], const int bulletquantity);
+
+
+
+//disparo dos aliens{
+
+    //ponteiro para guardar o endereço dos candidatos a disparar de cada coluna:
+    enemy *alien_shooter[NUM_ALIEN];
+
+    //indice gerado aleatoriamente para escolher qual alien do ponteiro acima ira disparar:
+    int k;
+
+    //vetor para guardar qual coluna ja teve o seu candidato a disparo escolhido:
+    bool check_array[NUM_ALIEN];
+
+    //var para checar o momento em que todos os aliens estiverem mortos ( = parar disparos):
+    int all_aliens_Rdead;
+
+    //delay para impedir que os aliens disparem muito rapido(a cada estouro do timer):
+    int alien_shot_delay;
+
+    //struct e vetor das balas dos aliens:
+    typedef struct{
+        int x;
+        int y;
+        bool live;
+        int speed;
+        int width;
+        int height;
+    }alienbullet;
+
+
+    #define NUM_aBULLETS 7
+
+    //(o tamanho dele se refere a quantidade de balas simutaneas que podem haver na tela)
+    alienbullet aBullet[NUM_aBULLETS];
+
+
+
+    //atrubui valores iniciais a struct das balas:
+    void Init_aBullet(void);
+
+    //escolhe um alien aleatorio para disparar(apenas os aliens que sao os ultimos de sua coluna podem ser candidatos a disparar):
+    void choose_shooter_alien(void);
+
+    //funçao que faz o alien escolhido efetuar o disparo:
+    void fire_aBullet(void);
+
+    //movimenta as balas disparadas:
+    void update_aBullet(void);
+
+    //void aBullet_sprite(void);
+
+    //desenha as balas na tela:
+    void draw_aBullet(void);
+
+//}
 
 
 #endif // ENEMIES_H_INCLUDED
