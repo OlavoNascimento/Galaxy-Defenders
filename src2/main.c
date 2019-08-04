@@ -38,6 +38,9 @@ int main(void){
 
        //inimigos 4 e 5 linha:
        InitAlien3(alien3, 2);
+
+       //Barreira:
+       InitBarrier();
    //}
 
 
@@ -62,6 +65,7 @@ int main(void){
 
             drawShip(&Pship, ship);
             drawBullet(bullets, NUM_BULLETS, bimg);
+            drawBarrier();
 
             draw_alien1(alien1img, alien1, NUM_ALIEN);
             draw_alien2(alien2img, alien2, 2);
@@ -114,7 +118,7 @@ bool init_basic_resources(void){
     }
 
     //imagem da nave
-    ship = al_load_bitmap("images/ship1.bmp");
+    ship = al_load_bitmap("images_src2/ship1.bmp");
     if(!ship){
         fprintf(stderr, "Error: could not load ship bitmap.\n");
         al_destroy_event_queue(eventQ);
@@ -127,7 +131,7 @@ bool init_basic_resources(void){
 
 
     //imagem da bala da nave:
-    bimg = al_load_bitmap("images/b.png");
+    bimg = al_load_bitmap("images_src2/b.png");
     if(!bimg){
         fprintf(stderr, "Error: could not load bullet bitmap.\n");
         al_destroy_event_queue(eventQ);
@@ -137,9 +141,15 @@ bool init_basic_resources(void){
     }
     al_convert_mask_to_alpha(bimg, al_map_rgb(0,0,0));
 
+    //Barreiras:
+    img_bar[0] = al_load_bitmap("images_src2/barrier00.png");
+    img_bar[1] = al_load_bitmap("images_src2/barrierdown.png");
+    img_bar[2] = al_load_bitmap("images_src2/barrierup.png");
+    img_bar[3] = al_load_bitmap("images_src2/barrier01.png");
+
 
     //imagem dos aliens da 1 fileira:
-    alien1img = al_load_bitmap("images/alien1.png");
+    alien1img = al_load_bitmap("images_src2/alien1.png");
     if(!alien1img){
         fprintf(stderr, "Error: could not load alien1 image.\n");
         al_destroy_event_queue(eventQ);
@@ -151,7 +161,7 @@ bool init_basic_resources(void){
     al_convert_mask_to_alpha(alien1img, al_map_rgb(0, 0 ,0));
 
     //imagem dos aliens da 2 e 3 fileira:
-    alien2img = al_load_bitmap("images/alien2.png");
+    alien2img = al_load_bitmap("images_src2/alien2.png");
     if(!alien2img){
         fprintf(stderr, "Error: could not load alien2 image.\n");
         al_destroy_event_queue(eventQ);
@@ -164,7 +174,7 @@ bool init_basic_resources(void){
     al_convert_mask_to_alpha(alien2img, al_map_rgb(0, 0 ,0));
 
     //imagem dos aliens da 4 e 5 fileira:
-    alien3img = al_load_bitmap("images/alien3.png");
+    alien3img = al_load_bitmap("images_src2/alien3.png");
     if(!alien3img){
         fprintf(stderr, "Error: could not load alien3 bitmap");
         al_destroy_event_queue(eventQ);
@@ -177,7 +187,7 @@ bool init_basic_resources(void){
     }
     al_convert_mask_to_alpha(alien3img, al_map_rgb(0, 0 ,0));
 
-    exp_img = al_load_bitmap("images/exp.png");
+    exp_img = al_load_bitmap("images_src2/exp.png");
     if(!exp_img){
         fprintf(stderr, "Error: could not load explosion bitmap");
         al_destroy_event_queue(eventQ);

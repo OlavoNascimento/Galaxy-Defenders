@@ -8,13 +8,14 @@
 #include "player_ship.h"
 #include "enemies.h"
 #include "alien_explosion.h"
+#include "barrier.h"
 
-//resoluçao da tela:
+//resoluï¿½ao da tela:
 #define gDISPLAYw 1280
 
 #define gDISPLAYh 720
 
-//taxa de atualizaçao da tela(frames per second):
+//taxa de atualizaï¿½ao da tela(frames per second):
 #define FPS 60
 
 
@@ -28,6 +29,7 @@ ALLEGRO_BITMAP *alien1img;
 ALLEGRO_BITMAP *alien2img;
 ALLEGRO_BITMAP *alien3img;
 ALLEGRO_BITMAP *exp_img;
+ALLEGRO_BITMAP *img_bar[NUM_BARRIERS];
 
 
 //objetos do programa:
@@ -36,6 +38,7 @@ bullet bullets[5];
 enemy alien1[NUM_ALIEN];
 enemy alien2[2][NUM_ALIEN];
 enemy alien3[2][NUM_ALIEN];
+barrier bar[NUM_BARRIERS];
 
 
 //variavel usada para atualizar a tela(redesenhar objetos):
