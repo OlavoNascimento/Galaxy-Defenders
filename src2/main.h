@@ -7,6 +7,7 @@
 #include <conio.h>
 #include <time.h>
 
+#include "barrier.h"
 #include "events.h"
 #include "player_ship.h"
 #include "enemies.h"
@@ -32,6 +33,7 @@ ALLEGRO_BITMAP *alien2img;
 ALLEGRO_BITMAP *alien3img;
 ALLEGRO_BITMAP *exp_img;
 ALLEGRO_BITMAP *alien_bullet_img;
+ALLEGRO_BITMAP *img_bar[4];
 
 
 //objetos do programa:
@@ -40,6 +42,7 @@ bullet bullets[5];
 enemy alien1[NUM_ALIEN];
 enemy alien2[2][NUM_ALIEN];
 enemy alien3[2][NUM_ALIEN];
+barrier bar[NUM_BARRIERS];
 
 
 //variavel usada para atualizar a tela(redesenhar objetos):
