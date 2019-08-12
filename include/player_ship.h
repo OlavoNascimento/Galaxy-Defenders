@@ -2,13 +2,8 @@
 #define PLAYER_SHIP_H
 
 #include <stdbool.h>
-#include <allegro5/allegro5.h>
 
-typedef struct {
-    ALLEGRO_BITMAP *bitmap;
-    float width;
-    float height;
-} Sprite;
+#include "game_state.h"
 
 typedef struct {
     Sprite sprite;
@@ -34,5 +29,7 @@ void update_player_lasers_positions(PlayerShip *ps);
 
 void draw_player_lasers(PlayerShip *ps);
 void draw_player_ship(PlayerShip *ps);
+
+void free_player_resources(PlayerShip *player);
 
 #endif

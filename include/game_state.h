@@ -1,13 +1,13 @@
-#ifndef MAIN_H
-#define MAIN_H
+#ifndef GAME_STATE_H
+#define GAME_STATE_H
 
 #include <allegro5/allegro5.h>
 #include <stdio.h>
 
 // Comprimento da tela
-#define SCREEN_WIDTH 1366
+#define SCREEN_WIDTH 768
 // Altura da tela
-#define SCREEN_HEIGHT 766
+#define SCREEN_HEIGHT 600
 // Taxa de atualização da tela 
 #define FPS 60
 
@@ -16,10 +16,13 @@
 
 // Velocidade do movimento da nave do jogador
 #define PLAYER_SPEED 4 
+
 // Velocidade de disparo do jogador
-#define PLAYER_FIRING_SPEED 4
+#define PLAYER_FIRING_SPEED 3
 // Velocidade do laser do jogador
-#define PLAYER_LASER_SPEED 4 
+#define PLAYER_LASER_SPEED 6
+// Quantidade máxima de disparos jogador
+#define PLAYER_MAX_LASER_COUNT 10
 
 // Ativa ou desativa mensagens de debug
 #define DEBUG
@@ -30,14 +33,22 @@
     #define DEBUG_PRINT(str, vars...)
 #endif
 
-// Teclas de movimento do jogador
+// Teclas disponíveis ao jogador
 enum keys {
     UP,
     DOWN,
     LEFT,
     RIGHT,
-    SPACE
+    SPACE,
+    ESC
 };
+
+// Imagens do jogo
+typedef struct {
+    ALLEGRO_BITMAP *bitmap;
+    float width;
+    float height;
+} Sprite;
 
 // Posição dos lasers das naves
 typedef struct {
@@ -49,12 +60,18 @@ typedef struct {
 typedef struct {
     ALLEGRO_DISPLAY *display;
     ALLEGRO_EVENT_QUEUE *event_queue;
+    int current_screen;
+    bool draw;
     // Timer responsável por atualizar a tela do jogo
     ALLEGRO_TIMER *screen_timer;
-    // Indica se a tela deve ser atualizada
-    bool draw;
+    // Indica se o jogo está rodando
+    bool running;
     // Array indicando os botões pressionados pelo jogador
     bool *keys_pressed;
 } GameState;
+
+
+bool init_game_state(GameState *game);
+void free_game_state_resources(GameState *game);
 
 #endif
