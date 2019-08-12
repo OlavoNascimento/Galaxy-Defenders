@@ -75,10 +75,6 @@ void timer_event_dealing(void){  //OBS: (aqui ficam as açoes que precisam ser pe
 
         //}
 
-
-
-
-
     //colisao dos aliens com balas{
 
         //verificando se houve a colisao entre as balas e os inimigos. Se sim, apaga o inimigo e a bala.
@@ -88,6 +84,7 @@ void timer_event_dealing(void){  //OBS: (aqui ficam as açoes que precisam ser pe
 
         detectBulletCollision_alien3(alien3, 2, bullets, NUM_BULLETS);
 
+        //colisionPlayer();
 
         update_explosion_alien1();
 
@@ -97,6 +94,13 @@ void timer_event_dealing(void){  //OBS: (aqui ficam as açoes que precisam ser pe
 
     //}
 
+    //colisoes da barreira
+
+        colisionAlien();
+
+        colisionPlayer();
+
+        lifeBarrier();
 
 
     //Movimento dos aliens{

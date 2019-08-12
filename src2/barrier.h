@@ -37,22 +37,22 @@ typedef struct
 
 
 //INICIALIZANDO BARREIRA
-void InitBarrier(void);
+void InitBarrier();
 
 //SAUDE DA BARRERIA
-void lifeBarrier(void);
+void lifeBarrier();
 
 //ALTERANDO SPRITE DA BARREIRA
-void update_explosion_barrier(void);
+void update_explosion_barrier();
 
 //DESENHANDO A BARREIRA
-void drawBarrier(void);
+void drawBarrier();
 
 //COLISAO COM O TIRO DO ALIEN
-void colisionAlien(void);
+void colisionAlien();
 
 //COLISAO COM O TIRO DO PLAYER
-void colisionPlayer(void);
+void colisionPlayer();
 
 
 #endif // BARRIER_H_INCLUDED
