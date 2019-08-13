@@ -100,7 +100,10 @@ void timer_event_dealing(void){  //OBS: (aqui ficam as açoes que precisam ser pe
 
         colisionPlayer();
 
+
         lifeBarrier();
+
+        update_explosion_barrier();
 
 
     //Movimento dos aliens{

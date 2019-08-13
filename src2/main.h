@@ -34,6 +34,7 @@ ALLEGRO_BITMAP *alien3img;
 ALLEGRO_BITMAP *exp_img;
 ALLEGRO_BITMAP *alien_bullet_img;
 ALLEGRO_BITMAP *img_bar[4];
+ALLEGRO_BITMAP *img_exp_bar;
 
 
 //objetos do programa:

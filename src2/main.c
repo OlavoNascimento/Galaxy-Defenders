@@ -69,7 +69,10 @@ int main(void){
 
             drawShip(&Pship, ship);
             drawBullet(bullets, NUM_BULLETS, bimg);
+
             drawBarrier();
+            draw_explosion_barrier();
+
 
             draw_alien1(alien1img, alien1, NUM_ALIEN);
             draw_alien2(alien2img, alien2, 2);
@@ -164,6 +167,21 @@ bool init_basic_resources(void){
         }
     }
 
+    //imagem da explosao da barreira
+    img_exp_bar = al_load_bitmap("images_src2/img_exp_bar.jpg");
+    if(!img_exp_bar){
+        fprintf(stderr, "Error: could not load explosion barrier image.\n");
+        al_destroy_event_queue(eventQ);
+        al_destroy_timer(timer);
+        al_destroy_bitmap(ship);
+        al_destroy_bitmap(bimg);
+
+        for(int i=0; i<NUM_BARRIERS; i++){
+            al_destroy_bitmap(img_bar[i]);
+        }
+    }
+    al_convert_mask_to_alpha(img_exp_bar, al_map_rgb(255,255,255));
+
 
     //imagem dos aliens da 1 fileira:
     alien1img = al_load_bitmap("images_src2/alien1.png");
@@ -173,7 +191,12 @@ bool init_basic_resources(void){
         al_destroy_timer(timer);
         al_destroy_bitmap(ship);
         al_destroy_bitmap(bimg);
-        al_destroy_bitmap(img_bar[0]);
+        al_destroy_bitmap(img_exp_bar);
+
+        for(int i=0; i<NUM_BARRIERS; i++){
+            al_destroy_bitmap(img_bar[i]);
+        }
+
         return false;
     }
     al_convert_mask_to_alpha(alien1img, al_map_rgb(0, 0 ,0));
@@ -186,8 +209,14 @@ bool init_basic_resources(void){
         al_destroy_timer(timer);
         al_destroy_bitmap(ship);
         al_destroy_bitmap(bimg);
-        al_destroy_bitmap(img_bar[0]);
+        al_destroy_bitmap(img_exp_bar);
         al_destroy_bitmap(alien1img);
+
+
+       for(int i=0; i<NUM_BARRIERS; i++){
+            al_destroy_bitmap(img_bar[i]);
+        }
+
         return false;
     }
     al_convert_mask_to_alpha(alien2img, al_map_rgb(0, 0 ,0));
@@ -200,9 +229,14 @@ bool init_basic_resources(void){
         al_destroy_timer(timer);
         al_destroy_bitmap(ship);
         al_destroy_bitmap(bimg);
-        al_destroy_bitmap(img_bar[0]);
+        al_destroy_bitmap(img_exp_bar);
         al_destroy_bitmap(alien1img);
         al_destroy_bitmap(alien2img);
+
+       for(int i=0; i<NUM_BARRIERS; i++){
+            al_destroy_bitmap(img_bar[i]);
+        }
+
         return false;
     }
     al_convert_mask_to_alpha(alien3img, al_map_rgb(0, 0 ,0));
@@ -215,10 +249,15 @@ bool init_basic_resources(void){
         al_destroy_timer(timer);
         al_destroy_bitmap(ship);
         al_destroy_bitmap(bimg);
-        al_destroy_bitmap(img_bar[0]);
+        al_destroy_bitmap(img_exp_bar);
         al_destroy_bitmap(alien1img);
         al_destroy_bitmap(alien2img);
         al_destroy_bitmap(alien3img);
+
+        for(int i=0; i<NUM_BARRIERS; i++){
+            al_destroy_bitmap(img_bar[i]);
+        }
+
         return false;
     }
     al_convert_mask_to_alpha(exp_img, al_map_rgb(0, 0 , 0));
@@ -231,11 +270,16 @@ bool init_basic_resources(void){
         al_destroy_timer(timer);
         al_destroy_bitmap(ship);
         al_destroy_bitmap(bimg);
-        al_destroy_bitmap(img_bar[0]);
+        al_destroy_bitmap(img_exp_bar);
         al_destroy_bitmap(alien1img);
         al_destroy_bitmap(alien2img);
         al_destroy_bitmap(alien3img);
         al_destroy_bitmap(exp_img);
+
+        for(int i=0; i<NUM_BARRIERS; i++){
+            al_destroy_bitmap(img_bar[i]);
+        }
+
         return false;
     }
     al_convert_mask_to_alpha(alien_bullet_img, al_map_rgb(0, 0 , 0));
@@ -260,13 +304,16 @@ void free_basic_resources(void){
     al_destroy_event_queue(eventQ);
     al_destroy_bitmap(ship);
     al_destroy_bitmap(bimg);
-    al_destroy_bitmap(img_bar[0]);
+    al_destroy_bitmap(img_exp_bar);
     al_destroy_bitmap(alien1img);
     al_destroy_bitmap(alien2img);
     al_destroy_bitmap(alien3img);
     al_destroy_bitmap(exp_img);
     al_destroy_bitmap(alien_bullet_img);
 
+    for(int i=0; i<NUM_BARRIERS; i++){
+            al_destroy_bitmap(img_bar[i]);
+    }
 }
 
 

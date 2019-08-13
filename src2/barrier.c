@@ -8,8 +8,8 @@
 void InitBarrier(void)
 {
     for(int i = 0; i<NUM_BARRIERS; ++i){
-        bar[i].life_up = 18;
-        bar[i].life_down = 18;
+        bar[i].life_up = 15;
+        bar[i].life_down = 15;
         bar[i].live = true;
         bar[i].x = 175 + i * 250;
         bar[i].y = 550;
@@ -18,9 +18,9 @@ void InitBarrier(void)
 
         bar[i].exp_bar.totalframes = 6;
         bar[i].exp_bar.currentframe = 0;
-        bar[i].exp_bar.framedelay = 10;
-        bar[i].exp_bar.currentframe = 0;
-        bar[i].exp_bar.start = false;
+        bar[i].exp_bar.framedelay = 15;
+        bar[i].exp_bar.framecounter = 0;
+        bar[i].exp_bar.start_exp = false;
     }
 }
 
@@ -29,11 +29,12 @@ void lifeBarrier(void)
 {
     for(int i = 0; i <NUM_BARRIERS; ++i)
     {
-        if(bar[i].life_up > -1 && bar[i].life_up < 1 && bar[i].life_down > -1 && bar[i].life_down < 1);
-        {
-            //bar[i].live = false;
-            bar[i].exp_bar.start = true;
-
+        if(bar[i].live){
+            if(bar[i].life_up < 1 && bar[i].life_down < 1)
+            {
+                bar[i].live = false;
+                bar[i].exp_bar.start_exp = true;
+            }
         }
 
     }
@@ -43,11 +44,27 @@ void lifeBarrier(void)
 void update_explosion_barrier(void)
 {
 
+    for(int i = 0; i< NUM_BARRIERS; ++i){
+        if(bar[i].exp_bar.start_exp){
+            if(++bar[i].exp_bar.framecounter >= bar[i].exp_bar.framedelay){
+                if(++bar[i].exp_bar.currentframe >= bar[i].exp_bar.totalframes){
+                    bar[i].exp_bar.start_exp = false;
+                }
+
+                bar[i].exp_bar.framecounter = 0;
+            }
+        }
+    }
 }
 
 void draw_explosion_barrier(void)
 {
-
+    for(int i=0; i< NUM_BARRIERS; ++i){
+        if(bar[i].exp_bar.start_exp){
+            al_draw_bitmap_region(img_exp_bar, bar[i].exp_bar.currentframe * bar[i].framewidth, 0, bar[i].framewidth, bar[i].frameheight, bar[i].x, bar[i].y, 0);
+             al_convert_mask_to_alpha(img_exp_bar, al_map_rgb(255,255,255));
+        }
+    }
 }
 
 //REDESENHANDO A BARREIRA

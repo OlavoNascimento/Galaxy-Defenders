@@ -14,7 +14,7 @@ typedef struct
     int currentframe;
     int framedelay;
     int framecounter;
-    bool start;
+    bool start_exp;
 
 }explosion_bar;
 
@@ -42,9 +42,6 @@ void InitBarrier();
 //SAUDE DA BARRERIA
 void lifeBarrier();
 
-//ALTERANDO SPRITE DA BARREIRA
-void update_explosion_barrier();
-
 //DESENHANDO A BARREIRA
 void drawBarrier();
 
@@ -53,6 +50,12 @@ void colisionAlien();
 
 //COLISAO COM O TIRO DO PLAYER
 void colisionPlayer();
+
+//DESENHANDO SPRITE DA EXPLOSAO
+void draw_explosion_barrier();
+
+//ALTERANDO ANIMACOES DO SPRITE
+void update_explosion_barrier();
 
 
 #endif // BARRIER_H_INCLUDED
