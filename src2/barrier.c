@@ -18,7 +18,7 @@ void InitBarrier(void)
 
         bar[i].exp_bar.totalframes = 6;
         bar[i].exp_bar.currentframe = 0;
-        bar[i].exp_bar.framedelay = 15;
+        bar[i].exp_bar.framedelay = 10;
         bar[i].exp_bar.framecounter = 0;
         bar[i].exp_bar.start_exp = false;
     }
