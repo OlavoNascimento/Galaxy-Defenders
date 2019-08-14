@@ -20,6 +20,8 @@ void InitBarrier(void)
         bar[i].exp_bar.currentframe = 0;
         bar[i].exp_bar.framedelay = 10;
         bar[i].exp_bar.framecounter = 0;
+        bar[i].exp_bar.framewidth = 165;
+        bar[i].exp_bar.frameheight = 110;
         bar[i].exp_bar.start_exp = false;
     }
 }
@@ -61,7 +63,7 @@ void draw_explosion_barrier(void)
 {
     for(int i=0; i< NUM_BARRIERS; ++i){
         if(bar[i].exp_bar.start_exp){
-            al_draw_bitmap_region(img_exp_bar, bar[i].exp_bar.currentframe * bar[i].framewidth, 0, bar[i].framewidth, bar[i].frameheight, bar[i].x, bar[i].y, 0);
+            al_draw_bitmap_region(img_exp_bar, bar[i].exp_bar.currentframe * bar[i].exp_bar.framewidth, 0, bar[i].exp_bar.framewidth, bar[i].exp_bar.frameheight, bar[i].x, bar[i].y, 0);
              al_convert_mask_to_alpha(img_exp_bar, al_map_rgb(255,255,255));
         }
     }

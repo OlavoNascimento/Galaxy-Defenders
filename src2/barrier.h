@@ -14,6 +14,8 @@ typedef struct
     int currentframe;
     int framedelay;
     int framecounter;
+    int framewidth;
+    int frameheight;
     bool start_exp;
 
 }explosion_bar;
