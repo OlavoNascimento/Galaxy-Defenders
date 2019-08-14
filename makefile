@@ -18,6 +18,7 @@ $(EXE): $(OBJ)
 	$(CC) -I$(INC_DIR) -o $(BIN_DIR)/$@ $(OBJ) $(LDFLAGS)
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
+	mkdir -p $(OBJ_DIR)
 	$(CC) -I$(INC_DIR) $(CFLAGS) -c $< -o $@
  
 clean:

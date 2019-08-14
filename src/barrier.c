@@ -3,6 +3,7 @@
 #include <stdbool.h>
 
 #include "main.h"
+#include "enemies.h"
 
 //INICIALIZANDO BARREIRA
 void InitBarrier(void)
@@ -11,8 +12,8 @@ void InitBarrier(void)
         bar[i].life_up = 15;
         bar[i].life_down = 15;
         bar[i].live = true;
-        bar[i].x = 175 + i * 250;
-        bar[i].y = 550;
+        bar[i].x = 50 + i * 200;
+        bar[i].y = SCREEN_HEIGHT / 1.6;
         bar[i].framewidth = 115;
         bar[i].frameheight = 71;
 
@@ -78,19 +79,39 @@ void drawBarrier(void)
 
         if(bar[i].live){
             if(bar[i].life_up >= 8 && bar[i].life_down >=8){
-                    al_draw_bitmap(img_bar[0], bar[i].x, bar[i].y, 0);
+                    al_draw_scaled_bitmap(img_bar[0], 
+                                          0, 0,
+                                          bar[i].framewidth, bar[i].frameheight,
+                                          bar[i].x, bar[i].y,
+                                          60, 60,
+                                          0);
                     al_convert_mask_to_alpha(img_bar[0], al_map_rgb(0,0,0));
             }
             else if(bar[i].life_up >= 8 && bar[i].life_down < 8){
-                al_draw_bitmap(img_bar[1], bar[i].x, bar[i].y, 0);
+                    al_draw_scaled_bitmap(img_bar[1], 
+                                          0, 0,
+                                          bar[i].framewidth, bar[i].frameheight,
+                                          bar[i].x, bar[i].y,
+                                          60, 60,
+                                          0);
                 al_convert_mask_to_alpha(img_bar[1], al_map_rgb(0,0,0));
             }
             else if(bar[i].life_up <=8 && bar[i].life_down >=8){
-                al_draw_bitmap(img_bar[2], bar[i].x, bar[i].y, 0);
+                    al_draw_scaled_bitmap(img_bar[2], 
+                                          0, 0,
+                                          bar[i].framewidth, bar[i].frameheight,
+                                          bar[i].x, bar[i].y,
+                                          60, 60,
+                                          0);
                 al_convert_mask_to_alpha(img_bar[2], al_map_rgb(0,0,0));
             }
             else if(bar[i].life_up < 8 && bar[i].life_down <8){
-                al_draw_bitmap(img_bar[3], bar[i].x, bar[i].y, 0);
+                    al_draw_scaled_bitmap(img_bar[3], 
+                                          0, 0,
+                                          bar[i].framewidth, bar[i].frameheight,
+                                          bar[i].x, bar[i].y,
+                                          60, 60,
+                                          0);
                 al_convert_mask_to_alpha(img_bar[3], al_map_rgb(0,0,0));
             }
         }
@@ -121,23 +142,21 @@ void colisionAlien(void)
 }
 
 //COLISAO COM O TIRO DO PLAYER
-void colisionPlayer(void)
+void colisionPlayer(PlayerShip *player)
 {
     for(int i=0; i <NUM_BARRIERS; ++i){
         if(bar[i].live)
         {
-           for(int j=0; j<NUM_BULLETS; ++j)
+           for(int j=0; j<player->lasers.alive; ++j)
            {
-               if(bullets[j].live){
-                    if(bullets[j].x <= bar[i].x + bar[i].framewidth -5 &&
-                       bullets[j].x + bullets[j].width >= bar[i].x + 5 &&
-                       bullets[j].y <= bar[i].y + bar[i].frameheight - 60 &&
-                       bullets[j].y + bullets[j].height >= bar[i].y)
-                       {
-                            bar[i].life_down--;
-                            bullets[j].live = false;
-                       }
-               }
+                if(player->lasers.fired[j].pos_x <= bar[i].x + bar[i].framewidth - 35 &&
+                    player->lasers.fired[j].pos_x + player->lasers.sprite.width >= bar[i].x &&
+                    player->lasers.fired[j].pos_y <= bar[i].y + 10 &&
+                    player->lasers.fired[j].pos_y + player->lasers.sprite.height >= bar[i].y)
+                    {
+                        bar[i].life_down--;
+                        remove_player_laser_fired(player, j);
+                    }
            }
         }
     }

@@ -3,11 +3,50 @@
 #include "game_state.h"
 #include "menu_screen.h"
 
+bool create_display(GameState *game){
+    //criando uma janela com a resolu�ao do desktop do usuario (fullscreen):
+    ALLEGRO_MONITOR_INFO info;
+
+    int res_x, res_y;
+
+    al_set_new_display_flags(ALLEGRO_FULLSCREEN_WINDOW);
+    al_get_monitor_info(0, &info);
+
+    res_x = info.x2 - info.x1;
+    res_y = info.y2 - info.y1;
+
+
+    game->display = al_create_display(res_x, res_y);
+    if(!game->display){
+        fprintf(stderr, "Error: could not create display.\n");
+        return false;
+    }
+
+    //redimensionando o jogo para se encaixar na resolu�ao do desktop do usuario:
+
+    float red_x = res_x/(float)SCREEN_WIDTH;
+    float red_y = res_y/(float)SCREEN_HEIGHT;
+
+    ALLEGRO_TRANSFORM transform;
+    al_identity_transform(&transform);
+    al_scale_transform(&transform, red_x, red_y);
+    al_use_transform(&transform);
+
+    return true;
+
+}
+
 // Inicia o estado inicia do jogo
 bool init_game_state(GameState *game) {
+    // Cria a fila de eventos
+    game->event_queue = al_create_event_queue();
+    if(!game->event_queue) {
+        fprintf(stderr, "Failed to create event queue!\n");
+        return false;
+    }
+
     // Cria a tela do jogo
-    game->display = al_create_display(SCREEN_WIDTH, SCREEN_HEIGHT);
-    if(!game->display) {
+    if(!create_display(game)) {
         fprintf(stderr, "Failed to create display!\n");
         return false;
     }
@@ -19,12 +58,6 @@ bool init_game_state(GameState *game) {
         return false;
     }
 
-    // Cria a fila de eventos
-    game->event_queue = al_create_event_queue();
-    if(!game->event_queue) {
-        fprintf(stderr, "Failed to create event queue!\n");
-        return false;
-    }
     // Adiciona eventos do display a fila de eventos
     al_register_event_source(game->event_queue, al_get_keyboard_event_source());
     // Adiciona eventos do teclado a fila de eventos

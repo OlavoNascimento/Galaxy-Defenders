@@ -2,6 +2,7 @@
 #include "player_ship.h"
 #include "events.h"
 #include "menu_screen.h"
+#include "main.h"
 
 
 // Controla o movimento do jogador
@@ -43,7 +44,7 @@ void process_player_movement(GameState *game, PlayerShip *player) {
 
         // Remove o primeiro disparo do array caso ele tenha saido da tela
         if(player->lasers.fired[0].pos_y < 0)
-            remove_player_laser_fired(player);
+            remove_player_laser_fired(player, 0);
 
         game->draw = true;
     }
@@ -77,18 +78,107 @@ void update_game_screen(PlayerShip *player) {
     draw_player_ship(player);
     draw_player_lasers(player);
 
+    drawBarrier();
+    draw_explosion_barrier();
+
+
+    draw_alien1(alien1img, alien1, NUM_ALIEN);
+    draw_alien2(alien2img, alien2, 2);
+    draw_alien3(alien3img, alien3, 2);
+
+    draw_explosion_alien1();
+    draw_explosion_alien2();
+    draw_explosion_alien3();
+
+    draw_aBullet();
+
     al_flip_display();
 }
 
 
 // Modifica a posição dos sprites na tela
-void process_player_events(GameState *game, PlayerShip *player) {
+void process_game_events(GameState *game, PlayerShip *player) {
     ALLEGRO_EVENT event;
     al_wait_for_event(game->event_queue, &event);
 
     if(event.type == ALLEGRO_EVENT_TIMER) {
         process_player_movement(game, player);
         process_player_firing(game, player);
+
+        //colisao dos aliens com balas{
+
+            //verificando se houve a colisao entre as balas e os inimigos. Se sim, apaga o inimigo e a bala.
+            detectBulletCollision_alien1(alien1, NUM_ALIEN, player);
+
+            detectBulletCollision_alien2(alien2, 2, player);
+
+            detectBulletCollision_alien3(alien3, 2, player);
+
+            //colisionPlayer();
+
+            update_explosion_alien1();
+
+            update_explosion_alien2();
+
+            update_explosion_alien3();
+
+        //}
+
+        //colisoes da barreira
+
+            colisionAlien();
+
+            colisionPlayer(player);
+
+
+            lifeBarrier();
+
+            update_explosion_barrier();
+
+
+        //Movimento dos aliens{
+
+            //limitando o movimento horizontal dos aliens e movimentando-os verticalmente:
+            limitXmoveY_alien1(alien1, NUM_ALIEN);
+
+            limitXmoveY_alien2(alien2, 2);
+
+            limitXmoveY_alien3(alien3, 2);
+
+
+            //movimentando os aliens horizontalmente:
+            moveX_alien1(alien1, NUM_ALIEN);
+
+            moveX_alien2(alien2, 2);
+
+            moveX_alien3(alien3, 2);
+
+
+            //atualizando os sprites dos inimigos constantemente:
+            updateSprite_alien1(alien1, NUM_ALIEN);
+
+            updateSprite_alien2(alien2, 2);
+
+            updateSprite_alien3(alien3, 2);
+        //}
+
+
+        //Disparo dos aliens{
+
+            //delay para impedir que os aliens disparem muito rapido(a cada estouro do timer):
+            if(++alien_shot_delay >= 50){
+
+                choose_shooter_alien();
+
+                fire_aBullet();
+
+                alien_shot_delay = 0;
+            }
+
+            update_aBullet();
+
+        //}
+        game->draw = true;
     } else {
         process_events(game, &event);
         if(game->keys_pressed[ESC]) {

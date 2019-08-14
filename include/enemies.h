@@ -2,14 +2,16 @@
 #define ENEMIES_H_INCLUDED
 
 #include <allegro5/allegro.h>
+
 #include "main.h"
 #include "alien_explosion.h"
+#include "player_ship.h"
 
 //numero de aliens em cada fileira:
 #define NUM_ALIEN 10
 
 
-//struct com as informaçoes de cada alien:
+//struct com as informaï¿½oes de cada alien:
 typedef struct{
     float x;
     float y;
@@ -25,7 +27,7 @@ typedef struct{
     explosion exp;
 }enemy;
 
-//atribuindo valores iniciais as informaçoes de cada alien:
+//atribuindo valores iniciais as informaï¿½oes de cada alien:
 void InitAlien1(enemy alien1[], int NUMALIEN);
 
 void InitAlien2(enemy alien2[][NUM_ALIEN], const int x);
@@ -57,7 +59,7 @@ void updateSprite_alien2(enemy alien2[][NUM_ALIEN], const int x);
 void updateSprite_alien3(enemy alien3[][NUM_ALIEN], const int x);
 
 
-//desenhando cada alien na sua posiçao atual:
+//desenhando cada alien na sua posiï¿½ao atual:
 void draw_alien1(ALLEGRO_BITMAP *alien1img, enemy alien1[], const int NUMALIEN);
 
 void draw_alien2(ALLEGRO_BITMAP *alien2img, enemy alien2[][NUM_ALIEN], const int x);
@@ -66,17 +68,17 @@ void draw_alien3(ALLEGRO_BITMAP *alien3img, enemy alien3[][NUM_ALIEN], const int
 
 
 //verificando se houve a colisao entre as balas e os inimigos:
-void detectBulletCollision_alien1(enemy alien1[], const int NUMALIEN, bullet bullets[], const int bulletquantity);
+void detectBulletCollision_alien1(enemy alien1[], const int NUMALIEN, PlayerShip *player);
 
-void detectBulletCollision_alien2(enemy alien2[][NUM_ALIEN], const int x, bullet bullets[], const int bulletquantity);
+void detectBulletCollision_alien2(enemy alien2[][NUM_ALIEN], const int x, PlayerShip *player);
 
-void detectBulletCollision_alien3(enemy alien3[][NUM_ALIEN], const int x, bullet bullets[], const int bulletquantity);
+void detectBulletCollision_alien3(enemy alien3[][NUM_ALIEN], const int x, PlayerShip *player);
 
 
 
 //disparo dos aliens{
 
-    //ponteiro para guardar o endereço dos candidatos a disparar de cada coluna:
+    //ponteiro para guardar o endereï¿½o dos candidatos a disparar de cada coluna:
     enemy *alien_shooter[NUM_ALIEN];
 
     //indice gerado aleatoriamente para escolher qual alien do ponteiro acima ira disparar:
@@ -115,7 +117,7 @@ void detectBulletCollision_alien3(enemy alien3[][NUM_ALIEN], const int x, bullet
     //escolhe um alien aleatorio para disparar(apenas os aliens que sao os ultimos de sua coluna podem ser candidatos a disparar):
     void choose_shooter_alien(void);
 
-    //funçao que faz o alien escolhido efetuar o disparo:
+    //funï¿½ao que faz o alien escolhido efetuar o disparo:
     void fire_aBullet(void);
 
     //movimenta as balas disparadas:

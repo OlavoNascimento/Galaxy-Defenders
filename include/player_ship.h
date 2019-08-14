@@ -24,7 +24,7 @@ bool init_player_laser(PlayerShip *ps);
 bool init_player_ship(PlayerShip *ps);
 
 void add_player_laser_fired(PlayerShip *ps);
-void remove_player_laser_fired(PlayerShip *ps);
+void remove_player_laser_fired(PlayerShip *ps, int laser_pos);
 void update_player_lasers_positions(PlayerShip *ps);
 
 void draw_player_lasers(PlayerShip *ps);

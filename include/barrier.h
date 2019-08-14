@@ -2,6 +2,7 @@
 #define BARRIER_H_INCLUDED
 
 #include "main.h"
+#include "player_ship.h"
 
 //definindo o numero de barreiras
 #define NUM_BARRIERS 4
@@ -53,7 +54,7 @@ void drawBarrier();
 void colisionAlien();
 
 //COLISAO COM O TIRO DO PLAYER
-void colisionPlayer();
+void colisionPlayer(PlayerShip *player);
 
 //DESENHANDO SPRITE DA EXPLOSAO
 void draw_explosion_barrier();

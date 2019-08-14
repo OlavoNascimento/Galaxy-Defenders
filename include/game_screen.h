@@ -6,6 +6,6 @@
 
 void process_player_movement(GameState *game, PlayerShip *player);
 void process_player_firing(GameState *game, PlayerShip *player);
-void process_player_events(GameState *game, PlayerShip *player);
+void process_game_events(GameState *game, PlayerShip *player);
 
 #endif

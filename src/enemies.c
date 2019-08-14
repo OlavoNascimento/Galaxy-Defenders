@@ -252,76 +252,67 @@ void draw_alien3(ALLEGRO_BITMAP *alien3img, enemy alien3[][NUM_ALIEN], const int
 
 }
 
-
-
-void detectBulletCollision_alien1(enemy alien1[], const int NUMALIEN, bullet bullets[], const int bulletquantity){
+void detectBulletCollision_alien1(enemy alien1[], const int NUMALIEN, PlayerShip *player){
     for(int i = 0; i<NUMALIEN; ++i){
         if(alien1[i].live){
-            for(int j = 0; j<bulletquantity; ++j){
-               if(bullets[j].live){
-                    if(bullets[j].x <= alien1[i].x + alien1[i].framewidth - 2 &&
-                       bullets[j].x + bullets[j].width >= alien1[i].x + 2 &&
-                       bullets[j].y <= alien1[i].y + alien1[i].frameheight - 2 &&
-                       bullets[j].y + bullets[j].height >= alien1[i].y + 2){
-                        bullets[j].live = false;
-                        alien1[i].live = false;
-                        alien1[i].exp.start = true;
-                    }
-               }
+            for(int j = 0; j<player->lasers.alive; ++j){
+                if(player->lasers.fired[j].pos_x <= alien1[i].x + alien1[i].framewidth - 2 &&
+                   player->lasers.fired[j].pos_x + player->lasers.sprite.width >= alien1[i].x + 2 &&
+                   player->lasers.fired[j].pos_y <= alien1[i].y + alien1[i].frameheight - 2 &&
+                   player->lasers.fired[j].pos_y + player->lasers.sprite.height >= alien1[i].y + 2){
+                    remove_player_laser_fired(player, j);
+                    alien1[i].live = false;
+                    alien1[i].exp.start = true;
+                }
             }
-
         }
-    }
 
+    }
 }
 
-void detectBulletCollision_alien2(enemy alien2[][NUM_ALIEN], const int x, bullet bullets[], const int bulletquantity){
+
+void detectBulletCollision_alien2(enemy alien2[][NUM_ALIEN], const int x, PlayerShip *player){
     for(int i = 0; i<x; ++i){
         for(int j = 0; j<NUM_ALIEN; ++j){
             if(alien2[i][j].live){
-                for(int k = 0; k<bulletquantity; ++k){
-                    if(bullets[k].live){
-                        if(bullets[k].x <= alien2[i][j].x + alien2[i][j].framewidth - 2 &&
-                           bullets[k].x + bullets[k].width >= alien2[i][j].x + 2 &&
-                           bullets[k].y <= alien2[i][j].y + alien2[i][j].frameheight - 2 &&
-                           bullets[k].y + bullets[k].height >= alien2[i][j].y + 2){
-                            bullets[k].live = false;
-                            alien2[i][j].live = false;
-                            alien2[i][j].exp.start = true;
-                        }
+                for(int k = 0; k<player->lasers.alive; ++k){
+                    if(player->lasers.fired[k].pos_x <= alien2[i][j].x + alien2[i][j].framewidth - 2 &&
+                       player->lasers.fired[k].pos_x + player->lasers.sprite.width >= alien2[i][j].x + 2 &&
+                       player->lasers.fired[k].pos_y <= alien2[i][j].y + alien2[i][j].frameheight - 2 &&
+                       player->lasers.fired[k].pos_y + player->lasers.sprite.height >= alien2[i][j].y + 2){
+                        remove_player_laser_fired(player, j);
+                        alien2[i][j].live = false;
+                        alien2[i][j].exp.start = true;
                     }
                 }
             }
         }
     }
-
 }
 
-void detectBulletCollision_alien3(enemy alien3[][NUM_ALIEN], const int x, bullet bullets[], const int bulletquantity){
+void detectBulletCollision_alien3(enemy alien3[][NUM_ALIEN], const int x, PlayerShip *player){
     for(int i = 0; i<x; ++i){
         for(int j = 0; j<NUM_ALIEN; ++j){
             if(alien3[i][j].live){
-                for(int k = 0; k<bulletquantity; ++k){
-                    if(bullets[k].live){
-                        if(bullets[k].x <= alien3[i][j].x + alien3[i][j].framewidth - 2 &&
-                           bullets[k].x + bullets[k].width >= alien3[i][j].x + 2 &&
-                           bullets[k].y <= alien3[i][j].y + alien3[i][j].frameheight - 2 &&
-                           bullets[k].y + bullets[k].height >= alien3[i][j].y + 2){
-                            bullets[k].live = false;
-                            alien3[i][j].live = false;
-                            alien3[i][j].exp.start = true;
-                        }
+                for(int k = 0; k<player->lasers.alive; ++k){
+                    if(player->lasers.fired[k].pos_x <= alien3[i][j].x + alien3[i][j].framewidth - 2 &&
+                       player->lasers.fired[k].pos_x + player->lasers.sprite.width >= alien3[i][j].x + 2 &&
+                       player->lasers.fired[k].pos_y <= alien3[i][j].y + alien3[i][j].frameheight - 2 &&
+                       player->lasers.fired[k].pos_y + player->lasers.sprite.height >= alien3[i][j].y + 2){
+                        remove_player_laser_fired(player, k);
+                        alien3[i][j].live = false;
+                        alien3[i][j].exp.start = true;
                     }
                 }
             }
         }
     }
-
 }
+
 
 //escolhe um alien aleatorio para disparar(apenas os aliens que sao os ultimos de sua coluna podem ser candidatos a disparar):
 void choose_shooter_alien(void){
-    //devemos limpar as variaves antes de começar para evitar lixo:
+    //devemos limpar as variaves antes de comeï¿½ar para evitar lixo:
     for(int i = 0; i<NUM_ALIEN; ++i){
         check_array[i] = false;
         alien_shooter[i] = NULL;

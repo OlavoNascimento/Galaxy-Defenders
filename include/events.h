@@ -4,6 +4,7 @@
 #include <allegro5/allegro5.h>
 
 #include "game_state.h"
+#include "player_ship.h"
 
 void process_key_down_event(ALLEGRO_EVENT *event, GameState *game, PlayerShip *player);
 void process_key_up_event(ALLEGRO_EVENT *event, GameState *game, PlayerShip *player);

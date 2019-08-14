@@ -60,23 +60,26 @@ void add_player_laser_fired(PlayerShip *ps) {
 
 // Remove o primeiro elemento do array de disparos do jogador
 // sobrescrevendo o elemento atual com o próximo
-void remove_player_laser_fired(PlayerShip *ps) {
-    for(int i = 0; i < ps->lasers.alive; i++)
+void remove_player_laser_fired(PlayerShip *ps, int laser_pos) {
+    for(int i = laser_pos; i < ps->lasers.alive; i++)
         ps->lasers.fired[i] = ps->lasers.fired[i+1];
     ps->lasers.alive--;
 }
 
 // Desenha os disparos do jogador em suas posições atuais
 void draw_player_lasers(PlayerShip *ps) {
-    for(int i = 0; i < ps->lasers.alive; i++)
+    for(int i = 0; i < ps->lasers.alive; i++) {
         al_draw_bitmap(ps->lasers.sprite.bitmap,
-                       ps->lasers.fired[i].pos_x, ps->lasers.fired[i].pos_y,
+               ps->lasers.fired[i].pos_x, ps->lasers.fired[i].pos_y,
                        0);
+        al_convert_mask_to_alpha(ps->lasers.sprite.bitmap, al_map_rgb(0,0,0));
+    }
 }
 
 // Desenha a nave do jogador na posição atual
 void draw_player_ship(PlayerShip *ps) {
     al_draw_bitmap(ps->sprite.bitmap, ps->pos_x, ps->pos_y, 0);
+    al_convert_mask_to_alpha(ps->sprite.bitmap, al_map_rgb(0,0,0));
 }
 
 void free_player_resources(PlayerShip *player) {
