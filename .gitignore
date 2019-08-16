@@ -2,6 +2,8 @@
 
 /obj/*
 
+/allegro-5/*
+
 # Prerequisites
 *.d
 
