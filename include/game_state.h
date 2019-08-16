@@ -5,9 +5,9 @@
 #include <stdio.h>
 
 // Comprimento da tela
-#define SCREEN_WIDTH 768
+#define SCREEN_WIDTH 1280
 // Altura da tela
-#define SCREEN_HEIGHT 600
+#define SCREEN_HEIGHT 720
 // Taxa de atualização da tela 
 #define FPS 60
 

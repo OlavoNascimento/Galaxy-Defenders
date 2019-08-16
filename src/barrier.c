@@ -12,11 +12,10 @@ void InitBarrier(void)
         bar[i].life_up = 15;
         bar[i].life_down = 15;
         bar[i].live = true;
-        bar[i].x = 50 + i * 200;
-        bar[i].y = SCREEN_HEIGHT / 1.6;
+        bar[i].x = 175 + i * 250;
+        bar[i].y = 580;
         bar[i].framewidth = 115;
         bar[i].frameheight = 71;
-
         bar[i].exp_bar.totalframes = 6;
         bar[i].exp_bar.currentframe = 0;
         bar[i].exp_bar.framedelay = 10;
