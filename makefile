@@ -7,7 +7,7 @@ OBJ_DIR = obj
 SRC_DIR = src
 INC_DIR = include
 
-EXE = Galaga
+EXE = GalaxyDefenders
 SRC = $(wildcard $(SRC_DIR)/*.c)
 OBJ = $(subst $(SRC_DIR), $(OBJ_DIR), $(SRC:.c=.o))
 
