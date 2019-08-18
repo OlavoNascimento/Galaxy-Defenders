@@ -35,7 +35,7 @@ bool init_player_ship(PlayerShip *ps) {
     ps->sprite.width = al_get_bitmap_width(ps->sprite.bitmap);
     ps->sprite.height = al_get_bitmap_height(ps->sprite.bitmap);
 
-    ps->alive = true;
+    ps->lives = 3;
     // Posiciona o jogador no centro da tela
     ps->pos_x = (SCREEN_WIDTH/2) - (ps->sprite.width/2);
     // Posiciona o jogador no canto inferior da tela

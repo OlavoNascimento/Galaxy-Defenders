@@ -15,7 +15,7 @@ typedef struct {
     Sprite sprite;
     float pos_x;
     float pos_y;
-    bool alive;
+    int lives;
     PlayerLasers lasers;
 } PlayerShip;
 

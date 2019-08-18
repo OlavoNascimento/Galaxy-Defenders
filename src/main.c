@@ -174,8 +174,9 @@ int main() {
             if(!init_player_ship(&player_ship))
                 return 1;
             DEBUG_PRINT("Loaded player ship...\n");
+            DEBUG_PRINT("Current lifes %d...\n", player_ship.lives);
 
-            while(player_ship.alive) 
+            while(player_ship.lives > 0) 
                 process_game_events(&game, &player_ship);
             free_player_resources(&player_ship);
         }

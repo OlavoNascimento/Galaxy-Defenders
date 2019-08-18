@@ -5,6 +5,22 @@
 #include "main.h"
 
 
+void detect_bullet_collision_player(PlayerShip *player) {
+    for(int i=0; i<NUM_aBULLETS; i++) {
+        if(aBullet[i].live) {
+            if(aBullet[i].y + aBullet[i].height >= player->pos_y &&
+               aBullet[i].y <= player->pos_y + player->sprite.height &&
+               aBullet[i].x + aBullet[i].width >= player->pos_x &&
+               aBullet[i].x <= player->pos_x + player->sprite.width) {
+                player->lives--;
+                aBullet[i].live = false;
+                DEBUG_PRINT("Collision! Current lifes: %d...\n", player->lives);
+            }
+        }
+    }
+
+}
+
 // Controla o movimento do jogador
 void process_player_movement(GameState *game, PlayerShip *player) {
     if(game->keys_pressed[UP]) {
@@ -105,6 +121,7 @@ void process_game_events(GameState *game, PlayerShip *player) {
         process_player_movement(game, player);
         process_player_firing(game, player);
 
+        detect_bullet_collision_player(player);
         //colisao dos aliens com balas{
 
             //verificando se houve a colisao entre as balas e os inimigos. Se sim, apaga o inimigo e a bala.
@@ -182,7 +199,7 @@ void process_game_events(GameState *game, PlayerShip *player) {
     } else {
         process_events(game, &event);
         if(game->keys_pressed[ESC]) {
-            player->alive = false;
+            player->lives = 0;
             game->current_screen = MENU_SCREEN;
         }
     }
