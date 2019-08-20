@@ -11,6 +11,7 @@
 #include "events.h"
 #include "player_ship.h"
 #include "main.h"
+#include "barrier.h"
 
 
 // Inicia todas os recursos do Allegro necessários
@@ -144,7 +145,7 @@ int main() {
 
     // Inicia o timer que atualiza a tela
     al_start_timer(game.screen_timer);
- 
+
     while(game.running) {
         DEBUG_PRINT("Loaded game menu...\n");
         wait_menu_selection(&menu, &game);
@@ -152,8 +153,9 @@ int main() {
 
         if(game.current_screen == GAME_SCREEN) {
             //inicializando objetos do programa{
-                //barreiras:
-                InitBarrier();
+               //Ponteiro e init das barreiras
+                barrier *Pbarr;
+                InitBarrier(&Pbarr);
 
                 //inimigos 1 linha:
                 InitAlien1(alien1, NUM_ALIEN);
@@ -176,7 +178,7 @@ int main() {
             DEBUG_PRINT("Loaded player ship...\n");
             DEBUG_PRINT("Current lifes %d...\n", player_ship.lives);
 
-            while(player_ship.lives > 0) 
+            while(player_ship.lives > 0)
                 process_game_events(&game, &player_ship);
             free_player_resources(&player_ship);
         }
