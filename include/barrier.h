@@ -43,7 +43,7 @@ typedef struct
 }barrier;
 
 //INICIALIZANDO BARREIRA
-void InitBarrier(barrier *Pbarr)
+void InitBarrier(barrier *Pbarr);
 
 //SAUDE DA BARRERIA
 void lifeBarrier(barrier *Pbarr);

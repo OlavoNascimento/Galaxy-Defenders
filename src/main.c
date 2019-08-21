@@ -10,8 +10,8 @@
 #include "game_screen.h"
 #include "events.h"
 #include "player_ship.h"
+#include "enemies.h"
 #include "main.h"
-#include "barrier.h"
 
 
 // Inicia todas os recursos do Allegro necessários
@@ -28,10 +28,9 @@ bool allegro_init() {
         fprintf(stderr, "Failed to initialize Allegro keyboard addon!");
         return false;
     }
-    if(!al_init_font_addon()) {
-        fprintf(stderr, "Failed to initialize Allegro font addon!");
-        return false;
-    }
+
+    al_init_font_addon();
+
     if(!al_init_ttf_addon()) {
         fprintf(stderr, "Failed to initialize Allegro ttf addon!");
         return false;
@@ -39,19 +38,16 @@ bool allegro_init() {
     return true;
 }
 
+
 void free_basic_resources(){
     //liberando os recursos usados no programa:
     al_destroy_bitmap(img_exp_bar);
-    al_destroy_bitmap(alien1img);
-    al_destroy_bitmap(alien2img);
-    al_destroy_bitmap(alien3img);
-    al_destroy_bitmap(exp_img);
-    al_destroy_bitmap(alien_bullet_img);
 
     for(int i=0; i<NUM_BARRIERS; i++){
             al_destroy_bitmap(img_bar[i]);
     }
 }
+
 
 bool init_basic_resources(void){
     //imagem das barreiras:
@@ -76,52 +72,6 @@ bool init_basic_resources(void){
         return 1;
     }
     al_convert_mask_to_alpha(img_exp_bar, al_map_rgb(255,255,255));
-
-
-    //imagem dos aliens da 1 fileira:
-    alien1img = al_load_bitmap("assets/images/alien1.png");
-    if(!alien1img){
-        fprintf(stderr, "Error: could not load alien1 image.\n");
-        free_basic_resources();
-        return false;
-    }
-    al_convert_mask_to_alpha(alien1img, al_map_rgb(0, 0 ,0));
-
-    //imagem dos aliens da 2 e 3 fileira:
-    alien2img = al_load_bitmap("assets/images/alien2.png");
-    if(!alien2img){
-        fprintf(stderr, "Error: could not load alien2 image.\n");
-        free_basic_resources();
-        return false;
-    }
-    al_convert_mask_to_alpha(alien2img, al_map_rgb(0, 0 ,0));
-
-    //imagem dos aliens da 4 e 5 fileira:
-    alien3img = al_load_bitmap("assets/images/alien3.png");
-    if(!alien3img){
-        fprintf(stderr, "Error: could not load alien3 bitmap");
-        free_basic_resources();
-        return false;
-    }
-    al_convert_mask_to_alpha(alien3img, al_map_rgb(0, 0 ,0));
-
-    //imagem da explosao dos aliens:
-    exp_img = al_load_bitmap("assets/images/exp.png");
-    if(!exp_img){
-        fprintf(stderr, "Error: could not load explosion bitmap");
-        free_basic_resources();
-        return false;
-    }
-    al_convert_mask_to_alpha(exp_img, al_map_rgb(0, 0 , 0));
-
-    //imagem da bala dos aliens:
-    alien_bullet_img = al_load_bitmap("assets/images/alienshot.png");
-    if(!alien_bullet_img){
-        fprintf(stderr, "Error: could not load alien bullet bitmap");
-        free_basic_resources();
-        return false;
-    }
-    al_convert_mask_to_alpha(alien_bullet_img, al_map_rgb(0, 0 , 0));
 
     return true;
 }
@@ -152,24 +102,14 @@ int main() {
         DEBUG_PRINT("Game menu exited...\n");
 
         if(game.current_screen == GAME_SCREEN) {
-            //inicializando objetos do programa{
-               //Ponteiro e init das barreiras
-                barrier *Pbarr;
-                InitBarrier(&Pbarr);
 
-                //inimigos 1 linha:
-                InitAlien1(alien1, NUM_ALIEN);
+            barreiras:
+            InitBarrier();
 
-                //inimigos 2 e 3 linha:
-                InitAlien2(alien2, 2);
-
-                //inimigos 4 e 5 linha:
-                InitAlien3(alien3, 2);
-
-                //tiro dos aliens:
-                Init_aBullet();
-
-            //}
+            //inicializa os inimigos:
+            enemies Enemies;
+            if(!InitEnemies(&Enemies))
+                return 1;
 
             // Cria e carrega a nave do jogador
             PlayerShip player_ship;
@@ -179,8 +119,9 @@ int main() {
             DEBUG_PRINT("Current lifes %d...\n", player_ship.lives);
 
             while(player_ship.lives > 0)
-                process_game_events(&game, &player_ship);
+                process_game_events(&game, &player_ship, &Enemies);
             free_player_resources(&player_ship);
+            free_enemies_resources(&Enemies);
         }
     }
 
