@@ -8,14 +8,14 @@
 #define SCREEN_WIDTH 1280
 // Altura da tela
 #define SCREEN_HEIGHT 720
-// Taxa de atualização da tela 
+// Taxa de atualização da tela
 #define FPS 60
 
 // Margem entre a nave do jogador e a parte inferior da tela
 #define PLAYER_BOTTOM_MARGIN 6
 
 // Velocidade do movimento da nave do jogador
-#define PLAYER_SPEED 4 
+#define PLAYER_SPEED 4
 
 // Velocidade de disparo do jogador
 #define PLAYER_FIRING_SPEED 3
@@ -48,6 +48,10 @@ typedef struct {
     ALLEGRO_BITMAP *bitmap;
     float width;
     float height;
+    int totalframes;
+    int currentframe;
+    int framedelay;
+    int framecounter;
 } Sprite;
 
 // Posição dos lasers das naves
