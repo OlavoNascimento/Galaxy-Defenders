@@ -6,6 +6,7 @@
 
 //definindo o numero de barreiras
 #define NUM_BARRIERS 4
+#define HEIGHT_BARRIER 580
 
 //struct com as informa��es das barreiras e explosão:
 
@@ -20,13 +21,13 @@ typedef struct
     int y;
     int x;
     bool start_exp;
+    ALLEGRO_BITMAP *img_exp_bar;
 
 }explosion_bar;
 
 
 typedef struct
 {
-    //BARREIRA 01
     int life_up;
     int life_down;
     bool live;
@@ -37,18 +38,18 @@ typedef struct
     float x;
     float y;
     explosion_bar exp_bar;
+    ALLEGRO_BITMAP *img_bar[4];
 
 }barrier;
 
-
 //INICIALIZANDO BARREIRA
-void InitBarrier();
+void InitBarrier(barrier *Pbarr)
 
 //SAUDE DA BARRERIA
-void lifeBarrier();
+void lifeBarrier(barrier *Pbarr);
 
 //DESENHANDO A BARREIRA
-void drawBarrier();
+void drawBarrier(barrier *Pbarr);
 
 //COLISAO COM O TIRO DO ALIEN
 void colisionAlien();
@@ -57,10 +58,10 @@ void colisionAlien();
 void colisionPlayer(PlayerShip *player);
 
 //DESENHANDO SPRITE DA EXPLOSAO
-void draw_explosion_barrier();
+void draw_explosion_barrier(barrier *Pbar);
 
 //ALTERANDO ANIMACOES DO SPRITE
-void update_explosion_barrier();
+void update_explosion_barrier(barrier *Pbar);
 
 
 #endif // BARRIER_H_INCLUDED
