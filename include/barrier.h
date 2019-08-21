@@ -1,6 +1,6 @@
 #ifndef BARRIER_H_INCLUDED
 #define BARRIER_H_INCLUDED
-/*
+
 #include "main.h"
 #include "player_ship.h"
 
@@ -63,5 +63,5 @@ void draw_explosion_barrier(barrier *Pbar);
 //ALTERANDO ANIMACOES DO SPRITE
 void update_explosion_barrier(barrier *Pbar);
 
-*/
+
 #endif // BARRIER_H_INCLUDED
