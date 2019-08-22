@@ -2,9 +2,9 @@
 #include "player_ship.h"
 #include "events.h"
 #include "menu_screen.h"
-#include "main.h"
 #include "enemies.h"
 #include "alien_explosion.h"
+#include "barrier.h"
 
 
 void detect_bullet_collision_player(PlayerShip *player, enemies *p_enemies) {
@@ -89,15 +89,15 @@ void process_player_firing(GameState *game, PlayerShip *player) {
 }
 
 // Atualiza a tela do jogo
-void update_game_screen(PlayerShip *player, enemies *p_enemies) {
+void update_game_screen(PlayerShip *player, enemies *p_enemies, main_barrier *Pbarr) {
     // DEBUG_PRINT("Updating game screen!\n");
     al_clear_to_color(al_map_rgb(0, 0, 0));
 
     draw_player_ship(player);
     draw_player_lasers(player);
 
-    //drawBarrier();
-    //draw_explosion_barrier();
+    drawBarrier(Pbarr);
+    draw_explosion_barrier(Pbarr);
 
 
     draw_alien1(p_enemies);
@@ -115,7 +115,7 @@ void update_game_screen(PlayerShip *player, enemies *p_enemies) {
 
 
 // Modifica a posição dos sprites na tela
-void process_game_events(GameState *game, PlayerShip *player, enemies *p_enemies) {
+void process_game_events(GameState *game, PlayerShip *player, enemies *p_enemies, main_barrier *Pbarr) {
     ALLEGRO_EVENT event;
     al_wait_for_event(game->event_queue, &event);
 
@@ -145,14 +145,14 @@ void process_game_events(GameState *game, PlayerShip *player, enemies *p_enemies
 
         //colisoes da barreira
 
-            colisionAlien();
+            colision_Alien_shot_barrier(Pbarr);
 
-            colisionPlayer(player);
+            colision_Player_shot_barrier(Pbarr);
 
 
-            lifeBarrier();
+            lifeBarrier(Pbarr);
 
-            update_explosion_barrier();
+            update_explosion_barrier(Pbarr);
 
 
         //Movimento dos aliens{
@@ -208,6 +208,6 @@ void process_game_events(GameState *game, PlayerShip *player, enemies *p_enemies
 
     if(game->draw && al_is_event_queue_empty(game->event_queue)) {
         game->draw = false;
-        update_game_screen(player, p_enemies);
+        update_game_screen(player, p_enemies, Pbarr);
     }
 }

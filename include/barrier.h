@@ -1,7 +1,7 @@
 #ifndef BARRIER_H_INCLUDED
 #define BARRIER_H_INCLUDED
 
-#include "main.h"
+#include "enemies.h"
 #include "player_ship.h"
 
 //definindo o numero de barreiras
@@ -21,7 +21,6 @@ typedef struct
     int y;
     int x;
     bool start_exp;
-    ALLEGRO_BITMAP *img_exp_bar;
 
 }explosion_bar;
 
@@ -38,30 +37,43 @@ typedef struct
     float x;
     float y;
     explosion_bar exp_bar;
-    ALLEGRO_BITMAP *img_bar[4];
+
 
 }barrier;
 
+typedef struct
+{
+    ALLEGRO_BITMAP *img_bar[4];
+    ALLEGRO_BITMAP *img_exp_bar;
+    barrier main_bar[NUM_BARRIERS];
+
+}main_barrier;
+
 //INICIALIZANDO BARREIRA
-void InitBarrier(barrier *Pbarr);
+void InitBarrier(main_barrier *Pbarr);
 
 //SAUDE DA BARRERIA
-void lifeBarrier(barrier *Pbarr);
+void lifeBarrier(main_barrier *Pbarr);
 
 //DESENHANDO A BARREIRA
-void drawBarrier(barrier *Pbarr);
+void drawBarrier(main_barrier *Pbarr);
 
-//COLISAO COM O TIRO DO ALIEN
-void colisionAlien();
+//COLISAO COM O TIRO DO ALIEN COM A BARREIRA
+void colision_Alien_shot_barrier(main_barrier *Pbarr);
 
 //COLISAO COM O TIRO DO PLAYER
-void colisionPlayer(PlayerShip *player);
+void colision_Player_shot_barrier(PlayerShip *player, main_barrier *Pbarr);
 
 //DESENHANDO SPRITE DA EXPLOSAO
-void draw_explosion_barrier(barrier *Pbar);
+void draw_explosion_barrier(main_barrier *Pbarr);
 
 //ALTERANDO ANIMACOES DO SPRITE
-void update_explosion_barrier(barrier *Pbar);
+void update_explosion_barrier(main_barrier *Pbarr);
 
+//LIBERAR RECURSOS USADOS NO PROGRAMA
+void free_barrier_resources(main_barrier *Pbarr);
+
+//INICIAR IMAGENS DAS BARREIRAS E DA EXPLOSAO
+bool init_barrier_resources(main_barrier *Pbarr);
 
 #endif // BARRIER_H_INCLUDED

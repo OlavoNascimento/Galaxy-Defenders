@@ -11,7 +11,7 @@
 #include "events.h"
 #include "player_ship.h"
 #include "enemies.h"
-#include "main.h"
+#include "barrier.h"
 
 
 // Inicia todas os recursos do Allegro necessários
@@ -38,49 +38,8 @@ bool allegro_init() {
     return true;
 }
 
-
-void free_basic_resources(){
-    //liberando os recursos usados no programa:
-    al_destroy_bitmap(img_exp_bar);
-
-    for(int i=0; i<NUM_BARRIERS; i++){
-            al_destroy_bitmap(img_bar[i]);
-    }
-}
-
-
-bool init_basic_resources(void){
-    //imagem das barreiras:
-    img_bar[0] = al_load_bitmap("assets/images/barrier00.png");
-    img_bar[1] = al_load_bitmap("assets/images/barrierdown.png");
-    img_bar[2] = al_load_bitmap("assets/images/barrierup.png");
-    img_bar[3] = al_load_bitmap("assets/images/barrier01.png");
-
-    for(int i=0; i<NUM_BARRIERS; i++)
-    {
-        if(!img_bar[i]){
-            fprintf(stderr, "Error: could not load barrier image.\n");
-            free_basic_resources();
-        }
-    }
-
-    //imagem da explosao da barreira
-    img_exp_bar = al_load_bitmap("assets/images/img_exp_bar.jpg");
-    if(!img_exp_bar){
-        fprintf(stderr, "Error: could not load explosion barrier image.\n");
-        free_basic_resources();
-        return 1;
-    }
-    al_convert_mask_to_alpha(img_exp_bar, al_map_rgb(255,255,255));
-
-    return true;
-}
-
 int main() {
     if(!allegro_init())
-        return 1;
-
-    if(!init_basic_resources())
         return 1;
 
     // Cria e carrega as informações do jogo
@@ -102,9 +61,11 @@ int main() {
         DEBUG_PRINT("Game menu exited...\n");
 
         if(game.current_screen == GAME_SCREEN) {
-
-            barreiras:
-            InitBarrier();
+            //Inicialização objetos programa
+            
+            //Ponteiro e init da barreira
+            main_barrier bar;
+            InitBarrier(&bar);
 
             //inicializa os inimigos:
             enemies Enemies;
@@ -119,16 +80,16 @@ int main() {
             DEBUG_PRINT("Current lifes %d...\n", player_ship.lives);
 
             while(player_ship.lives > 0)
-                process_game_events(&game, &player_ship, &Enemies);
+                process_game_events(&game, &player_ship, &Enemies, &bar);
             free_player_resources(&player_ship);
             free_enemies_resources(&Enemies);
+            free_barrier_resources(&bar);
         }
     }
 
     DEBUG_PRINT("Stopping game...\n");
     free_menu_resources(&menu);
     free_game_state_resources(&game);
-    free_basic_resources();
 
     return 0;
 }
