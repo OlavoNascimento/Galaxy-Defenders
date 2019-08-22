@@ -59,7 +59,7 @@ void lifeBarrier(main_barrier *Pbarr);
 void drawBarrier(main_barrier *Pbarr);
 
 //COLISAO COM O TIRO DO ALIEN COM A BARREIRA
-void colision_Alien_shot_barrier(main_barrier *Pbarr);
+void colision_Alien_shot_barrier(main_barrier *Pbarr, enemies *p_enemies);
 
 //COLISAO COM O TIRO DO PLAYER
 void colision_Player_shot_barrier(PlayerShip *player, main_barrier *Pbarr);

@@ -122,21 +122,21 @@ void drawBarrier(main_barrier *Pbarr)
 }
 
 //COLISAO COM O TIRO DO ALIEN
-void colision_Alien_shot_barrier(main_barrier *Pbarr)
+void colision_Alien_shot_barrier(main_barrier *Pbarr, enemies *p_enemies)
 {
     for(int i=0; i<NUM_BARRIERS; ++i){
         if(Pbarr->main_bar[i].live)
         {
            for(int j=0; j< NUM_aBULLETS ; ++j)
            {
-               if(aBullet[j].live){
-                    if(aBullet[j].x <= Pbarr->main_bar[i].x + Pbarr->main_bar[i].framewidth -5 &&
-                       aBullet[j].x + aBullet[j].width >= Pbarr->main_bar[i].x + 5 &&
-                       aBullet[j].y <= Pbarr->main_bar[i].y + Pbarr->main_bar[i].frameheight -55 &&
-                       aBullet[j].y + aBullet[j].height >= Pbarr->main_bar[i].y + 16)
+               if(p_enemies->alienShots.aBullet[j].live){
+                    if(p_enemies->alienShots.aBullet[j].x <= Pbarr->main_bar[i].x + Pbarr->main_bar[i].framewidth -5 &&
+                       p_enemies->alienShots.aBullet[j].x + p_enemies->alienShots.aBullet[j].width >= Pbarr->main_bar[i].x + 5 &&
+                       p_enemies->alienShots.aBullet[j].y <= Pbarr->main_bar[i].y + Pbarr->main_bar[i].frameheight -55 &&
+                       p_enemies->alienShots.aBullet[j].y + p_enemies->alienShots.aBullet[j].height >= Pbarr->main_bar[i].y + 16)
                        {
                             Pbarr->main_bar[i].life_up--;
-                            aBullet[j].live = false;
+                            p_enemies->alienShots.aBullet[j].live = false;
                        }
                }
            }

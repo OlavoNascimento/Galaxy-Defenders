@@ -145,9 +145,9 @@ void process_game_events(GameState *game, PlayerShip *player, enemies *p_enemies
 
         //colisoes da barreira
 
-            colision_Alien_shot_barrier(Pbarr);
+            colision_Alien_shot_barrier(Pbarr, p_enemies);
 
-            colision_Player_shot_barrier(Pbarr);
+            colision_Player_shot_barrier(player, Pbarr);
 
 
             lifeBarrier(Pbarr);
