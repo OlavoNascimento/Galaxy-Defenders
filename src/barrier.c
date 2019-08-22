@@ -13,18 +13,18 @@ void InitBarrier(main_barrier *Pbarr)
         Pbarr->main_bar[i].life_up = 15;
         Pbarr->main_bar[i].life_down = 15;
         Pbarr->main_bar[i].live = true;
-        Pbarr->main_bar[i].x = 175 + i * 250;
+        Pbarr->main_bar[i].x = 170 + i * 265;
         Pbarr->main_bar[i].y = HEIGHT_BARRIER;
         Pbarr->main_bar[i].framewidth = 115;
         Pbarr->main_bar[i].frameheight = 71;
         Pbarr->main_bar[i].exp_bar.totalframes = 6;
         Pbarr->main_bar[i].exp_bar.currentframe = 0;
-        Pbarr->main_bar[i].exp_bar.framedelay = 10;
+        Pbarr->main_bar[i].exp_bar.framedelay = 9;
         Pbarr->main_bar[i].exp_bar.framecounter = 0;
         Pbarr->main_bar[i].exp_bar.framewidth = 175;
         Pbarr->main_bar[i].exp_bar.frameheight = 116;
-        Pbarr->main_bar[i].exp_bar.x = Pbarr->main_bar[i].x - 30;
-        Pbarr->main_bar[i].exp_bar.y = HEIGHT_BARRIER;
+        Pbarr->main_bar[i].exp_bar.x = Pbarr->main_bar[i].x - 37;
+        Pbarr->main_bar[i].exp_bar.y = HEIGHT_BARRIER - 20;
         Pbarr->main_bar[i].exp_bar.start_exp = false;
 
         //CHAMANDO FUNCAO DE CARREGAMENTO DE IMAGEM
@@ -86,7 +86,7 @@ void drawBarrier(main_barrier *Pbarr)
                                           0, 0,
                                           Pbarr->main_bar[i].framewidth, Pbarr->main_bar[i].frameheight,
                                           Pbarr->main_bar[i].x, Pbarr->main_bar[i].y,
-                                          60, 60,
+                                          115,71,
                                           0);
                     al_convert_mask_to_alpha(Pbarr->img_bar[0], al_map_rgb(0,0,0));
             }
@@ -95,7 +95,7 @@ void drawBarrier(main_barrier *Pbarr)
                                           0, 0,
                                           Pbarr->main_bar[i].framewidth, Pbarr->main_bar[i].frameheight,
                                           Pbarr->main_bar[i].x, Pbarr->main_bar[i].y,
-                                          60, 60,
+                                          115, 71,
                                           0);
                 al_convert_mask_to_alpha(Pbarr->img_bar[1], al_map_rgb(0,0,0));
             }
@@ -104,7 +104,7 @@ void drawBarrier(main_barrier *Pbarr)
                                           0, 0,
                                           Pbarr->main_bar[i].framewidth, Pbarr->main_bar[i].frameheight,
                                           Pbarr->main_bar[i].x, Pbarr->main_bar[i].y,
-                                          60, 60,
+                                          115, 71,
                                           0);
                 al_convert_mask_to_alpha(Pbarr->img_bar[2], al_map_rgb(0,0,0));
             }
@@ -113,7 +113,7 @@ void drawBarrier(main_barrier *Pbarr)
                                           0, 0,
                                           Pbarr->main_bar[i].framewidth, Pbarr->main_bar[i].frameheight,
                                           Pbarr->main_bar[i].x, Pbarr->main_bar[i].y,
-                                          60, 60,
+                                          115, 71,
                                           0);
                 al_convert_mask_to_alpha(Pbarr->img_bar[3], al_map_rgb(0,0,0));
             }
@@ -130,9 +130,9 @@ void colision_Alien_shot_barrier(main_barrier *Pbarr, enemies *p_enemies)
            for(int j=0; j< NUM_aBULLETS ; ++j)
            {
                if(p_enemies->alienShots.aBullet[j].live){
-                    if(p_enemies->alienShots.aBullet[j].x <= Pbarr->main_bar[i].x + Pbarr->main_bar[i].framewidth -5 &&
+                    if(p_enemies->alienShots.aBullet[j].x <= Pbarr->main_bar[i].x + Pbarr->main_bar[i].framewidth &&
                        p_enemies->alienShots.aBullet[j].x + p_enemies->alienShots.aBullet[j].width >= Pbarr->main_bar[i].x + 5 &&
-                       p_enemies->alienShots.aBullet[j].y <= Pbarr->main_bar[i].y + Pbarr->main_bar[i].frameheight -55 &&
+                       p_enemies->alienShots.aBullet[j].y <= Pbarr->main_bar[i].y + Pbarr->main_bar[i].frameheight -46 &&
                        p_enemies->alienShots.aBullet[j].y + p_enemies->alienShots.aBullet[j].height >= Pbarr->main_bar[i].y + 16)
                        {
                             Pbarr->main_bar[i].life_up--;
@@ -152,8 +152,8 @@ void colision_Player_shot_barrier(PlayerShip *player, main_barrier *Pbarr)
         {
            for(int j=0; j<player->lasers.alive; ++j)
            {
-                if(player->lasers.fired[j].pos_x <= Pbarr->main_bar[i].x + Pbarr->main_bar[i].framewidth - 35 &&
-                    player->lasers.fired[j].pos_x + player->lasers.sprite.width >= Pbarr->main_bar[i].x &&
+                if(player->lasers.fired[j].pos_x <= Pbarr->main_bar[i].x + Pbarr->main_bar[i].framewidth - 1 &&
+                    player->lasers.fired[j].pos_x + player->lasers.sprite.width >= Pbarr->main_bar[i].x  &&
                     player->lasers.fired[j].pos_y <= Pbarr->main_bar[i].y + 10 &&
                     player->lasers.fired[j].pos_y + player->lasers.sprite.height >= Pbarr->main_bar[i].y)
                     {
