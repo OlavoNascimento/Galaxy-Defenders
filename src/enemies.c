@@ -280,7 +280,7 @@ void draw_alien3(enemies *p_enemies){
 void detectBulletCollision_alien1(enemies *p_enemies, PlayerShip *player){
     for(int i = 0; i<NUM_ALIEN; ++i){
         if((*p_enemies).alien1[i].live){
-            for(int j = 0; j<player->lasers.alive; ++j){
+            for(int j = 0; j<player->lasers.alive; j++){
                 if(player->lasers.fired[j].pos_x <= (*p_enemies).alien1[i].x + (*p_enemies).alien1[i].sprite.width - 2 &&
                    player->lasers.fired[j].pos_x + player->lasers.sprite.width >= (*p_enemies).alien1[i].x + 2 &&
                    player->lasers.fired[j].pos_y <= (*p_enemies).alien1[i].y + (*p_enemies).alien1[i].sprite.height - 2 &&
@@ -300,12 +300,12 @@ void detectBulletCollision_alien2(enemies *p_enemies, PlayerShip *player){
     for(int i = 0; i<NUM_ALIEN_i; ++i){
         for(int j = 0; j<NUM_ALIEN; ++j){
             if((*p_enemies).alien2[i][j].live){
-                for(int k = 0; k<player->lasers.alive; ++k){
+                for(int k = 0; k<player->lasers.alive; k++){
                     if(player->lasers.fired[k].pos_x <= (*p_enemies).alien2[i][j].x + (*p_enemies).alien2[i][j].sprite.width - 2 &&
                        player->lasers.fired[k].pos_x + player->lasers.sprite.width >= (*p_enemies).alien2[i][j].x + 2 &&
                        player->lasers.fired[k].pos_y <= (*p_enemies).alien2[i][j].y + (*p_enemies).alien2[i][j].sprite.height - 2 &&
                        player->lasers.fired[k].pos_y + player->lasers.sprite.height >= (*p_enemies).alien2[i][j].y + 2){
-                        remove_player_laser_fired(player, j);
+                        remove_player_laser_fired(player, k);
                         (*p_enemies).alien2[i][j].live = false;
                         (*p_enemies).alien2[i][j].exp.start = true;
                     }
@@ -319,7 +319,7 @@ void detectBulletCollision_alien3(enemies *p_enemies, PlayerShip *player){
     for(int i = 0; i<NUM_ALIEN_i; ++i){
         for(int j = 0; j<NUM_ALIEN; ++j){
             if((*p_enemies).alien3[i][j].live){
-                for(int k = 0; k<player->lasers.alive; ++k){
+                for(int k = 0; k<player->lasers.alive; k++){
                     if(player->lasers.fired[k].pos_x <= (*p_enemies).alien3[i][j].x + (*p_enemies).alien3[i][j].sprite.width - 2 &&
                        player->lasers.fired[k].pos_x + player->lasers.sprite.width >= (*p_enemies).alien3[i][j].x + 2 &&
                        player->lasers.fired[k].pos_y <= (*p_enemies).alien3[i][j].y + (*p_enemies).alien3[i][j].sprite.height - 2 &&

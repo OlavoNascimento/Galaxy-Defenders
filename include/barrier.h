@@ -21,7 +21,6 @@ typedef struct
     int y;
     int x;
     bool start_exp;
-
 }explosion_bar;
 
 
@@ -30,15 +29,11 @@ typedef struct
     int life_up;
     int life_down;
     bool live;
-    float position_x;
-    float position_y;
     int framewidth;
     int frameheight;
     float x;
     float y;
     explosion_bar exp_bar;
-
-
 }barrier;
 
 typedef struct
@@ -46,7 +41,6 @@ typedef struct
     ALLEGRO_BITMAP *img_bar[4];
     ALLEGRO_BITMAP *img_exp_bar;
     barrier main_bar[NUM_BARRIERS];
-
 }main_barrier;
 
 //INICIALIZANDO BARREIRA

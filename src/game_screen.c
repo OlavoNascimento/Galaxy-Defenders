@@ -6,65 +6,113 @@
 #include "alien_explosion.h"
 #include "barrier.h"
 
+// Checa se o jogador esta alinhado na vertical
+// ou horizontal com as barreiras
+bool player_alligned_with_barrier(PlayerShip *player, main_barrier *pbarr, char axis) {
+    for(int i=0; i<NUM_BARRIERS; i++) {
+        if(pbarr->main_bar[i].live)
+            switch(axis) {
+                case 'v':
+                    if(player->pos_y + player->sprite.height >= pbarr->main_bar[i].y &&
+                        player->pos_y <= pbarr->main_bar[i].y + pbarr->main_bar[i].frameheight) {
+                        return true;
+                    } 
+                    break;
+                case 'h':
+                    if(player->pos_x + player->sprite.width >= pbarr->main_bar[i].x &&
+                        player->pos_x <= pbarr->main_bar[i].x + pbarr->main_bar[i].framewidth) {
+                        return true;
+                    }
+                    break;
+            }
+    }
+    return false;
+}
 
-void detect_bullet_collision_player(PlayerShip *player, enemies *p_enemies) {
+// Detecta se o proximo movimento do jogador fará com que
+// ele colida com uma barreira
+bool detect_player_collision_barrier(PlayerShip *player, main_barrier *pbarr, char player_movement) {
+    for(int i=0; i<NUM_BARRIERS; i++) {
+        if(pbarr->main_bar[i].live)
+            switch(player_movement) { 
+                case 'u':
+                    if(player_alligned_with_barrier(player, pbarr, 'h') &&
+                    player->pos_y - PLAYER_SPEED <= pbarr->main_bar[i].y + pbarr->main_bar[i].frameheight &&
+                    player->pos_y - PLAYER_SPEED + player->sprite.height >= pbarr->main_bar[i].y) {
+                        DEBUG_PRINT("Can't move left!\n");
+                        return true;
+                    }
+                    break;
+                case 'd':
+                    if(player_alligned_with_barrier(player, pbarr, 'h') &&
+                    player->pos_y + player->sprite.height + PLAYER_SPEED >= pbarr->main_bar[i].y &&
+                    player->pos_y + PLAYER_SPEED <= pbarr->main_bar[i].y + pbarr->main_bar[i].frameheight) {
+                        DEBUG_PRINT("Can't move down!\n");
+                        return true;
+                    } 
+                    break;
+                case 'r':
+                    if(player_alligned_with_barrier(player, pbarr, 'v') &&
+                    player->pos_x + player->sprite.width + PLAYER_SPEED >= pbarr->main_bar[i].x &&
+                    player->pos_x + PLAYER_SPEED <= pbarr->main_bar[i].x + pbarr->main_bar[i].framewidth) {
+                        DEBUG_PRINT("Can't move right!\n");
+                        return true;
+                    } 
+                    break;
+                case 'l':
+                    if(player_alligned_with_barrier(player, pbarr, 'v') &&
+                    player->pos_x - PLAYER_SPEED <= pbarr->main_bar[i].x + pbarr->main_bar[i].framewidth &&
+                    player->pos_x - PLAYER_SPEED + player->sprite.width >= pbarr->main_bar[i].x) {
+                        DEBUG_PRINT("Can't move left!\n");
+                        return true;
+                    }
+                    break;
+            }
+    }
+    return false;
+}
+
+// Detecta a colisão entre um disparo dos aliens com a nave do jogador
+void detect_alien_bullet_collision_player(PlayerShip *player, enemies *p_enemies) {
     for(int i=0; i<NUM_aBULLETS; i++) {
-        if((*p_enemies).alienShots.aBullet[i].live) {
-            if((*p_enemies).alienShots.aBullet[i].y + (*p_enemies).alienShots.aBullet[i].height >= player->pos_y &&
-               (*p_enemies).alienShots.aBullet[i].y <= player->pos_y + player->sprite.height &&
-               (*p_enemies).alienShots.aBullet[i].x + (*p_enemies).alienShots.aBullet[i].width >= player->pos_x &&
-               (*p_enemies).alienShots.aBullet[i].x <= player->pos_x + player->sprite.width) {
+        if(p_enemies->alienShots.aBullet[i].live) {
+            if(p_enemies->alienShots.aBullet[i].y + p_enemies->alienShots.aBullet[i].height >= player->pos_y &&
+               p_enemies->alienShots.aBullet[i].y <= player->pos_y + player->sprite.height &&
+               p_enemies->alienShots.aBullet[i].x + p_enemies->alienShots.aBullet[i].width >= player->pos_x &&
+               p_enemies->alienShots.aBullet[i].x <= player->pos_x + player->sprite.width) {
                 player->lives--;
-                (*p_enemies).alienShots.aBullet[i].live = false;
+                p_enemies->alienShots.aBullet[i].live = false;
                 DEBUG_PRINT("Collision! Current lifes: %d...\n", player->lives);
             }
         }
     }
-
 }
 
-// Controla o movimento do jogador
-void process_player_movement(GameState *game, PlayerShip *player) {
-    if(game->keys_pressed[UP]) {
-        // Impede que a nave ultrapasse as barreiras
-        if(player->pos_y - PLAYER_SPEED > SCREEN_HEIGHT/1.3) {
-            player->pos_y -= PLAYER_SPEED;
-            game->draw = true;
-        }
+// Move o jogador, impedindo que a nave do jogador saia da tela ou atravesse uma barreira
+void process_player_movement(GameState *game, PlayerShip *player, main_barrier *pbarr) {
+    if(game->keys_pressed[UP] &&
+       player->pos_y - PLAYER_SPEED > SCREEN_HEIGHT/1.4 && 
+       !detect_player_collision_barrier(player, pbarr, 'u')) {
+         player->pos_y -= PLAYER_SPEED;
+         game->draw = true;
     }
-    if(game->keys_pressed[DOWN]) {
-        // Impede que a nave do jogador saia da tela
-        if(player->pos_y + PLAYER_SPEED <= SCREEN_HEIGHT - player->sprite.height) {
-            player->pos_y += PLAYER_SPEED;
-            game->draw = true;
-        }
+    if(game->keys_pressed[DOWN] &&
+       player->pos_y + PLAYER_SPEED <= SCREEN_HEIGHT - player->sprite.height &&
+       !detect_player_collision_barrier(player, pbarr, 'd')) {
+         player->pos_y += PLAYER_SPEED;
+         game->draw = true;
     }
-    if(game->keys_pressed[LEFT]) {
-        // Impede que a nave do jogador saia da tela
-        if(player->pos_x - PLAYER_SPEED >= 0) {
+    if(game->keys_pressed[LEFT] &&
+       player->pos_x - PLAYER_SPEED >= 0 && 
+       !detect_player_collision_barrier(player, pbarr, 'l')) {
             player->pos_x -= PLAYER_SPEED;
             game->draw = true;
-        }
     }
-    if(game->keys_pressed[RIGHT]) {
-        // Impede que a nave do jogador saia da tela
-        if(player->pos_x + PLAYER_SPEED < SCREEN_WIDTH - player->sprite.width)  {
+    if(game->keys_pressed[RIGHT] &&
+       player->pos_x + PLAYER_SPEED < SCREEN_WIDTH - player->sprite.width && 
+       !detect_player_collision_barrier(player, pbarr, 'r')) {
             player->pos_x += PLAYER_SPEED;
             game->draw = true;
-        }
-    }
-
-    if(player->lasers.alive > 0)  {
-        // Atualiza a posição dos lasers do jogador
-        // removendo-os caso necessário
-        for(int i=0; i<player->lasers.alive; i++)
-            player->lasers.fired[i].pos_y -= PLAYER_LASER_SPEED;
-
-        // Remove o primeiro disparo do array caso ele tenha saido da tela
-        if(player->lasers.fired[0].pos_y < 0)
-            remove_player_laser_fired(player, 0);
-
-        game->draw = true;
     }
 }
 
@@ -86,6 +134,7 @@ void process_player_firing(GameState *game, PlayerShip *player) {
         add_player_laser_fired(player);
         game->draw = true;
     }
+
 }
 
 // Atualiza a tela do jogo
@@ -120,10 +169,12 @@ void process_game_events(GameState *game, PlayerShip *player, enemies *p_enemies
     al_wait_for_event(game->event_queue, &event);
 
     if(event.type == ALLEGRO_EVENT_TIMER) {
-        process_player_movement(game, player);
+        process_player_movement(game, player, Pbarr);
         process_player_firing(game, player);
+    
+        update_player_lasers(player);
 
-        detect_bullet_collision_player(player, p_enemies);
+        detect_alien_bullet_collision_player(player, p_enemies);
         //colisao dos aliens com balas{
 
             //verificando se houve a colisao entre as balas e os inimigos. Se sim, apaga o inimigo e a bala.

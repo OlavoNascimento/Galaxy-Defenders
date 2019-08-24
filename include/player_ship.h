@@ -19,16 +19,15 @@ typedef struct {
     PlayerLasers lasers;
 } PlayerShip;
 
-bool load_player_laser_sprite(PlayerShip *ps);
-bool init_player_laser(PlayerShip *ps);
-bool init_player_ship(PlayerShip *ps);
+bool init_player_laser(PlayerShip *player);
+bool init_player_ship(PlayerShip *player);
 
-void add_player_laser_fired(PlayerShip *ps);
-void remove_player_laser_fired(PlayerShip *ps, int laser_pos);
-void update_player_lasers_positions(PlayerShip *ps);
+void add_player_laser_fired(PlayerShip *player);
+void remove_player_laser_fired(PlayerShip *player, int laser_pos);
+void update_player_lasers(PlayerShip *player);
 
-void draw_player_lasers(PlayerShip *ps);
-void draw_player_ship(PlayerShip *ps);
+void draw_player_lasers(PlayerShip *player);
+void draw_player_ship(PlayerShip *player);
 
 void free_player_resources(PlayerShip *player);
 
