@@ -3,7 +3,7 @@
 #include "game_state.h"
 
 
-// Atualiza o estado do jogo de acordo com a tecla
+// Atualiza o estado do jogo de acordo com a teclaa
 // pressionanda pelo jogador
 void process_key_down_event(ALLEGRO_EVENT *event, GameState *game) {
     switch(event->keyboard.keycode) {

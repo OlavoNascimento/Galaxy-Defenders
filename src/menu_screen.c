@@ -24,6 +24,18 @@ bool init_game_menu(GameMenu *menu) {
     // Opção selecionada atualmente no menu
     menu->selection = GAME_SCREEN;
 
+    (*menu).Esc_menu.esc_img_1 = al_load_bitmap("assets/images/esc_img_1.png");
+    if(!(*menu).Esc_menu.esc_img_1){
+        fprintf(stderr, "Failed to load esc_img_1 !\n");
+        return false;
+    }
+
+    (*menu).Esc_menu.esc_img_2 = al_load_bitmap("assets/images/esc_img_2.png");
+    if(!(*menu).Esc_menu.esc_img_2){
+        fprintf(stderr, "Failed to load esc_img_2 !\n");
+        return false;
+    }
+
     return true;
 }
 
@@ -38,7 +50,7 @@ void update_menu_screen(GameMenu *menu) {
                           SCREEN_WIDTH, SCREEN_HEIGHT,
                           0);
     // Posição da primeira opção
-    int pos_y = SCREEN_HEIGHT / 2; 
+    int pos_y = SCREEN_HEIGHT / 2;
 
     const char options[3][12] = {"Iniciar", "Pontuação", "Sair"};
     for(int i=0; i<3; i++) {
@@ -48,8 +60,8 @@ void update_menu_screen(GameMenu *menu) {
         if(i == menu->selection)
             color = al_map_rgb(0, 0, 127);
 
-        al_draw_text(menu->font, 
-                    color, 
+        al_draw_text(menu->font,
+                    color,
                     0, pos_y,
                     0,
                     options[i]);
@@ -109,4 +121,6 @@ void wait_menu_selection(GameMenu *menu, GameState *game) {
 void free_menu_resources(GameMenu *menu) {
     al_destroy_bitmap(menu->background.bitmap);
     al_destroy_font(menu->font);
+    al_destroy_bitmap((*menu).Esc_menu.esc_img_1);
+    al_destroy_bitmap((*menu).Esc_menu.esc_img_2);
 }

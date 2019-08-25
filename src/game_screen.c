@@ -16,7 +16,7 @@ bool player_alligned_with_barrier(PlayerShip *player, main_barrier *pbarr, char 
                     if(player->pos_y + player->sprite.height >= pbarr->main_bar[i].y &&
                         player->pos_y <= pbarr->main_bar[i].y + pbarr->main_bar[i].frameheight) {
                         return true;
-                    } 
+                    }
                     break;
                 case 'h':
                     if(player->pos_x + player->sprite.width >= pbarr->main_bar[i].x &&
@@ -34,7 +34,7 @@ bool player_alligned_with_barrier(PlayerShip *player, main_barrier *pbarr, char 
 bool detect_player_collision_barrier(PlayerShip *player, main_barrier *pbarr, char player_movement) {
     for(int i=0; i<NUM_BARRIERS; i++) {
         if(pbarr->main_bar[i].live)
-            switch(player_movement) { 
+            switch(player_movement) {
                 case 'u':
                     if(player_alligned_with_barrier(player, pbarr, 'h') &&
                     player->pos_y - PLAYER_SPEED <= pbarr->main_bar[i].y + pbarr->main_bar[i].frameheight &&
@@ -49,7 +49,7 @@ bool detect_player_collision_barrier(PlayerShip *player, main_barrier *pbarr, ch
                     player->pos_y + PLAYER_SPEED <= pbarr->main_bar[i].y + pbarr->main_bar[i].frameheight) {
                         DEBUG_PRINT("Can't move down!\n");
                         return true;
-                    } 
+                    }
                     break;
                 case 'r':
                     if(player_alligned_with_barrier(player, pbarr, 'v') &&
@@ -57,7 +57,7 @@ bool detect_player_collision_barrier(PlayerShip *player, main_barrier *pbarr, ch
                     player->pos_x + PLAYER_SPEED <= pbarr->main_bar[i].x + pbarr->main_bar[i].framewidth) {
                         DEBUG_PRINT("Can't move right!\n");
                         return true;
-                    } 
+                    }
                     break;
                 case 'l':
                     if(player_alligned_with_barrier(player, pbarr, 'v') &&
@@ -91,7 +91,7 @@ void detect_alien_bullet_collision_player(PlayerShip *player, enemies *p_enemies
 // Move o jogador, impedindo que a nave do jogador saia da tela ou atravesse uma barreira
 void process_player_movement(GameState *game, PlayerShip *player, main_barrier *pbarr) {
     if(game->keys_pressed[UP] &&
-       player->pos_y - PLAYER_SPEED > SCREEN_HEIGHT/1.4 && 
+       player->pos_y - PLAYER_SPEED > SCREEN_HEIGHT/1.4 &&
        !detect_player_collision_barrier(player, pbarr, 'u')) {
          player->pos_y -= PLAYER_SPEED;
          game->draw = true;
@@ -103,13 +103,13 @@ void process_player_movement(GameState *game, PlayerShip *player, main_barrier *
          game->draw = true;
     }
     if(game->keys_pressed[LEFT] &&
-       player->pos_x - PLAYER_SPEED >= 0 && 
+       player->pos_x - PLAYER_SPEED >= 0 &&
        !detect_player_collision_barrier(player, pbarr, 'l')) {
             player->pos_x -= PLAYER_SPEED;
             game->draw = true;
     }
     if(game->keys_pressed[RIGHT] &&
-       player->pos_x + PLAYER_SPEED < SCREEN_WIDTH - player->sprite.width && 
+       player->pos_x + PLAYER_SPEED < SCREEN_WIDTH - player->sprite.width &&
        !detect_player_collision_barrier(player, pbarr, 'r')) {
             player->pos_x += PLAYER_SPEED;
             game->draw = true;
@@ -138,7 +138,7 @@ void process_player_firing(GameState *game, PlayerShip *player) {
 }
 
 // Atualiza a tela do jogo
-void update_game_screen(PlayerShip *player, enemies *p_enemies, main_barrier *Pbarr) {
+void update_game_screen(PlayerShip *player, enemies *p_enemies, main_barrier *Pbarr, GameMenu *menu) {
     // DEBUG_PRINT("Updating game screen!\n");
     al_clear_to_color(al_map_rgb(0, 0, 0));
 
@@ -159,19 +159,27 @@ void update_game_screen(PlayerShip *player, enemies *p_enemies, main_barrier *Pb
 
     draw_aBullet(p_enemies);
 
+    if(!(*menu).Esc_menu.back_option_selected){
+        if((*menu).Esc_menu.current_esc_bitmap == 0){
+            al_draw_bitmap((*menu).Esc_menu.esc_img_2, 411, 249, 0);
+        }else if((*menu).Esc_menu.current_esc_bitmap == 1){
+            al_draw_bitmap((*menu).Esc_menu.esc_img_1, 411, 249, 0);
+        }
+    }
+
     al_flip_display();
 }
 
 
 // Modifica a posição dos sprites na tela
-void process_game_events(GameState *game, PlayerShip *player, enemies *p_enemies, main_barrier *Pbarr) {
+void process_game_events(GameState *game, GameMenu *menu, PlayerShip *player, enemies *p_enemies, main_barrier *Pbarr) {
     ALLEGRO_EVENT event;
     al_wait_for_event(game->event_queue, &event);
 
     if(event.type == ALLEGRO_EVENT_TIMER) {
         process_player_movement(game, player, Pbarr);
         process_player_firing(game, player);
-    
+
         update_player_lasers(player);
 
         detect_alien_bullet_collision_player(player, p_enemies);
@@ -251,14 +259,61 @@ void process_game_events(GameState *game, PlayerShip *player, enemies *p_enemies
         game->draw = true;
     } else {
         process_events(game, &event);
+        (*menu).Esc_menu.back_option_selected = true;       //indica quando não queremos printar o menu 'esc' dentro do jogo
         if(game->keys_pressed[ESC]) {
-            player->lives = 0;
-            game->current_screen = MENU_SCREEN;
+
+            (*menu).Esc_menu.back_option_selected = false;
+            (*menu).Esc_menu.current_esc_bitmap = 0;       // indica qual das duas imagens do menu esc esta sendo printada atualmente na tela;
+            update_game_screen(player, p_enemies, Pbarr, menu);
+            bool option_selected = false;
+
+            while(!option_selected){
+                ALLEGRO_EVENT Event;
+                al_wait_for_event(game->event_queue, &Event);
+                process_events(game, &Event);
+
+                if(Event.type == ALLEGRO_EVENT_KEY_DOWN){
+
+                    if(game->keys_pressed[DOWN]){
+                        if((*menu).Esc_menu.current_esc_bitmap == 0){
+                            update_game_screen(player, p_enemies, Pbarr, menu);
+                            (*menu).Esc_menu.current_esc_bitmap = 1;
+                        }else if((*menu).Esc_menu.current_esc_bitmap == 1){
+                            update_game_screen(player, p_enemies, Pbarr, menu);
+                            (*menu).Esc_menu.current_esc_bitmap = 0;
+                        }
+                    }
+
+                    if(game->keys_pressed[UP]){
+                        if((*menu).Esc_menu.current_esc_bitmap == 0){
+                            update_game_screen(player, p_enemies, Pbarr, menu);
+                            (*menu).Esc_menu.current_esc_bitmap = 1;
+                        }else if ((*menu).Esc_menu.current_esc_bitmap == 1){
+                            update_game_screen(player, p_enemies, Pbarr, menu);
+                            (*menu).Esc_menu.current_esc_bitmap = 0;
+                        }
+                    }
+
+                    if(game->keys_pressed[SPACE]){
+                        option_selected = true;
+
+                        if((*menu).Esc_menu.current_esc_bitmap == 0){
+                            player->lives = 0;
+                            game->current_screen = MENU_SCREEN;
+                        }else if((*menu).Esc_menu.current_esc_bitmap == 1){
+                            (*menu).Esc_menu.back_option_selected = true;
+                        }
+                    }
+
+                }
+
+
+            }
         }
     }
 
-    if(game->draw && al_is_event_queue_empty(game->event_queue)) {
+    if(game->draw && al_is_event_queue_empty(game->event_queue) && (*menu).Esc_menu.back_option_selected) {
         game->draw = false;
-        update_game_screen(player, p_enemies, Pbarr);
+        update_game_screen(player, p_enemies, Pbarr, menu);
     }
 }

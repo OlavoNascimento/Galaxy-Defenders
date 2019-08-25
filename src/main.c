@@ -80,7 +80,7 @@ int main() {
             DEBUG_PRINT("Current lifes %d...\n", player_ship.lives);
 
             while(player_ship.lives > 0)
-                process_game_events(&game, &player_ship, &Enemies, &bar);
+                process_game_events(&game, &menu, &player_ship, &Enemies, &bar);
             free_player_resources(&player_ship);
             free_enemies_resources(&Enemies);
             free_barrier_resources(&bar);

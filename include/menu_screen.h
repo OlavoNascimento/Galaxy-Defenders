@@ -2,6 +2,7 @@
 #define GAME_MENU_H 
 
 #include <allegro5/allegro_font.h>
+#include <allegro5/allegro_image.h>
 
 #include "game_state.h"
 #include "player_ship.h"
@@ -12,14 +13,25 @@ enum menu_options {
     GAME_SCREEN,
     SCORE_SCREEN,
     EXIT_SCREEN,
-    MENU_SCREEN
+    MENU_SCREEN,
 };
+
+typedef struct {
+    int current_esc_bitmap;
+    bool back_option_selected;
+    ALLEGRO_BITMAP *esc_img_1;
+    ALLEGRO_BITMAP *esc_img_2;
+}esc_menu;
+
 
 typedef struct {
     Sprite background;
     int selection;
     ALLEGRO_FONT *font;
+    esc_menu Esc_menu;
 } GameMenu;
+
+
 
 bool init_game_menu(GameMenu *menu);
 void draw_menu(GameMenu *menu);

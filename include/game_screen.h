@@ -5,6 +5,7 @@
 #include "player_ship.h"
 #include "enemies.h"
 #include "barrier.h"
+#include "menu_screen.h"
 
 bool player_alligned_with_barrier(PlayerShip *player, main_barrier *pbarr, char axis);
 bool detect_player_collision_barrier(PlayerShip *player, main_barrier *pbarr, char player_movement);
@@ -12,7 +13,7 @@ bool detect_player_collision_barrier(PlayerShip *player, main_barrier *pbarr, ch
 void process_player_movement(GameState *game, PlayerShip *player, main_barrier *pbarr);
 void process_player_firing(GameState *game, PlayerShip *player);
 
-void update_game_screen(PlayerShip *player, enemies *p_enemies, main_barrier *Pbarr);
-void process_game_events(GameState *game, PlayerShip *player, enemies *p_enemies, main_barrier *Pbarr);
+void update_game_screen(PlayerShip *player, enemies *p_enemies, main_barrier *Pbarr, GameMenu *menu);
+void process_game_events(GameState *game, GameMenu *menu, PlayerShip *player, enemies *p_enemies, main_barrier *Pbarr);
 
 #endif
