@@ -162,9 +162,9 @@ void update_game_screen(PlayerShip *player, enemies *p_enemies, main_barrier *Pb
     //desenha o esc menu quando necessario:
     if(!(*menu).Esc_menu.back_option_selected){
         if((*menu).Esc_menu.current_esc_bitmap == 0){
-            al_draw_bitmap((*menu).Esc_menu.esc_img_2, 411, 249, 0);
-        }else if((*menu).Esc_menu.current_esc_bitmap == 1){
             al_draw_bitmap((*menu).Esc_menu.esc_img_1, 411, 249, 0);
+        }else if((*menu).Esc_menu.current_esc_bitmap == 1){
+            al_draw_bitmap((*menu).Esc_menu.esc_img_2, 411, 249, 0);
         }
     }
 
@@ -414,21 +414,21 @@ void process_game_events(GameState *game, GameMenu *menu, PlayerShip *player, en
 
                     if(game->keys_pressed[DOWN]){
                         if((*menu).Esc_menu.current_esc_bitmap == 0){
-                            update_game_screen(player, p_enemies, Pbarr, menu);
                             (*menu).Esc_menu.current_esc_bitmap = 1;
-                        }else if((*menu).Esc_menu.current_esc_bitmap == 1){
                             update_game_screen(player, p_enemies, Pbarr, menu);
+                        }else if((*menu).Esc_menu.current_esc_bitmap == 1){
                             (*menu).Esc_menu.current_esc_bitmap = 0;
+                            update_game_screen(player, p_enemies, Pbarr, menu);
                         }
                     }
 
                     if(game->keys_pressed[UP]){
                         if((*menu).Esc_menu.current_esc_bitmap == 0){
-                            update_game_screen(player, p_enemies, Pbarr, menu);
                             (*menu).Esc_menu.current_esc_bitmap = 1;
-                        }else if ((*menu).Esc_menu.current_esc_bitmap == 1){
                             update_game_screen(player, p_enemies, Pbarr, menu);
+                        }else if ((*menu).Esc_menu.current_esc_bitmap == 1){
                             (*menu).Esc_menu.current_esc_bitmap = 0;
+                            update_game_screen(player, p_enemies, Pbarr, menu);
                         }
                     }
 
