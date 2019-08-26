@@ -19,7 +19,7 @@ void InitBarrier(main_barrier *Pbarr)
         Pbarr->main_bar[i].frameheight = 71;
         Pbarr->main_bar[i].exp_bar.totalframes = 6;
         Pbarr->main_bar[i].exp_bar.currentframe = 0;
-        Pbarr->main_bar[i].exp_bar.framedelay = 9;
+        Pbarr->main_bar[i].exp_bar.framedelay = 7;
         Pbarr->main_bar[i].exp_bar.framecounter = 0;
         Pbarr->main_bar[i].exp_bar.framewidth = 175;
         Pbarr->main_bar[i].exp_bar.frameheight = 116;

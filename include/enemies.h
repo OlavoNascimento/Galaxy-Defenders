@@ -10,7 +10,7 @@
 #define NUM_ALIEN 10
 #define NUM_ALIEN_i 2
 
-#define NUM_aBULLETS 7
+#define NUM_aBULLETS 10
 
 typedef struct{
     int totalframes;
