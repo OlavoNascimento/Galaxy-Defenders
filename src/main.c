@@ -54,6 +54,7 @@ int main() {
 
     // Inicia o timer que atualiza a tela
     al_start_timer(game.screen_timer);
+    al_hide_mouse_cursor(game.display);
 
     while(game.running) {
         if(!menu.Endgame_menu.ignore_main_menu){
