@@ -159,12 +159,30 @@ void update_game_screen(PlayerShip *player, enemies *p_enemies, main_barrier *Pb
 
     draw_aBullet(p_enemies);
 
+    //desenha o esc menu quando necessario:
     if(!(*menu).Esc_menu.back_option_selected){
         if((*menu).Esc_menu.current_esc_bitmap == 0){
             al_draw_bitmap((*menu).Esc_menu.esc_img_2, 411, 249, 0);
         }else if((*menu).Esc_menu.current_esc_bitmap == 1){
             al_draw_bitmap((*menu).Esc_menu.esc_img_1, 411, 249, 0);
         }
+    }
+
+    //desenha a tela de fim de jogo quando necessario:
+    if((*menu).Endgame_menu.start_v){
+
+        if((*menu).Endgame_menu.current_option_bitmap == 0)
+            al_draw_bitmap((*menu).Endgame_menu.victory_img_1, 215 , 132 , 0);
+        else if((*menu).Endgame_menu.current_option_bitmap == 1)
+            al_draw_bitmap((*menu).Endgame_menu.victory_img_2, 215 , 132 , 0);
+
+    }else if((*menu).Endgame_menu.start_d){
+
+        if((*menu).Endgame_menu.current_option_bitmap == 0)
+            al_draw_bitmap((*menu).Endgame_menu.defeat_img_1, 215 , 132 , 0);
+        else if((*menu).Endgame_menu.current_option_bitmap == 1)
+            al_draw_bitmap((*menu).Endgame_menu.defeat_img_2, 215 , 132 , 0);
+
     }
 
     al_flip_display();
@@ -256,6 +274,122 @@ void process_game_events(GameState *game, GameMenu *menu, PlayerShip *player, en
             update_aBullet(p_enemies);
 
         //}
+
+        //end-game logic:
+            //victory:
+        if((*p_enemies).aliens_defeated >= 50 && (*player).lives > 0){
+
+            (*menu).Endgame_menu.start_v = true;
+
+            (*menu).Endgame_menu.current_option_bitmap = 0;
+            update_game_screen(player, p_enemies, Pbarr, menu);
+
+            bool victory_menu_option_selected = false;
+            while(!victory_menu_option_selected){
+                ALLEGRO_EVENT event_v;
+                al_wait_for_event(game->event_queue, &event_v);
+                process_events(game, &event_v);
+
+                if(event_v.type == ALLEGRO_EVENT_KEY_DOWN){
+
+                    if(game->keys_pressed[DOWN]){
+                        if((*menu).Endgame_menu.current_option_bitmap == 0){
+                            (*menu).Endgame_menu.current_option_bitmap = 1;
+                            update_game_screen(player, p_enemies, Pbarr, menu);
+                        }else if((*menu).Endgame_menu.current_option_bitmap == 1){
+                            (*menu).Endgame_menu.current_option_bitmap = 0;
+                            update_game_screen(player, p_enemies, Pbarr, menu);
+                        }
+
+                    }
+
+                    if(game->keys_pressed[UP]){
+                        if((*menu).Endgame_menu.current_option_bitmap == 0){
+                            (*menu).Endgame_menu.current_option_bitmap = 1;
+                            update_game_screen(player, p_enemies, Pbarr, menu);
+                        }else if((*menu).Endgame_menu.current_option_bitmap == 1){
+                            (*menu).Endgame_menu.current_option_bitmap = 0;
+                            update_game_screen(player, p_enemies, Pbarr, menu);
+                        }
+                    }
+
+                    if(game->keys_pressed[SPACE]){
+                        victory_menu_option_selected = true;
+
+                        if((*menu).Endgame_menu.current_option_bitmap == 0){
+                            player->lives = 0;
+                            game->current_screen = MENU_SCREEN;
+                        }else if((*menu).Endgame_menu.current_option_bitmap == 1){
+                            player->lives = 0;
+                            game->current_screen = GAME_SCREEN;
+                        }
+
+                    }
+
+                }
+
+            }
+
+            (*menu).Endgame_menu.start_v = false;
+            //defeat:
+        }else if((*p_enemies).aliens_defeated < 50 && (*player).lives <= 0){
+
+            (*menu).Endgame_menu.start_d = true;
+
+            (*menu).Endgame_menu.current_option_bitmap = 0;
+             update_game_screen(player, p_enemies, Pbarr, menu);
+
+            bool defeat_menu_option_selected = false;
+            while(!defeat_menu_option_selected){
+
+                ALLEGRO_EVENT event_d;
+                al_wait_for_event(game->event_queue, &event_d);
+                process_events(game, &event_d);
+
+                if(event_d.type == ALLEGRO_EVENT_KEY_DOWN){
+
+                    if(game->keys_pressed[DOWN]){
+                        if((*menu).Endgame_menu.current_option_bitmap == 0){
+                            (*menu).Endgame_menu.current_option_bitmap = 1;
+                            update_game_screen(player, p_enemies, Pbarr, menu);
+                        }else if((*menu).Endgame_menu.current_option_bitmap == 1){
+                            (*menu).Endgame_menu.current_option_bitmap = 0;
+                            update_game_screen(player, p_enemies, Pbarr, menu);
+                        }
+
+                    }
+
+                    if(game->keys_pressed[UP]){
+                        if((*menu).Endgame_menu.current_option_bitmap == 0){
+                            (*menu).Endgame_menu.current_option_bitmap = 1;
+                            update_game_screen(player, p_enemies, Pbarr, menu);
+                        }else if((*menu).Endgame_menu.current_option_bitmap == 1){
+                            (*menu).Endgame_menu.current_option_bitmap = 0;
+                            update_game_screen(player, p_enemies, Pbarr, menu);
+                        }
+                    }
+
+                    if(game->keys_pressed[SPACE]){
+                        defeat_menu_option_selected = true;
+
+                        if((*menu).Endgame_menu.current_option_bitmap == 0){
+                            player->lives = 0;
+                            game->current_screen = MENU_SCREEN;
+                        }else if((*menu).Endgame_menu.current_option_bitmap == 1){
+                            player->lives = 0;
+                            game->current_screen = GAME_SCREEN;
+                        }
+
+                    }
+
+                }
+
+
+            }
+
+            (*menu).Endgame_menu.start_d = false;
+        }
+
         game->draw = true;
     } else {
         process_events(game, &event);
@@ -263,11 +397,13 @@ void process_game_events(GameState *game, GameMenu *menu, PlayerShip *player, en
         if(game->keys_pressed[ESC]) {
 
             (*menu).Esc_menu.back_option_selected = false;
-            (*menu).Esc_menu.current_esc_bitmap = 0;       // indica qual das duas imagens do menu esc esta sendo printada atualmente na tela;
+            (*menu).Esc_menu.current_esc_bitmap = 0;       // indica qual das duas imagens do menu esc esta sendo
+                                                          //printada atualmente na tela;
             update_game_screen(player, p_enemies, Pbarr, menu);
-            bool option_selected = false;
+            bool esc_menu_option_selected = false;  //var para verificar se alguma das opcoes do
+                                                   // esc-menu ja foi selecionada.
 
-            while(!option_selected){
+            while(!esc_menu_option_selected){
                 ALLEGRO_EVENT Event;
                 al_wait_for_event(game->event_queue, &Event);
                 process_events(game, &Event);
@@ -295,7 +431,7 @@ void process_game_events(GameState *game, GameMenu *menu, PlayerShip *player, en
                     }
 
                     if(game->keys_pressed[SPACE]){
-                        option_selected = true;
+                        esc_menu_option_selected = true;
 
                         if((*menu).Esc_menu.current_esc_bitmap == 0){
                             player->lives = 0;

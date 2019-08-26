@@ -63,6 +63,7 @@ typedef struct{
     ALLEGRO_BITMAP *exp_img;
     alienshots alienShots;
     ALLEGRO_BITMAP *alien_bullet_img;
+    int aliens_defeated; //contador para ir guardando a quantidade de aliens mortos atualmente.
 }enemies;
 
 

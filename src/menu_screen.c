@@ -24,18 +24,48 @@ bool init_game_menu(GameMenu *menu) {
     // Opção selecionada atualmente no menu
     menu->selection = GAME_SCREEN;
 
-    (*menu).Esc_menu.esc_img_1 = al_load_bitmap("assets/images/esc_img_1.png");
-    if(!(*menu).Esc_menu.esc_img_1){
-        fprintf(stderr, "Failed to load esc_img_1 !\n");
-        return false;
-    }
+    //imagens do esc menu:
+        (*menu).Esc_menu.esc_img_1 = al_load_bitmap("assets/images/esc_img_1.png");
+        if(!(*menu).Esc_menu.esc_img_1){
+            fprintf(stderr, "Failed to load esc_img_1 !\n");
+            return false;
+        }
 
-    (*menu).Esc_menu.esc_img_2 = al_load_bitmap("assets/images/esc_img_2.png");
-    if(!(*menu).Esc_menu.esc_img_2){
-        fprintf(stderr, "Failed to load esc_img_2 !\n");
-        return false;
-    }
+        (*menu).Esc_menu.esc_img_2 = al_load_bitmap("assets/images/esc_img_2.png");
+        if(!(*menu).Esc_menu.esc_img_2){
+            fprintf(stderr, "Failed to load esc_img_2 !\n");
+            return false;
+        }
+    //}
 
+    //imagens do end-game menu:
+        (*menu).Endgame_menu.victory_img_1 = al_load_bitmap("assets/images/victory_img_1.png");
+        if(!(*menu).Endgame_menu.victory_img_1){
+            fprintf(stderr, "Failed to load victory_img_1 !\n");
+            return false;
+        }
+
+        (*menu).Endgame_menu.victory_img_2 = al_load_bitmap("assets/images/victory_img_2.png");
+        if(!(*menu).Endgame_menu.victory_img_2){
+            fprintf(stderr, "Failed to load victory_img_2 !\n");
+            return false;
+        }
+
+        (*menu).Endgame_menu.defeat_img_1 = al_load_bitmap("assets/images/defeat_img_1.png");
+        if(!(*menu).Endgame_menu.defeat_img_1){
+            fprintf(stderr, "Failed to load defeat_img_1 !\n");
+            return false;
+        }
+
+        (*menu).Endgame_menu.defeat_img_2 = al_load_bitmap("assets/images/defeat_img_2.png");
+        if(!(*menu).Endgame_menu.defeat_img_2){
+            fprintf(stderr, "Failed to load defeat_img_2 !\n");
+            return false;
+        }
+    //}
+
+    (*menu).Endgame_menu.start_v = false;  //indica quando a tela de vitoria deve aparecer;
+    (*menu).Endgame_menu.start_d = false;  //indica quando a tela de derrota deve aparecer;
     return true;
 }
 
@@ -123,4 +153,8 @@ void free_menu_resources(GameMenu *menu) {
     al_destroy_font(menu->font);
     al_destroy_bitmap((*menu).Esc_menu.esc_img_1);
     al_destroy_bitmap((*menu).Esc_menu.esc_img_2);
+    al_destroy_bitmap((*menu).Endgame_menu.victory_img_1);
+    al_destroy_bitmap((*menu).Endgame_menu.victory_img_2);
+    al_destroy_bitmap((*menu).Endgame_menu.defeat_img_1);
+    al_destroy_bitmap((*menu).Endgame_menu.defeat_img_2);
 }

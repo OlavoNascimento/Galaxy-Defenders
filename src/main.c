@@ -85,6 +85,7 @@ int main() {
             free_enemies_resources(&Enemies);
             free_barrier_resources(&bar);
         }
+
     }
 
     DEBUG_PRINT("Stopping game...\n");

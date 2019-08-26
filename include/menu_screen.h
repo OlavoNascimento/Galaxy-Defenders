@@ -23,12 +23,22 @@ typedef struct {
     ALLEGRO_BITMAP *esc_img_2;
 }esc_menu;
 
+typedef struct{
+    bool start_v;
+    bool start_d;
+    int current_option_bitmap;
+    ALLEGRO_BITMAP *victory_img_1;
+    ALLEGRO_BITMAP *victory_img_2;
+    ALLEGRO_BITMAP *defeat_img_1;
+    ALLEGRO_BITMAP *defeat_img_2;
+}endgame_menu;
 
 typedef struct {
     Sprite background;
     int selection;
     ALLEGRO_FONT *font;
     esc_menu Esc_menu;
+    endgame_menu Endgame_menu;
 } GameMenu;
 
 

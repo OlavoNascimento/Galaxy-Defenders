@@ -288,6 +288,7 @@ void detectBulletCollision_alien1(enemies *p_enemies, PlayerShip *player){
                     remove_player_laser_fired(player, j);
                     (*p_enemies).alien1[i].live = false;
                     (*p_enemies).alien1[i].exp.start = true;
+                    ++(*p_enemies).aliens_defeated;
                 }
             }
         }
@@ -308,6 +309,7 @@ void detectBulletCollision_alien2(enemies *p_enemies, PlayerShip *player){
                         remove_player_laser_fired(player, k);
                         (*p_enemies).alien2[i][j].live = false;
                         (*p_enemies).alien2[i][j].exp.start = true;
+                        ++(*p_enemies).aliens_defeated;
                     }
                 }
             }
@@ -327,6 +329,7 @@ void detectBulletCollision_alien3(enemies *p_enemies, PlayerShip *player){
                         remove_player_laser_fired(player, k);
                         (*p_enemies).alien3[i][j].live = false;
                         (*p_enemies).alien3[i][j].exp.start = true;
+                        ++(*p_enemies).aliens_defeated;
                     }
                 }
             }
@@ -469,6 +472,8 @@ bool InitEnemies(enemies *p_enemies){
 
     Init_aBullet(p_enemies);
 
+
+    (*p_enemies).aliens_defeated = 0;
 
 
     (*p_enemies).alien1img = al_load_bitmap("assets/images/alien1.png");
