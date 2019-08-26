@@ -28,6 +28,7 @@ void InitAlien1(enemies *p_enemies){
         (*p_enemies).alien1[i].exp.framecounter = 0;
         (*p_enemies).alien1[i].exp.framewidth = 65;
         (*p_enemies).alien1[i].exp.start = false;
+        (*p_enemies).alien1[i].score = 0;
 
     }
 
@@ -55,6 +56,7 @@ void InitAlien2(enemies *p_enemies){
             (*p_enemies).alien2[i][j].exp.framecounter = 0;
             (*p_enemies).alien2[i][j].exp.framewidth = 65;
             (*p_enemies).alien2[i][j].exp.start = false;
+            (*p_enemies).alien2[i][j].score = 0;
 
         }
     }
@@ -84,6 +86,7 @@ void InitAlien3(enemies *p_enemies){
             (*p_enemies).alien3[i][j].exp.framecounter = 0;
             (*p_enemies).alien3[i][j].exp.framewidth = 65;
             (*p_enemies).alien3[i][j].exp.start = false;
+            (*p_enemies).alien3[i][j].score = 0;
 
         }
     }
@@ -288,6 +291,7 @@ void detectBulletCollision_alien1(enemies *p_enemies, PlayerShip *player){
                     remove_player_laser_fired(player, j);
                     (*p_enemies).alien1[i].live = false;
                     (*p_enemies).alien1[i].exp.start = true;
+                    (*p_enemies).alien1[i].score += 10;
                 }
             }
         }
@@ -308,6 +312,7 @@ void detectBulletCollision_alien2(enemies *p_enemies, PlayerShip *player){
                         remove_player_laser_fired(player, k);
                         (*p_enemies).alien2[i][j].live = false;
                         (*p_enemies).alien2[i][j].exp.start = true;
+                        (*p_enemies).alien1[i].score += 8;
                     }
                 }
             }
@@ -327,6 +332,7 @@ void detectBulletCollision_alien3(enemies *p_enemies, PlayerShip *player){
                         remove_player_laser_fired(player, k);
                         (*p_enemies).alien3[i][j].live = false;
                         (*p_enemies).alien3[i][j].exp.start = true;
+                        (*p_enemies).alien1[i].score += 5;
                     }
                 }
             }
