@@ -18,7 +18,7 @@
 #define PLAYER_SPEED 4
 
 // Velocidade de disparo do jogador
-#define PLAYER_FIRING_SPEED 3
+#define PLAYER_FIRING_SPEED 2
 // Velocidade do laser do jogador
 #define PLAYER_LASER_SPEED 6
 // Quantidade máxima de disparos jogador

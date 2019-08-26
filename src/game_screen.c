@@ -262,7 +262,7 @@ void process_game_events(GameState *game, GameMenu *menu, PlayerShip *player, en
         //Disparo dos aliens{
 
             //delay para impedir que os aliens disparem muito rapido(a cada estouro do timer):
-            if(++(*p_enemies).alienShots.alien_shot_delay >= 50){
+            if(++(*p_enemies).alienShots.alien_shot_delay >= 35){
 
                 choose_shooter_alien(p_enemies);
 
