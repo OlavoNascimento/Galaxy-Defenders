@@ -66,6 +66,7 @@ bool init_game_menu(GameMenu *menu) {
 
     (*menu).Endgame_menu.start_v = false;  //indica quando a tela de vitoria deve aparecer;
     (*menu).Endgame_menu.start_d = false;  //indica quando a tela de derrota deve aparecer;
+    (*menu).Endgame_menu.ignore_main_menu = false;
     return true;
 }
 

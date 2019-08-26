@@ -56,13 +56,17 @@ int main() {
     al_start_timer(game.screen_timer);
 
     while(game.running) {
-        DEBUG_PRINT("Loaded game menu...\n");
-        wait_menu_selection(&menu, &game);
-        DEBUG_PRINT("Game menu exited...\n");
+        if(!menu.Endgame_menu.ignore_main_menu){
+            DEBUG_PRINT("Loaded game menu...\n");
+            wait_menu_selection(&menu, &game);
+            DEBUG_PRINT("Game menu exited...\n");
+        }
+
+        menu.Endgame_menu.ignore_main_menu = false;
 
         if(game.current_screen == GAME_SCREEN) {
             //Inicialização objetos programa
-            
+
             //Ponteiro e init da barreira
             main_barrier bar;
             InitBarrier(&bar);

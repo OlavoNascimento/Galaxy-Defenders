@@ -322,6 +322,7 @@ void process_game_events(GameState *game, GameMenu *menu, PlayerShip *player, en
                         }else if((*menu).Endgame_menu.current_option_bitmap == 1){
                             player->lives = 0;
                             game->current_screen = GAME_SCREEN;
+                            (*menu).Endgame_menu.ignore_main_menu = true;
                         }
 
                     }
@@ -378,6 +379,7 @@ void process_game_events(GameState *game, GameMenu *menu, PlayerShip *player, en
                         }else if((*menu).Endgame_menu.current_option_bitmap == 1){
                             player->lives = 0;
                             game->current_screen = GAME_SCREEN;
+                            (*menu).Endgame_menu.ignore_main_menu = true;
                         }
 
                     }

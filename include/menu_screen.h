@@ -27,6 +27,7 @@ typedef struct{
     bool start_v;
     bool start_d;
     int current_option_bitmap;
+    bool ignore_main_menu;
     ALLEGRO_BITMAP *victory_img_1;
     ALLEGRO_BITMAP *victory_img_2;
     ALLEGRO_BITMAP *defeat_img_1;
