@@ -4,12 +4,15 @@
 #include "enemies.h"
 #include "player_ship.h"
 
-//definindo o numero de barreiras
-#define NUM_BARRIERS 4
-#define HEIGHT_BARRIER 580
+//definindo valores de constantes das barreiras
+#define NUM_BARRIERS 4          //Numero de barreiras do jogo
+#define HEIGHT_BARRIER 580      //Altura padrão da barreira na tela
+#define HALF_LIFE_BARRIERS 5    //Meia vida das barreiras (quando elas mudam de forma) 
+#define TOTAL_LIFE_BARRIERS 10  //Total de vida das barreiras
 
-//struct com as informa��es das barreiras e explosão:
+//struct com as informações das barreiras e explosão:
 
+//Struct contendo informacoes da explosao da barreira
 typedef struct
 {
     int totalframes;
@@ -23,7 +26,7 @@ typedef struct
     bool start_exp;
 }explosion_bar;
 
-
+//Struct contendo informacoes da barreira
 typedef struct
 {
     int life_up;
@@ -36,6 +39,7 @@ typedef struct
     explosion_bar exp_bar;
 }barrier;
 
+//Struct contendo informacoes das outras structs e algumas informacoes a mais
 typedef struct
 {
     ALLEGRO_BITMAP *img_bar[4];
@@ -43,31 +47,32 @@ typedef struct
     barrier main_bar[NUM_BARRIERS];
 }main_barrier;
 
-//INICIALIZANDO BARREIRA
+
+//Inicializando dados da barreira
 void InitBarrier(main_barrier *Pbarr);
 
-//SAUDE DA BARRERIA
+//Vida da barreira
 void lifeBarrier(main_barrier *Pbarr);
 
-//DESENHANDO A BARREIRA
+//Desenhando a barreira na tela
 void drawBarrier(main_barrier *Pbarr);
 
-//COLISAO COM O TIRO DO ALIEN COM A BARREIRA
+//Deteccao de colisao entre o tiro do alien e a barrreira
 void colision_Alien_shot_barrier(main_barrier *Pbarr, enemies *p_enemies);
 
-//COLISAO COM O TIRO DO PLAYER
+//Deteccao de colisao entre o tiro do player e a barreira
 void colision_Player_shot_barrier(PlayerShip *player, main_barrier *Pbarr);
 
-//DESENHANDO SPRITE DA EXPLOSAO
+//Desenhando animacao da explosao na barreira
 void draw_explosion_barrier(main_barrier *Pbarr);
 
-//ALTERANDO ANIMACOES DO SPRITE
+//Alteracao de sprite da barreira
 void update_explosion_barrier(main_barrier *Pbarr);
 
-//LIBERAR RECURSOS USADOS NO PROGRAMA
+//Liberando recursos usados no programa
 void free_barrier_resources(main_barrier *Pbarr);
 
-//INICIAR IMAGENS DAS BARREIRAS E DA EXPLOSAO
+//Inicia as imagens que vao ser usadas na barreira
 bool init_barrier_resources(main_barrier *Pbarr);
 
 #endif // BARRIER_H_INCLUDED

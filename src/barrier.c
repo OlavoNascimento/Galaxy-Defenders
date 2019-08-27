@@ -6,7 +6,7 @@
 #include "barrier.h"
 #include "player_ship.h"
 
-//INICIALIZANDO BARREIRA
+//Inicializando dados das barreiras
 void InitBarrier(main_barrier *Pbarr)
 {
     for(int i = 0; i<NUM_BARRIERS; ++i){
@@ -27,12 +27,12 @@ void InitBarrier(main_barrier *Pbarr)
         Pbarr->main_bar[i].exp_bar.y = HEIGHT_BARRIER - 20;
         Pbarr->main_bar[i].exp_bar.start_exp = false;
 
-        //CHAMANDO FUNCAO DE CARREGAMENTO DE IMAGEM
+        //Funcao de carregamento de imagens
         init_barrier_resources(Pbarr);
     }
 }
 
-//SAUDE DA BARRERIA
+//Saude de barreira
 void lifeBarrier(main_barrier *Pbarr)
 {
     for(int i = 0; i <NUM_BARRIERS; ++i)
@@ -48,7 +48,7 @@ void lifeBarrier(main_barrier *Pbarr)
     }
 }
 
-//EXPLODINDO BARREIRA
+//Alteracao de sprites da explosao 
 void update_explosion_barrier(main_barrier *Pbarr)
 {
 
@@ -65,6 +65,7 @@ void update_explosion_barrier(main_barrier *Pbarr)
     }
 }
 
+//Desenha as barreiras na tela
 void draw_explosion_barrier(main_barrier *Pbarr)
 {
     for(int i=0; i< NUM_BARRIERS; ++i){
@@ -75,7 +76,7 @@ void draw_explosion_barrier(main_barrier *Pbarr)
     }
 }
 
-//REDESENHANDO A BARREIRA
+//Redesenha a barreira de outra forma quando necessario
 void drawBarrier(main_barrier *Pbarr)
 {
     for(int i=0; i<NUM_BARRIERS; ++i){
@@ -121,7 +122,7 @@ void drawBarrier(main_barrier *Pbarr)
     }
 }
 
-//COLISAO COM O TIRO DO ALIEN
+//Detecta colisao entre o tiro do Alien e a barreira
 void colision_Alien_shot_barrier(main_barrier *Pbarr, enemies *p_enemies)
 {
     for(int i=0; i<NUM_BARRIERS; ++i){
@@ -144,7 +145,7 @@ void colision_Alien_shot_barrier(main_barrier *Pbarr, enemies *p_enemies)
     }
 }
 
-//COLISAO COM O TIRO DO PLAYER
+//Detecta colisao entre o tiro do player e a barreira
 void colision_Player_shot_barrier(PlayerShip *player, main_barrier *Pbarr)
 {
     for(int i=0; i <NUM_BARRIERS; ++i){
@@ -165,6 +166,7 @@ void colision_Player_shot_barrier(PlayerShip *player, main_barrier *Pbarr)
     }
 }
 
+//Carrega as imagens que vao ser usadas na barreira 
 bool init_barrier_resources(main_barrier *Pbarr){
     //imagem das barreiras:
     Pbarr->img_bar[0] = al_load_bitmap("assets/images/barrier00.png");
@@ -172,6 +174,7 @@ bool init_barrier_resources(main_barrier *Pbarr){
     Pbarr->img_bar[2] = al_load_bitmap("assets/images/barrierup.png");
     Pbarr->img_bar[3] = al_load_bitmap("assets/images/barrier01.png");
 
+    //Mensagem de erro caso não consiga carregar as imagens da barreira
     for(int i=0; i<NUM_BARRIERS; i++)
     {
         if(!Pbarr->img_bar[i]){
@@ -179,7 +182,7 @@ bool init_barrier_resources(main_barrier *Pbarr){
         }
     }
 
-    //imagem da explosao da barreira
+    //Mensagem de erro caso não consiga carregar o sprite de explosao
     Pbarr->img_exp_bar = al_load_bitmap("assets/images/img_exp_bar.jpg");
     if(!Pbarr->img_exp_bar){
         fprintf(stderr, "Error: could not load explosion barrier image.\n");
@@ -190,6 +193,7 @@ bool init_barrier_resources(main_barrier *Pbarr){
     return true;
 }
 
+//Libera os recursos usado pela barreira 
 void free_barrier_resources(main_barrier *Pbarr){
     //liberando os recursos usados no programa:
     al_destroy_bitmap(Pbarr->img_exp_bar);
