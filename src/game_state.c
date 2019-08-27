@@ -4,7 +4,7 @@
 #include "menu_screen.h"
 
 bool create_display(GameState *game){
-    //criando uma janela com a resolu�ao do desktop do usuario (fullscreen):
+    //criando uma janela com a resolucao do desktop do usuario (fullscreen):
     ALLEGRO_MONITOR_INFO info;
 
     int res_x, res_y;
@@ -22,7 +22,7 @@ bool create_display(GameState *game){
         return false;
     }
 
-    //redimensionando o jogo para se encaixar na resolu�ao do desktop do usuario:
+    //redimensionando o jogo para se encaixar na resolucao do desktop do usuario:
 
     float red_x = res_x/(float)SCREEN_WIDTH;
     float red_y = res_y/(float)SCREEN_HEIGHT;

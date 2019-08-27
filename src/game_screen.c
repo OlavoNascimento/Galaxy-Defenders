@@ -159,8 +159,8 @@ void update_game_screen(PlayerShip *player, enemies *p_enemies, main_barrier *Pb
 
     draw_aBullet(p_enemies);
 
-    //desenha o esc menu quando necessario:
-    if(!(*menu).Esc_menu.back_option_selected){
+    //desenha o esc menu quando necessario :
+    if(!(*menu).Esc_menu.back_option_selected){ // var que so permite desenhar o esc menu quando esc for apertado.
         if((*menu).Esc_menu.current_esc_bitmap == 0){
             al_draw_bitmap((*menu).Esc_menu.esc_img_1, 411, 249, 0);
         }else if((*menu).Esc_menu.current_esc_bitmap == 1){
@@ -201,26 +201,25 @@ void process_game_events(GameState *game, GameMenu *menu, PlayerShip *player, en
         update_player_lasers(player);
 
         detect_alien_bullet_collision_player(player, p_enemies);
-        //colisao dos aliens com balas{
+        
 
-            //verificando se houve a colisao entre as balas e os inimigos. Se sim, apaga o inimigo e a bala.
-            detectBulletCollision_alien1(p_enemies, player);
+    
+        detectBulletCollision_alien1(p_enemies, player);
 
-            detectBulletCollision_alien2(p_enemies, player);
+        detectBulletCollision_alien2(p_enemies, player);
 
-            detectBulletCollision_alien3(p_enemies, player);
+        detectBulletCollision_alien3(p_enemies, player);
 
-            //colisionPlayer();
 
-            update_explosion_alien1(p_enemies);
+        update_explosion_alien1(p_enemies);
 
-            update_explosion_alien2(p_enemies);
+        update_explosion_alien2(p_enemies);
 
-            update_explosion_alien3(p_enemies);
+        update_explosion_alien3(p_enemies);
 
-        //}
+        
 
-        //colisoes da barreira
+        //barreira:
 
             colision_Alien_shot_barrier(Pbarr, p_enemies);
 
@@ -234,7 +233,7 @@ void process_game_events(GameState *game, GameMenu *menu, PlayerShip *player, en
 
         //Movimento dos aliens{
 
-            //limitando o movimento horizontal dos aliens e movimentando-os verticalmente:
+            
             limitXmoveY_alien1(p_enemies);
 
             limitXmoveY_alien2(p_enemies);
@@ -242,7 +241,7 @@ void process_game_events(GameState *game, GameMenu *menu, PlayerShip *player, en
             limitXmoveY_alien3(p_enemies);
 
 
-            //movimentando os aliens horizontalmente:
+           
             moveX_alien1(p_enemies);
 
             moveX_alien2(p_enemies);
@@ -250,7 +249,7 @@ void process_game_events(GameState *game, GameMenu *menu, PlayerShip *player, en
             moveX_alien3(p_enemies);
 
 
-            //atualizando os sprites dos inimigos constantemente:
+            
             updateSprite_alien1(p_enemies);
 
             updateSprite_alien2(p_enemies);

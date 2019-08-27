@@ -12,6 +12,7 @@
 
 #define NUM_aBULLETS 10
 
+//struct com as vars para construir a logica da explosao.
 typedef struct{
     int totalframes;
     int currentframe;
@@ -21,6 +22,7 @@ typedef struct{
     bool start;
 }explosion;
 
+//struct com as informaçoes gerais de cada alien.
 typedef struct{
     float x;
     float y;
@@ -33,7 +35,7 @@ typedef struct{
 }enemy;
 
 
-//struct e vetor das balas dos aliens:
+//struct com as informaçoes gerais das balas dos aliens.
 typedef struct{
     int x;
     int y;
@@ -43,32 +45,32 @@ typedef struct{
     int height;
 }alienbullet;
 
-
+//struct com as variaveis que possibilitam a logica do disparo dos aliens
 typedef struct{
-    alienbullet aBullet[NUM_aBULLETS];
-    enemy *alien_shooter[NUM_ALIEN];//ponteiro para guardar o endere�o dos candidatos a disparar de cada coluna:
-    int k;//indice gerado aleatoriamente para escolher qual alien do ponteiro acima ira disparar:
-    bool check_array[NUM_ALIEN];//vetor para guardar qual coluna ja teve o seu candidato a disparo escolhido:
-    int all_aliens_Rdead;//var para checar o momento em que todos os aliens estiverem mortos ( = parar disparos):
-    int alien_shot_delay;  //delay para impedir que os aliens disparem muito rapido(a cada estouro do timer):
+    alienbullet aBullet[NUM_aBULLETS]; // vetor em que cada posicao representa uma bala.
+    enemy *alien_shooter[NUM_ALIEN];//ponteiro para guardar o endereco dos candidatos a disparar de cada coluna.
+    int k;//indice gerado aleatoriamente para escolher qual alien do ponteiro acima ira disparar.
+    bool check_array[NUM_ALIEN];//vetor para guardar qual coluna ja teve o seu candidato a disparo escolhido.
+    int all_aliens_Rdead;//var para checar o momento em que todos os aliens estiverem mortos ( = parar disparos).
+    int alien_shot_delay;  //delay para impedir que os aliens disparem muito rapido(a cada estouro do timer).
 }alienshots;
 
 
 typedef struct{
-    enemy alien1[NUM_ALIEN];
+    enemy alien1[NUM_ALIEN]; //inimigos da 1.o linha.
     ALLEGRO_BITMAP *alien1img;
-    enemy alien2[2][NUM_ALIEN];
+    enemy alien2[2][NUM_ALIEN]; //inimigos da 2.o e 3.o linha.
     ALLEGRO_BITMAP *alien2img;
-    enemy alien3[2][NUM_ALIEN];
+    enemy alien3[2][NUM_ALIEN]; //inimigos da 4.o e 5.o linha.
     ALLEGRO_BITMAP *alien3img;
-    ALLEGRO_BITMAP *exp_img;
+    ALLEGRO_BITMAP *exp_img; ; //imagem da explosao
     alienshots alienShots;
     ALLEGRO_BITMAP *alien_bullet_img;
-    int aliens_defeated; //contador para ir guardando a quantidade de aliens mortos atualmente.
+    int aliens_defeated; //contador para ir guardando a quantidade de aliens mortos atualmente. (para determinarmos o termino do jogo)
 }enemies;
 
 
-//atribuindo valores iniciais as informa�oes de cada alien:
+//atribuindo valores iniciais as informacoes gerais de cada alien:
 void InitAlien1(enemies *p_enemies);
 
 void InitAlien2(enemies *p_enemies);
@@ -100,7 +102,7 @@ void updateSprite_alien2(enemies *p_enemies);
 void updateSprite_alien3(enemies *p_enemies);
 
 
-//desenhando cada alien na sua posi�ao atual:
+//desenhando cada alien na sua posicao atual:
 void draw_alien1(enemies *p_enemies);
 
 void draw_alien2(enemies *p_enemies);
@@ -132,9 +134,10 @@ void update_aBullet(enemies *p_enemies);
 //desenha as balas na tela:
 void draw_aBullet(enemies *p_enemies);
 
-
+//funçao de inicializaçao geral dos inimigos.
 bool InitEnemies(enemies *p_enemies);
 
+//libera os recursos usados pelos aliens
 void free_enemies_resources(enemies *p_enemies);
 
 
