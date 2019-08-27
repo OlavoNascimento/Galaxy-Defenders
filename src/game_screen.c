@@ -172,16 +172,16 @@ void update_game_screen(PlayerShip *player, enemies *p_enemies, main_barrier *Pb
     if((*menu).Endgame_menu.start_v){
 
         if((*menu).Endgame_menu.current_option_bitmap == 0)
-            al_draw_bitmap((*menu).Endgame_menu.victory_img_1, 215 , 132 , 0);
+            al_draw_bitmap((*menu).Endgame_menu.victory_img_1, 0, 0, 0);
         else if((*menu).Endgame_menu.current_option_bitmap == 1)
-            al_draw_bitmap((*menu).Endgame_menu.victory_img_2, 215 , 132 , 0);
+            al_draw_bitmap((*menu).Endgame_menu.victory_img_2, 0, 0, 0);
 
     }else if((*menu).Endgame_menu.start_d){
 
         if((*menu).Endgame_menu.current_option_bitmap == 0)
-            al_draw_bitmap((*menu).Endgame_menu.defeat_img_1, 215 , 132 , 0);
+            al_draw_bitmap((*menu).Endgame_menu.defeat_img_1, 0, 0, 0);
         else if((*menu).Endgame_menu.current_option_bitmap == 1)
-            al_draw_bitmap((*menu).Endgame_menu.defeat_img_2, 215 , 132 , 0);
+            al_draw_bitmap((*menu).Endgame_menu.defeat_img_2, 0, 0, 0);
 
     }
 
@@ -201,9 +201,9 @@ void process_game_events(GameState *game, GameMenu *menu, PlayerShip *player, en
         update_player_lasers(player);
 
         detect_alien_bullet_collision_player(player, p_enemies);
-        
 
-    
+
+
         detectBulletCollision_alien1(p_enemies, player);
 
         detectBulletCollision_alien2(p_enemies, player);
@@ -217,7 +217,7 @@ void process_game_events(GameState *game, GameMenu *menu, PlayerShip *player, en
 
         update_explosion_alien3(p_enemies);
 
-        
+
 
         //barreira:
 
@@ -233,7 +233,7 @@ void process_game_events(GameState *game, GameMenu *menu, PlayerShip *player, en
 
         //Movimento dos aliens{
 
-            
+
             limitXmoveY_alien1(p_enemies);
 
             limitXmoveY_alien2(p_enemies);
@@ -241,7 +241,7 @@ void process_game_events(GameState *game, GameMenu *menu, PlayerShip *player, en
             limitXmoveY_alien3(p_enemies);
 
 
-           
+
             moveX_alien1(p_enemies);
 
             moveX_alien2(p_enemies);
@@ -249,7 +249,7 @@ void process_game_events(GameState *game, GameMenu *menu, PlayerShip *player, en
             moveX_alien3(p_enemies);
 
 
-            
+
             updateSprite_alien1(p_enemies);
 
             updateSprite_alien2(p_enemies);
@@ -318,11 +318,11 @@ void process_game_events(GameState *game, GameMenu *menu, PlayerShip *player, en
 
                         if((*menu).Endgame_menu.current_option_bitmap == 0){
                             player->lives = 0;
-                            game->current_screen = MENU_SCREEN;
-                        }else if((*menu).Endgame_menu.current_option_bitmap == 1){
-                            player->lives = 0;
                             game->current_screen = GAME_SCREEN;
                             (*menu).Endgame_menu.ignore_main_menu = true;
+                        }else if((*menu).Endgame_menu.current_option_bitmap == 1){
+                            player->lives = 0;
+                            game->current_screen = MENU_SCREEN;
                         }
 
                     }
@@ -375,11 +375,12 @@ void process_game_events(GameState *game, GameMenu *menu, PlayerShip *player, en
 
                         if((*menu).Endgame_menu.current_option_bitmap == 0){
                             player->lives = 0;
-                            game->current_screen = MENU_SCREEN;
-                        }else if((*menu).Endgame_menu.current_option_bitmap == 1){
-                            player->lives = 0;
                             game->current_screen = GAME_SCREEN;
                             (*menu).Endgame_menu.ignore_main_menu = true;
+                            
+                        }else if((*menu).Endgame_menu.current_option_bitmap == 1){
+                            player->lives = 0;
+                            game->current_screen = MENU_SCREEN;
                         }
 
                     }

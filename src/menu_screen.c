@@ -39,25 +39,25 @@ bool init_game_menu(GameMenu *menu) {
     //}
 
     //imagens do end-game menu:
-        (*menu).Endgame_menu.victory_img_1 = al_load_bitmap("assets/images/victory_img_1.png");
+        (*menu).Endgame_menu.victory_img_1 = al_load_bitmap("assets/images/victory_img_1.jpg");
         if(!(*menu).Endgame_menu.victory_img_1){
             fprintf(stderr, "Failed to load victory_img_1 !\n");
             return false;
         }
 
-        (*menu).Endgame_menu.victory_img_2 = al_load_bitmap("assets/images/victory_img_2.png");
+        (*menu).Endgame_menu.victory_img_2 = al_load_bitmap("assets/images/victory_img_2.jpg");
         if(!(*menu).Endgame_menu.victory_img_2){
             fprintf(stderr, "Failed to load victory_img_2 !\n");
             return false;
         }
 
-        (*menu).Endgame_menu.defeat_img_1 = al_load_bitmap("assets/images/defeat_img_1.png");
+        (*menu).Endgame_menu.defeat_img_1 = al_load_bitmap("assets/images/defeat_img_1.jpg");
         if(!(*menu).Endgame_menu.defeat_img_1){
             fprintf(stderr, "Failed to load defeat_img_1 !\n");
             return false;
         }
 
-        (*menu).Endgame_menu.defeat_img_2 = al_load_bitmap("assets/images/defeat_img_2.png");
+        (*menu).Endgame_menu.defeat_img_2 = al_load_bitmap("assets/images/defeat_img_2.jpg");
         if(!(*menu).Endgame_menu.defeat_img_2){
             fprintf(stderr, "Failed to load defeat_img_2 !\n");
             return false;
