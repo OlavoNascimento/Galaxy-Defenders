@@ -7,21 +7,20 @@
 
 // Inicializa as informações do menu do jogo
 bool init_game_menu(GameMenu *menu) {
-    menu->background.bitmap = al_load_bitmap("assets/images/menu_background.png");
-    if(menu->background.bitmap == NULL) {
-        fprintf(stderr, "Failed to load menu background!\n");
-        return false;
-    }
-    menu->background.height = al_get_bitmap_height(menu->background.bitmap);
-    menu->background.width = al_get_bitmap_width(menu->background.bitmap);
+    menu->backgrounds[GAME_SCREEN].bitmap = al_load_bitmap("assets/images/menu_01_dc.jpg");
+    menu->backgrounds[TUTORIAL_SCREEN].bitmap = al_load_bitmap("assets/images/menu_02_dc.jpg");
+    menu->backgrounds[EXIT_SCREEN].bitmap = al_load_bitmap("assets/images/menu_03_dc.jpg");
 
-    menu->font = al_load_font("assets/fonts/Roboto-Regular.ttf", 36, 0);
-    if(menu->font == NULL) {
-        fprintf(stderr, "Error loading menu font!\n");
-        return false;
+    for(int i=0; i<=EXIT_SCREEN; i++) {
+        if(menu->backgrounds[i].bitmap == NULL) {
+            fprintf(stderr, "Failed to load menu %d background!\n", i);
+            return false;
+        }
+        menu->backgrounds[i].height = al_get_bitmap_height(menu->backgrounds[i].bitmap);
+        menu->backgrounds[i].width = al_get_bitmap_width(menu->backgrounds[i].bitmap);
     }
 
-    // Opção selecionada atualmente no menu
+    // Opção selecionada inicialmente no menu
     menu->selection = GAME_SCREEN;
 
     //imagens do esc menu:
@@ -74,32 +73,13 @@ bool init_game_menu(GameMenu *menu) {
 void update_menu_screen(GameMenu *menu) {
     al_clear_to_color(al_map_rgb(0, 0, 0));
 
-    al_draw_scaled_bitmap(menu->background.bitmap,
+    al_draw_scaled_bitmap(menu->backgrounds[menu->selection].bitmap,
                           0, 0,
-                          menu->background.width, menu->background.height,
+                          menu->backgrounds[menu->selection].width, 
+                          menu->backgrounds[menu->selection].height,
                           0, 0,
                           SCREEN_WIDTH, SCREEN_HEIGHT,
                           0);
-    // Posição da primeira opção
-    int pos_y = SCREEN_HEIGHT / 2;
-
-    const char options[3][12] = {"Iniciar", "Pontuação", "Sair"};
-    for(int i=0; i<3; i++) {
-        ALLEGRO_COLOR color = al_map_rgb(0, 0, 0);
-
-        // Colore a opção selecionada
-        if(i == menu->selection)
-            color = al_map_rgb(0, 0, 127);
-
-        al_draw_text(menu->font,
-                    color,
-                    0, pos_y,
-                    0,
-                    options[i]);
-        // Espaçamento entre as opções
-        pos_y += OPTIONS_SPACING;
-    }
-
     al_flip_display();
 }
 
@@ -115,16 +95,14 @@ void wait_menu_selection(GameMenu *menu, GameState *game) {
         process_events(game, &event);
 
         if(event.type == ALLEGRO_EVENT_KEY_DOWN){
-            if(game->keys_pressed[DOWN])
-                if(menu->selection < EXIT_SCREEN) {
-                    menu->selection++;
-                    update_menu_screen(menu);
-                }
-            if(game->keys_pressed[UP])
-                if(menu->selection > GAME_SCREEN) {
-                    menu->selection--;
-                    update_menu_screen(menu);
-                }
+            if(game->keys_pressed[DOWN] && menu->selection < EXIT_SCREEN) {
+                menu->selection++;
+                update_menu_screen(menu);
+            }
+            if(game->keys_pressed[UP] && menu->selection > GAME_SCREEN) {
+                menu->selection--;
+                update_menu_screen(menu);
+            }
 
             if(game->keys_pressed[SPACE]) {
                 game->current_screen = menu->selection;
@@ -135,7 +113,7 @@ void wait_menu_selection(GameMenu *menu, GameState *game) {
                     game->running = false;
 
                 // Reseta o estado de todas as teclas
-                for(int i=0; i<ESC; i++)
+                for(int i=0; i<=ESC; i++)
                     game->keys_pressed[i] = false;
             }
 
@@ -150,8 +128,8 @@ void wait_menu_selection(GameMenu *menu, GameState *game) {
 
 // Libera os recursos alocados pelo programa
 void free_menu_resources(GameMenu *menu) {
-    al_destroy_bitmap(menu->background.bitmap);
-    al_destroy_font(menu->font);
+    for(int i=0; i<=EXIT_SCREEN; i++)
+        al_destroy_bitmap(menu->backgrounds[i].bitmap);
     al_destroy_bitmap((*menu).Esc_menu.esc_img_1);
     al_destroy_bitmap((*menu).Esc_menu.esc_img_2);
     al_destroy_bitmap((*menu).Endgame_menu.victory_img_1);

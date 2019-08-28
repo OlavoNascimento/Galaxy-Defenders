@@ -11,9 +11,9 @@
 
 enum menu_options {
     GAME_SCREEN,
-    SCORE_SCREEN,
+    TUTORIAL_SCREEN,
     EXIT_SCREEN,
-    MENU_SCREEN,
+    MENU_SCREEN
 };
 
 typedef struct {
@@ -35,13 +35,11 @@ typedef struct{
 }endgame_menu;
 
 typedef struct {
-    Sprite background;
+    Sprite backgrounds[3];
     int selection;
-    ALLEGRO_FONT *font;
     esc_menu Esc_menu;
     endgame_menu Endgame_menu;
 } GameMenu;
-
 
 
 bool init_game_menu(GameMenu *menu);
