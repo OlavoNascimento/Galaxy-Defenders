@@ -38,6 +38,15 @@ bool init_player_ship(PlayerShip *player) {
     player->sprite.height = al_get_bitmap_height(player->sprite.bitmap);
 
     player->lives = 3;
+
+    player->lives_sprite.bitmap = al_load_bitmap("assets/images/player_lives.png");
+    if(player->lives_sprite.bitmap == NULL) {
+        fprintf(stderr, "Failed to load player lives sprite!\n");
+        return false;
+    }
+    player->lives_sprite.width = al_get_bitmap_width(player->lives_sprite.bitmap);
+    player->lives_sprite.height = al_get_bitmap_height(player->lives_sprite.bitmap);
+
     // Posiciona o jogador no centro da tela
     player->pos_x = (SCREEN_WIDTH/2) - (player->sprite.width/2);
     // Posiciona o jogador no canto inferior da tela
@@ -98,6 +107,14 @@ void draw_player_ship(PlayerShip *player) {
     al_draw_bitmap(player->sprite.bitmap, player->pos_x, player->pos_y, 0);
 }
 
+// Desenha a nave do jogador na posição atual
+void draw_player_lives(PlayerShip *player) {
+    int pos_x = 0;
+    for(int i=0; i<player->lives; i++) {
+        al_draw_bitmap(player->lives_sprite.bitmap, pos_x, 0, 0);
+        pos_x += player->lives_sprite.width + 4;
+    }
+}
 
 void free_player_resources(PlayerShip *player) {
     al_destroy_bitmap(player->sprite.bitmap);

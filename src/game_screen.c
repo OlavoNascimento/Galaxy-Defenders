@@ -37,26 +37,26 @@ bool detect_player_collision_barrier(PlayerShip *player, main_barrier *pbarr, ch
             switch(player_movement) {
                 case 'u':
                     if(player_alligned_with_barrier(player, pbarr, 'h') &&
-                    player->pos_y - PLAYER_SPEED <= pbarr->main_bar[i].y + pbarr->main_bar[i].frameheight &&
-                    player->pos_y - PLAYER_SPEED + player->sprite.height >= pbarr->main_bar[i].y)
+                       player->pos_y - PLAYER_SPEED <= pbarr->main_bar[i].y + pbarr->main_bar[i].frameheight &&
+                       player->pos_y - PLAYER_SPEED + player->sprite.height >= pbarr->main_bar[i].y)
                         return true;
                     break;
                 case 'd':
                     if(player_alligned_with_barrier(player, pbarr, 'h') &&
-                    player->pos_y + player->sprite.height + PLAYER_SPEED >= pbarr->main_bar[i].y &&
-                    player->pos_y + PLAYER_SPEED <= pbarr->main_bar[i].y + pbarr->main_bar[i].frameheight)
+                       player->pos_y + player->sprite.height + PLAYER_SPEED >= pbarr->main_bar[i].y &&
+                       player->pos_y + PLAYER_SPEED <= pbarr->main_bar[i].y + pbarr->main_bar[i].frameheight)
                         return true;
                     break;
                 case 'r':
                     if(player_alligned_with_barrier(player, pbarr, 'v') &&
-                    player->pos_x + player->sprite.width + PLAYER_SPEED >= pbarr->main_bar[i].x &&
-                    player->pos_x + PLAYER_SPEED <= pbarr->main_bar[i].x + pbarr->main_bar[i].framewidth)
+                       player->pos_x + player->sprite.width + PLAYER_SPEED >= pbarr->main_bar[i].x &&
+                       player->pos_x + PLAYER_SPEED <= pbarr->main_bar[i].x + pbarr->main_bar[i].framewidth)
                         return true;
                     break;
                 case 'l':
                     if(player_alligned_with_barrier(player, pbarr, 'v') &&
-                    player->pos_x - PLAYER_SPEED <= pbarr->main_bar[i].x + pbarr->main_bar[i].framewidth &&
-                    player->pos_x - PLAYER_SPEED + player->sprite.width >= pbarr->main_bar[i].x)
+                       player->pos_x - PLAYER_SPEED <= pbarr->main_bar[i].x + pbarr->main_bar[i].framewidth &&
+                       player->pos_x - PLAYER_SPEED + player->sprite.width >= pbarr->main_bar[i].x)
                         return true;
                     break;
             }
@@ -140,7 +140,6 @@ void update_game_screen(PlayerShip *player, enemies *p_enemies, main_barrier *Pb
     drawBarrier(Pbarr);
     draw_explosion_barrier(Pbarr);
 
-
     draw_alien1(p_enemies);
     draw_alien2(p_enemies);
     draw_alien3(p_enemies);
@@ -150,6 +149,8 @@ void update_game_screen(PlayerShip *player, enemies *p_enemies, main_barrier *Pb
     draw_explosion_alien3(p_enemies);
 
     draw_aBullet(p_enemies);
+
+    draw_player_lives(player);
 
     //desenha o esc menu quando necessario :
     if(!(*menu).Esc_menu.back_option_selected){ // var que so permite desenhar o esc menu quando esc for apertado.

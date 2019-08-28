@@ -13,6 +13,7 @@ typedef struct {
 
 typedef struct {
     Sprite sprite;
+    Sprite lives_sprite;
     float pos_x;
     float pos_y;
     int lives;
@@ -28,6 +29,7 @@ void update_player_lasers(PlayerShip *player);
 
 void draw_player_lasers(PlayerShip *player);
 void draw_player_ship(PlayerShip *player);
+void draw_player_lives(PlayerShip *player);
 
 void free_player_resources(PlayerShip *player);
 
