@@ -2,6 +2,8 @@
 #define GAME_STATE_H
 
 #include <allegro5/allegro5.h>
+#include <allegro5/allegro_font.h>
+#include <allegro5/allegro_ttf.h>
 #include <stdio.h>
 
 // Comprimento da tela
@@ -40,7 +42,8 @@ enum keys {
     LEFT,
     RIGHT,
     SPACE,
-    ESC
+    ESC,
+    ENTER
 };
 
 // Imagens do jogo
@@ -72,6 +75,7 @@ typedef struct {
     bool running;
     // Array indicando os botões pressionados pelo jogador
     bool *keys_pressed;
+    ALLEGRO_FONT *font_score;
 } GameState;
 
 

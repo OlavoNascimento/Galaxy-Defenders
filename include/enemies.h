@@ -29,7 +29,6 @@ typedef struct{
     float velx;
     float vely;
     int live;
-    int score;
     Sprite sprite;
     explosion exp;
 }enemy;

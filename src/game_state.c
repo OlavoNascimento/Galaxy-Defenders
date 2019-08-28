@@ -45,6 +45,12 @@ bool init_game_state(GameState *game) {
         return false;
     }
 
+    game->font_score = al_load_font("assets/fonts/FrenteH1-Regular.ttf", 40, 0);
+    if(!game->font_score){
+        fprintf(stderr, "Failed to create font score!\n");
+        return false;
+    }
+
     // Cria a tela do jogo
     if(!create_display(game)) {
         fprintf(stderr, "Failed to create display!\n");
@@ -89,4 +95,5 @@ void free_game_state_resources(GameState *game) {
     al_destroy_timer(game->screen_timer);
     al_destroy_event_queue(game->event_queue);
     al_destroy_display(game->display);
+    al_destroy_font(game->font_score);
 }

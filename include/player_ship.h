@@ -17,6 +17,7 @@ typedef struct {
     float pos_x;
     float pos_y;
     int lives;
+    int cont_score;
     PlayerLasers lasers;
 } PlayerShip;
 

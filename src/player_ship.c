@@ -38,6 +38,7 @@ bool init_player_ship(PlayerShip *player) {
     player->sprite.height = al_get_bitmap_height(player->sprite.bitmap);
 
     player->lives = 3;
+    player->cont_score = 0;
 
     player->lives_sprite.bitmap = al_load_bitmap("assets/images/player_lives.png");
     if(player->lives_sprite.bitmap == NULL) {
