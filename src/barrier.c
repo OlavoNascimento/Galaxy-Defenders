@@ -10,8 +10,8 @@
 void InitBarrier(main_barrier *Pbarr)
 {
     for(int i = 0; i<NUM_BARRIERS; ++i){
-        Pbarr->main_bar[i].life_up = 15;
-        Pbarr->main_bar[i].life_down = 15;
+        Pbarr->main_bar[i].life_up = TOTAL_LIFE_BARRIERS;
+        Pbarr->main_bar[i].life_down = TOTAL_LIFE_BARRIERS;
         Pbarr->main_bar[i].live = true;
         Pbarr->main_bar[i].x = 170 + i * 265;
         Pbarr->main_bar[i].y = HEIGHT_BARRIER;
@@ -82,7 +82,7 @@ void drawBarrier(main_barrier *Pbarr)
     for(int i=0; i<NUM_BARRIERS; ++i){
 
         if(Pbarr->main_bar[i].live){
-            if(Pbarr->main_bar[i].life_up >= 8 && Pbarr->main_bar[i].life_down >=8){
+            if(Pbarr->main_bar[i].life_up >= HALF_LIFE_BARRIERS && Pbarr->main_bar[i].life_down >= HALF_LIFE_BARRIERS){
                     al_draw_scaled_bitmap(Pbarr->img_bar[0],
                                           0, 0,
                                           Pbarr->main_bar[i].framewidth, Pbarr->main_bar[i].frameheight,
@@ -91,7 +91,7 @@ void drawBarrier(main_barrier *Pbarr)
                                           0);
                     al_convert_mask_to_alpha(Pbarr->img_bar[0], al_map_rgb(0,0,0));
             }
-            else if(Pbarr->main_bar[i].life_up >= 8 && Pbarr->main_bar[i].life_down < 8){
+            else if(Pbarr->main_bar[i].life_up >= HALF_LIFE_BARRIERS && Pbarr->main_bar[i].life_down < HALF_LIFE_BARRIERS){
                     al_draw_scaled_bitmap(Pbarr->img_bar[1],
                                           0, 0,
                                           Pbarr->main_bar[i].framewidth, Pbarr->main_bar[i].frameheight,
@@ -100,7 +100,7 @@ void drawBarrier(main_barrier *Pbarr)
                                           0);
                 al_convert_mask_to_alpha(Pbarr->img_bar[1], al_map_rgb(0,0,0));
             }
-            else if(Pbarr->main_bar[i].life_up <=8 && Pbarr->main_bar[i].life_down >=8){
+            else if(Pbarr->main_bar[i].life_up <=HALF_LIFE_BARRIERS && Pbarr->main_bar[i].life_down >=HALF_LIFE_BARRIERS){
                     al_draw_scaled_bitmap(Pbarr->img_bar[2],
                                           0, 0,
                                           Pbarr->main_bar[i].framewidth, Pbarr->main_bar[i].frameheight,
@@ -109,7 +109,7 @@ void drawBarrier(main_barrier *Pbarr)
                                           0);
                 al_convert_mask_to_alpha(Pbarr->img_bar[2], al_map_rgb(0,0,0));
             }
-            else if(Pbarr->main_bar[i].life_up < 8 && Pbarr->main_bar[i].life_down <8){
+            else if(Pbarr->main_bar[i].life_up < HALF_LIFE_BARRIERS && Pbarr->main_bar[i].life_down <HALF_LIFE_BARRIERS){
                     al_draw_scaled_bitmap(Pbarr->img_bar[3],
                                           0, 0,
                                           Pbarr->main_bar[i].framewidth, Pbarr->main_bar[i].frameheight,
