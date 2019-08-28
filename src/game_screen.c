@@ -38,34 +38,26 @@ bool detect_player_collision_barrier(PlayerShip *player, main_barrier *pbarr, ch
                 case 'u':
                     if(player_alligned_with_barrier(player, pbarr, 'h') &&
                     player->pos_y - PLAYER_SPEED <= pbarr->main_bar[i].y + pbarr->main_bar[i].frameheight &&
-                    player->pos_y - PLAYER_SPEED + player->sprite.height >= pbarr->main_bar[i].y) {
-                        DEBUG_PRINT("Can't move left!\n");
+                    player->pos_y - PLAYER_SPEED + player->sprite.height >= pbarr->main_bar[i].y)
                         return true;
-                    }
                     break;
                 case 'd':
                     if(player_alligned_with_barrier(player, pbarr, 'h') &&
                     player->pos_y + player->sprite.height + PLAYER_SPEED >= pbarr->main_bar[i].y &&
-                    player->pos_y + PLAYER_SPEED <= pbarr->main_bar[i].y + pbarr->main_bar[i].frameheight) {
-                        DEBUG_PRINT("Can't move down!\n");
+                    player->pos_y + PLAYER_SPEED <= pbarr->main_bar[i].y + pbarr->main_bar[i].frameheight)
                         return true;
-                    }
                     break;
                 case 'r':
                     if(player_alligned_with_barrier(player, pbarr, 'v') &&
                     player->pos_x + player->sprite.width + PLAYER_SPEED >= pbarr->main_bar[i].x &&
-                    player->pos_x + PLAYER_SPEED <= pbarr->main_bar[i].x + pbarr->main_bar[i].framewidth) {
-                        DEBUG_PRINT("Can't move right!\n");
+                    player->pos_x + PLAYER_SPEED <= pbarr->main_bar[i].x + pbarr->main_bar[i].framewidth)
                         return true;
-                    }
                     break;
                 case 'l':
                     if(player_alligned_with_barrier(player, pbarr, 'v') &&
                     player->pos_x - PLAYER_SPEED <= pbarr->main_bar[i].x + pbarr->main_bar[i].framewidth &&
-                    player->pos_x - PLAYER_SPEED + player->sprite.width >= pbarr->main_bar[i].x) {
-                        DEBUG_PRINT("Can't move left!\n");
+                    player->pos_x - PLAYER_SPEED + player->sprite.width >= pbarr->main_bar[i].x)
                         return true;
-                    }
                     break;
             }
     }
