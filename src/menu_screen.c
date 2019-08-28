@@ -104,7 +104,7 @@ void wait_menu_selection(GameMenu *menu, GameState *game) {
                 update_menu_screen(menu);
             }
 
-            if(game->keys_pressed[SPACE]) {
+            if(game->keys_pressed[ENTER]) {
                 game->current_screen = menu->selection;
                 option_selected = true;
 

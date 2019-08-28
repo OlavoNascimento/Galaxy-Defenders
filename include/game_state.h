@@ -26,6 +26,7 @@
 // Quantidade máxima de disparos jogador
 #define PLAYER_MAX_LASER_COUNT 10
 
+
 // Ativa ou desativa mensagens de debug
 #define DEBUG
 

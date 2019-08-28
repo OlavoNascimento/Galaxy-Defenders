@@ -60,7 +60,7 @@ int main() {
 
     while(game.running) {
 
-        //If usado para permitir a funcionalidade da opcao 'jogar novamente' do end-game menu 
+        //If usado para permitir a funcionalidade da opcao 'jogar novamente' do end-game menu
         if(!menu.Endgame_menu.ignore_main_menu){
             DEBUG_PRINT("Loaded game menu...\n");
             wait_menu_selection(&menu, &game);
@@ -68,6 +68,7 @@ int main() {
         }
 
         menu.Endgame_menu.ignore_main_menu = false;
+
 
         if(game.current_screen == GAME_SCREEN) {
 

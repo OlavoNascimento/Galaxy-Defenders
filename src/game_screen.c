@@ -208,6 +208,8 @@ void update_game_screen(PlayerShip *player, enemies *p_enemies, main_barrier *Pb
     }
 
     al_flip_display();
+
+
 }
 
 
@@ -307,6 +309,7 @@ void process_game_events(GameState *game, GameMenu *menu, PlayerShip *player, en
             update_game_screen(player, p_enemies, Pbarr, menu,game);
 
             bool victory_menu_option_selected = false;
+
             while(!victory_menu_option_selected){
                 ALLEGRO_EVENT event_v;
                 al_wait_for_event(game->event_queue, &event_v);
@@ -335,7 +338,7 @@ void process_game_events(GameState *game, GameMenu *menu, PlayerShip *player, en
                         }
                     }
 
-                    if(game->keys_pressed[SPACE]){
+                    if(game->keys_pressed[ENTER]){
                         victory_menu_option_selected = true;
 
                         if((*menu).Endgame_menu.current_option_bitmap == 0){
@@ -392,7 +395,7 @@ void process_game_events(GameState *game, GameMenu *menu, PlayerShip *player, en
                         }
                     }
 
-                    if(game->keys_pressed[SPACE]){
+                    if(game->keys_pressed[ENTER]){
                         defeat_menu_option_selected = true;
 
                         if((*menu).Endgame_menu.current_option_bitmap == 0){
@@ -455,7 +458,7 @@ void process_game_events(GameState *game, GameMenu *menu, PlayerShip *player, en
                         }
                     }
 
-                    if(game->keys_pressed[SPACE]){
+                    if(game->keys_pressed[ENTER]){
                         esc_menu_option_selected = true;
 
                         if((*menu).Esc_menu.current_esc_bitmap == 0){
