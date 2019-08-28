@@ -29,6 +29,9 @@ void process_key_down_event(ALLEGRO_EVENT *event, GameState *game) {
         case ALLEGRO_KEY_SPACE:
             game->keys_pressed[SPACE] = true;
             break;
+        case ALLEGRO_KEY_ENTER:
+            game->keys_pressed[ENTER] = true;
+            break;
     }
 }
 
@@ -53,11 +56,14 @@ void process_key_up_event(ALLEGRO_EVENT *event, GameState *game) {
         case ALLEGRO_KEY_SPACE:
             game->keys_pressed[SPACE] = false;
             break;
+        case ALLEGRO_KEY_ENTER:
+            game->keys_pressed[ENTER] = false;
+            break;
     }
 }
 
-// Atualiza as informações do jogo e do jogador 
-// de acordo com o evento 
+// Atualiza as informações do jogo e do jogador
+// de acordo com o evento
 void process_events(GameState *game, ALLEGRO_EVENT *event) {
     switch(event->type) {
         case ALLEGRO_EVENT_KEY_DOWN:

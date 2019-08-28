@@ -75,7 +75,7 @@ void update_menu_screen(GameMenu *menu) {
 
     al_draw_scaled_bitmap(menu->backgrounds[menu->selection].bitmap,
                           0, 0,
-                          menu->backgrounds[menu->selection].width, 
+                          menu->backgrounds[menu->selection].width,
                           menu->backgrounds[menu->selection].height,
                           0, 0,
                           SCREEN_WIDTH, SCREEN_HEIGHT,
@@ -104,7 +104,7 @@ void wait_menu_selection(GameMenu *menu, GameState *game) {
                 update_menu_screen(menu);
             }
 
-            if(game->keys_pressed[SPACE]) {
+            if(game->keys_pressed[ENTER]) {
                 game->current_screen = menu->selection;
                 option_selected = true;
 

@@ -72,7 +72,7 @@ bool init_game_state(GameState *game) {
     game->current_screen = MENU_SCREEN;
 
     // Inicializa o array das teclas como não pressionadas
-    game->keys_pressed = (bool*) calloc(sizeof(bool) * 6, 6);
+    game->keys_pressed = (bool*) calloc(sizeof(bool) * 7, 7);
     if(game->keys_pressed == NULL) {
         fprintf(stderr, "Failed to allocate memory for keys array!\n");
         return false;
