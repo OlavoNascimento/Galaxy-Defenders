@@ -110,9 +110,9 @@ void draw_player_ship(PlayerShip *player) {
 
 // Desenha a nave do jogador na posição atual
 void draw_player_lives(PlayerShip *player) {
-    int pos_x = 0;
+    int pos_x = 426;
     for(int i=0; i<player->lives; i++) {
-        al_draw_bitmap(player->lives_sprite.bitmap, pos_x, 0, 0);
+        al_draw_bitmap(player->lives_sprite.bitmap, pos_x, 15, 0);
         pos_x += player->lives_sprite.width + 4;
     }
 }

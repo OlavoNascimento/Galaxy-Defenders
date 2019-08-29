@@ -11,7 +11,7 @@ void InitAlien1(enemies *p_enemies){
     for(int i = 0; i<NUM_ALIEN; ++i){
 
         (*p_enemies).alien1[i].x = 256 + i*75;
-        (*p_enemies).alien1[i].y = 0;
+        (*p_enemies).alien1[i].y = 60;
         (*p_enemies).alien1[i].velx = 2.5;
         (*p_enemies).alien1[i].vely = 15;
         (*p_enemies).alien1[i].live = true;
@@ -38,7 +38,7 @@ void InitAlien2(enemies *p_enemies){
         for(int j = 0; j<NUM_ALIEN; ++j){
 
             (*p_enemies).alien2[i][j].x = 256 + j*75;
-            (*p_enemies).alien2[i][j].y = (i+1)*62;
+            (*p_enemies).alien2[i][j].y = (i+1)*62 + 60;
             (*p_enemies).alien2[i][j].velx = 2.5;
             (*p_enemies).alien2[i][j].vely = 7.5;
             (*p_enemies).alien2[i][j].live = true;
@@ -67,7 +67,7 @@ void InitAlien3(enemies *p_enemies){
         for(int j = 0; j<NUM_ALIEN; ++j){
 
             (*p_enemies).alien3[i][j].x = 256 + j*75;
-            (*p_enemies).alien3[i][j].y = (i+3)*62;
+            (*p_enemies).alien3[i][j].y = (i+3)*62 + 60;
             (*p_enemies).alien3[i][j].velx = 2.5;
             (*p_enemies).alien3[i][j].vely = 7.5;
             (*p_enemies).alien3[i][j].live = true;

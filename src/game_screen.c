@@ -153,7 +153,7 @@ void update_game_screen(PlayerShip *player, enemies *p_enemies, main_barrier *Pb
     draw_player_lives(player);
 
     al_draw_textf(game->font_score, al_map_rgb(255,255,255),
-                                    900,
+                                    762,
                                     5,
                                     ALLEGRO_ALIGN_CENTRE ,
                                     "SCORE: %d", player->cont_score);
@@ -180,7 +180,7 @@ void update_game_screen(PlayerShip *player, enemies *p_enemies, main_barrier *Pb
         }else if((*menu).Endgame_menu.current_option_bitmap == 1){
             al_draw_bitmap((*menu).Endgame_menu.victory_img_2, 0, 0, 0);
             al_draw_textf(game->font_score, al_map_rgb(255,255,255),
-                                            575, //Posicao X da tela onde vai ser printado o score
+                                            585, //Posicao X da tela onde vai ser printado o score
                                             305, //Posicao Y da tela onde vai ser printado o score
                                             ALLEGRO_ALIGN_CENTRE,
                                             "%d", player->cont_score);
@@ -191,14 +191,14 @@ void update_game_screen(PlayerShip *player, enemies *p_enemies, main_barrier *Pb
         if((*menu).Endgame_menu.current_option_bitmap == 0){
             al_draw_bitmap((*menu).Endgame_menu.defeat_img_1, 0, 0, 0);
             al_draw_textf(game->font_score, al_map_rgb(255,255,255),
-                                            575, //Posicao X da tela onde vai ser printado o score
+                                            585, //Posicao X da tela onde vai ser printado o score
                                             305, //Posicao Y da tela onde vai ser printado o score
                                             ALLEGRO_ALIGN_CENTRE,
                                             "%d", player->cont_score);
         }else if((*menu).Endgame_menu.current_option_bitmap == 1){
             al_draw_bitmap((*menu).Endgame_menu.defeat_img_2, 0, 0, 0);
             al_draw_textf(game->font_score, al_map_rgb(255,255,255),
-                                            575, //Posicao X da tela onde vai ser printado o score
+                                            585, //Posicao X da tela onde vai ser printado o score
                                             305, //Posicao Y da tela onde vai ser printado o score
                                             ALLEGRO_ALIGN_CENTRE,
                                             "%d", player->cont_score);
