@@ -73,7 +73,6 @@ void add_player_laser_fired(PlayerShip *player) {
 // Remove o primeiro elemento do array de disparos do jogador
 // sobrescrevendo o elemento atual com o próximo
 void remove_player_laser_fired(PlayerShip *player, int laser_pos) {
-    DEBUG_PRINT("Removing laser %d\n", laser_pos);
     for(int i=laser_pos; i < player->lasers.alive - 1; i++)
         player->lasers.fired[i] = player->lasers.fired[i+1];
     player->lasers.alive--;
