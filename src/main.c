@@ -6,6 +6,7 @@
 #include <allegro5/allegro_font.h>
 
 #include "game_state.h"
+#include "tutorial_screen.h"
 #include "menu_screen.h"
 #include "game_screen.h"
 #include "events.h"
@@ -59,7 +60,6 @@ int main() {
     al_hide_mouse_cursor(game.display);
 
     while(game.running) {
-
         //If usado para permitir a funcionalidade da opcao 'jogar novamente' do end-game menu
         if(!menu.Endgame_menu.ignore_main_menu){
             DEBUG_PRINT("Loaded game menu...\n");
@@ -69,9 +69,7 @@ int main() {
 
         menu.Endgame_menu.ignore_main_menu = false;
 
-
         if(game.current_screen == GAME_SCREEN) {
-
             //Ponteiro e init da barreira
             main_barrier bar;
             InitBarrier(&bar);
@@ -89,11 +87,13 @@ int main() {
 
             while(player_ship.lives > 0)
                 process_game_events(&game, &menu, &player_ship, &Enemies, &bar);
+
             free_player_resources(&player_ship);
             free_enemies_resources(&Enemies);
             free_barrier_resources(&bar);
+        } else if(game.current_screen == TUTORIAL_SCREEN) {
+            draw_tutorial_screen(&game);
         }
-
     }
 
     DEBUG_PRINT("Stopping game...\n");
