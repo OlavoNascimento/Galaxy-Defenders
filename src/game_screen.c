@@ -84,28 +84,20 @@ void detect_alien_bullet_collision_player(PlayerShip *player, enemies *p_enemies
 void process_player_movement(GameState *game, PlayerShip *player, main_barrier *pbarr) {
     if(game->keys_pressed[UP] &&
        player->pos_y - PLAYER_SPEED > SCREEN_HEIGHT/1.4 &&
-       !detect_player_collision_barrier(player, pbarr, 'u')) {
-         player->pos_y -= PLAYER_SPEED;
-         game->draw = true;
-    }
+       !detect_player_collision_barrier(player, pbarr, 'u'))
+            player->pos_y -= PLAYER_SPEED;
     if(game->keys_pressed[DOWN] &&
        player->pos_y + PLAYER_SPEED <= SCREEN_HEIGHT - player->sprite.height &&
-       !detect_player_collision_barrier(player, pbarr, 'd')) {
-         player->pos_y += PLAYER_SPEED;
-         game->draw = true;
-    }
+       !detect_player_collision_barrier(player, pbarr, 'd'))
+            player->pos_y += PLAYER_SPEED;
     if(game->keys_pressed[LEFT] &&
        player->pos_x - PLAYER_SPEED >= 0 &&
-       !detect_player_collision_barrier(player, pbarr, 'l')) {
+       !detect_player_collision_barrier(player, pbarr, 'l'))
             player->pos_x -= PLAYER_SPEED;
-            game->draw = true;
-    }
     if(game->keys_pressed[RIGHT] &&
        player->pos_x + PLAYER_SPEED < SCREEN_WIDTH - player->sprite.width &&
-       !detect_player_collision_barrier(player, pbarr, 'r')) {
+       !detect_player_collision_barrier(player, pbarr, 'r'))
             player->pos_x += PLAYER_SPEED;
-            game->draw = true;
-    }
 }
 
 // Controla os disparos do jogador
