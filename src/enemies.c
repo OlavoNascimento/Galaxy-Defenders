@@ -277,7 +277,7 @@ void draw_alien3(enemies *p_enemies){
 
 }
 
-void detectBulletCollision_alien1(enemies *p_enemies, PlayerShip *player){
+void detectBulletCollision_alien1(enemies *p_enemies, PlayerShip *player, GameState *game){
     for(int i = 0; i<NUM_ALIEN; ++i){
         if((*p_enemies).alien1[i].live){
             for(int j = 0; j<player->lasers.alive; j++){
@@ -290,6 +290,8 @@ void detectBulletCollision_alien1(enemies *p_enemies, PlayerShip *player){
                     (*p_enemies).alien1[i].exp.start = true;
                     ++(*p_enemies).aliens_defeated;
                     (*player).cont_score += 10;
+
+                    al_play_sample((*game).Audio.alien_explosion, 2.0, 0.0, 1.0, ALLEGRO_PLAYMODE_ONCE, NULL);
                 }
             }
         }
@@ -298,7 +300,7 @@ void detectBulletCollision_alien1(enemies *p_enemies, PlayerShip *player){
 }
 
 
-void detectBulletCollision_alien2(enemies *p_enemies, PlayerShip *player){
+void detectBulletCollision_alien2(enemies *p_enemies, PlayerShip *player, GameState *game){
     for(int i = 0; i<NUM_ALIEN_i; ++i){
         for(int j = 0; j<NUM_ALIEN; ++j){
             if((*p_enemies).alien2[i][j].live){
@@ -312,6 +314,8 @@ void detectBulletCollision_alien2(enemies *p_enemies, PlayerShip *player){
                         (*p_enemies).alien2[i][j].exp.start = true;
                         ++(*p_enemies).aliens_defeated;
                         (*player).cont_score += 8;
+
+                        al_play_sample((*game).Audio.alien_explosion, 2.0, 0.0, 1.0, ALLEGRO_PLAYMODE_ONCE, NULL);
                     }
                 }
             }
@@ -319,7 +323,7 @@ void detectBulletCollision_alien2(enemies *p_enemies, PlayerShip *player){
     }
 }
 
-void detectBulletCollision_alien3(enemies *p_enemies, PlayerShip *player){
+void detectBulletCollision_alien3(enemies *p_enemies, PlayerShip *player, GameState *game){
     for(int i = 0; i<NUM_ALIEN_i; ++i){
         for(int j = 0; j<NUM_ALIEN; ++j){
             if((*p_enemies).alien3[i][j].live){
@@ -333,6 +337,8 @@ void detectBulletCollision_alien3(enemies *p_enemies, PlayerShip *player){
                         (*p_enemies).alien3[i][j].exp.start = true;
                         ++(*p_enemies).aliens_defeated;
                         (*player).cont_score += 5;
+
+                        al_play_sample((*game).Audio.alien_explosion, 2.0, 0.0, 1.0, ALLEGRO_PLAYMODE_ONCE, NULL);
                     }
                 }
             }

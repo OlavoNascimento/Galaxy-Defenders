@@ -7,7 +7,7 @@
 //definindo valores de constantes das barreiras
 #define NUM_BARRIERS 4          //Numero de barreiras do jogo
 #define HEIGHT_BARRIER 580      //Altura padrão da barreira na tela
-#define HALF_LIFE_BARRIERS 5    //Meia vida das barreiras (quando elas mudam de forma) 
+#define HALF_LIFE_BARRIERS 5    //Meia vida das barreiras (quando elas mudam de forma)
 #define TOTAL_LIFE_BARRIERS 10  //Total de vida das barreiras
 
 //struct com as informações das barreiras e explosão:
@@ -52,16 +52,16 @@ typedef struct
 void InitBarrier(main_barrier *Pbarr);
 
 //Vida da barreira
-void lifeBarrier(main_barrier *Pbarr);
+void lifeBarrier(main_barrier *Pbarr, GameState *game);
 
 //Desenhando a barreira na tela
 void drawBarrier(main_barrier *Pbarr);
 
 //Deteccao de colisao entre o tiro do alien e a barrreira
-void colision_Alien_shot_barrier(main_barrier *Pbarr, enemies *p_enemies);
+void colision_Alien_shot_barrier(main_barrier *Pbarr, enemies *p_enemies, GameState *game);
 
 //Deteccao de colisao entre o tiro do player e a barreira
-void colision_Player_shot_barrier(PlayerShip *player, main_barrier *Pbarr);
+void colision_Player_shot_barrier(PlayerShip *player, main_barrier *Pbarr, GameState *game);
 
 //Desenhando animacao da explosao na barreira
 void draw_explosion_barrier(main_barrier *Pbarr);
