@@ -4,6 +4,8 @@
 #include <allegro5/allegro_image.h>
 #include <allegro5/allegro_ttf.h>
 #include <allegro5/allegro_font.h>
+#include <allegro5/allegro_audio.h>
+#include <allegro5/allegro_acodec.h>
 
 #include "game_state.h"
 #include "tutorial_screen.h"
@@ -15,7 +17,7 @@
 #include "barrier.h"
 
 
-// Inicia todas os recursos do Allegro necessários
+//Inicia todas os recursos do Allegro necessários:
 bool allegro_init() {
     if(!al_init()) {
         fprintf(stderr, "Failed to initialize Allegro!");
@@ -36,7 +38,18 @@ bool allegro_init() {
         fprintf(stderr, "Failed to initialize Allegro ttf addon!");
         return false;
     }
-    return true;
+
+    if(!al_install_audio()){
+        fprintf(stderr, "Failed to install audio subsystem!");
+        return false;
+    }
+
+    if(!al_init_acodec_addon()){
+        fprintf(stderr, "Failed to initialize acodec addon!");
+        return false;
+    }
+
+     return true;
 }
 
 int main() {
@@ -59,6 +72,7 @@ int main() {
     // Esconde o cursor do mouse:
     al_hide_mouse_cursor(game.display);
 
+
     while(game.running) {
         //If usado para permitir a funcionalidade da opcao 'jogar novamente' do end-game menu
         if(!menu.Endgame_menu.ignore_main_menu){
@@ -70,6 +84,9 @@ int main() {
         menu.Endgame_menu.ignore_main_menu = false;
 
         if(game.current_screen == GAME_SCREEN) {
+            //desliga o audio de fundo do menu:
+            al_set_audio_stream_playing(game.Audio.UI_background, false);
+
             //Ponteiro e init da barreira
             main_barrier bar;
             InitBarrier(&bar);
@@ -84,6 +101,9 @@ int main() {
                 return 1;
             DEBUG_PRINT("Loaded player ship...\n");
             DEBUG_PRINT("Current lifes %d...\n", player_ship.lives);
+
+            //toca o audio de fundo do jogo:
+            al_set_audio_stream_playing(game.Audio.ingame_background, true);
 
             while(player_ship.lives > 0)
                 process_game_events(&game, &menu, &player_ship, &Enemies, &bar);

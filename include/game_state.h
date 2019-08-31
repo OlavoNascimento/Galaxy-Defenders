@@ -4,6 +4,9 @@
 #include <allegro5/allegro5.h>
 #include <allegro5/allegro_font.h>
 #include <allegro5/allegro_ttf.h>
+#include <allegro5/allegro_audio.h>
+#include <allegro5/allegro_acodec.h>
+
 #include <stdio.h>
 
 // Comprimento da tela
@@ -64,6 +67,26 @@ typedef struct {
     float pos_y;
 } Laser;
 
+//struct com as variaveis de audio:
+typedef struct{
+    //UI:
+    ALLEGRO_SAMPLE *changing_option;
+    ALLEGRO_SAMPLE *selecting_option;
+    ALLEGRO_SAMPLE *back_option;
+    ALLEGRO_SAMPLE *victory_song;
+    ALLEGRO_SAMPLE *defeat_song;
+    ALLEGRO_SAMPLE *esc_midgame;
+    ALLEGRO_AUDIO_STREAM *UI_background;
+    //in-game:
+    ALLEGRO_SAMPLE *player_shot;
+    ALLEGRO_SAMPLE *player_explosion;
+    ALLEGRO_SAMPLE *barrier_collision;
+    ALLEGRO_SAMPLE *barrier_explosion;
+    ALLEGRO_SAMPLE *alien_shot;
+    ALLEGRO_SAMPLE *alien_explosion;
+    ALLEGRO_AUDIO_STREAM *ingame_background;
+}audio;
+
 // Armazena as informações do estado atual do jogo
 typedef struct {
     ALLEGRO_DISPLAY *display;
@@ -77,6 +100,8 @@ typedef struct {
     // Array indicando os botões pressionados pelo jogador
     bool *keys_pressed;
     ALLEGRO_FONT *font_score;
+    //variavel de audio:
+    audio Audio;
 } GameState;
 
 
