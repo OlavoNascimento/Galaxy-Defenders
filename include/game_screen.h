@@ -8,7 +8,7 @@
 #include "menu_screen.h"
 
 bool player_alligned_with_barrier(PlayerShip *player, main_barrier *pbarr, char axis);
-bool detect_player_collision_barrier(PlayerShip *player, main_barrier *pbarr, char player_movement);
+bool detect_player_collision_barrier(PlayerShip *player, main_barrier *pbarr, char player_movement, GameState *game);
 
 void process_player_movement(GameState *game, PlayerShip *player, main_barrier *pbarr);
 void process_player_firing(GameState *game, PlayerShip *player);

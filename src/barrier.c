@@ -33,7 +33,7 @@ void InitBarrier(main_barrier *Pbarr)
 }
 
 //Saude de barreira
-void lifeBarrier(main_barrier *Pbarr)
+void lifeBarrier(main_barrier *Pbarr, GameState *game)
 {
     for(int i = 0; i <NUM_BARRIERS; ++i)
     {
@@ -42,13 +42,14 @@ void lifeBarrier(main_barrier *Pbarr)
             {
                 Pbarr->main_bar[i].live = false;
                 Pbarr->main_bar[i].exp_bar.start_exp = true;
+                al_play_sample((*game).Audio.barrier_explosion, 1.5, 0.0, 1.0, ALLEGRO_PLAYMODE_ONCE, NULL);
             }
         }
 
     }
 }
 
-//Alteracao de sprites da explosao 
+//Alteracao de sprites da explosao
 void update_explosion_barrier(main_barrier *Pbarr)
 {
 
@@ -123,7 +124,7 @@ void drawBarrier(main_barrier *Pbarr)
 }
 
 //Detecta colisao entre o tiro do Alien e a barreira
-void colision_Alien_shot_barrier(main_barrier *Pbarr, enemies *p_enemies)
+void colision_Alien_shot_barrier(main_barrier *Pbarr, enemies *p_enemies, GameState *game)
 {
     for(int i=0; i<NUM_BARRIERS; ++i){
         if(Pbarr->main_bar[i].live)
@@ -138,6 +139,8 @@ void colision_Alien_shot_barrier(main_barrier *Pbarr, enemies *p_enemies)
                        {
                             Pbarr->main_bar[i].life_up--;
                             p_enemies->alienShots.aBullet[j].live = false;
+
+                            al_play_sample((*game).Audio.barrier_collision, 1.5, 0.0, 1.0, ALLEGRO_PLAYMODE_ONCE, NULL);
                        }
                }
            }
@@ -146,7 +149,7 @@ void colision_Alien_shot_barrier(main_barrier *Pbarr, enemies *p_enemies)
 }
 
 //Detecta colisao entre o tiro do player e a barreira
-void colision_Player_shot_barrier(PlayerShip *player, main_barrier *Pbarr)
+void colision_Player_shot_barrier(PlayerShip *player, main_barrier *Pbarr, GameState *game)
 {
     for(int i=0; i <NUM_BARRIERS; ++i){
         if(Pbarr->main_bar[i].live)
@@ -160,13 +163,15 @@ void colision_Player_shot_barrier(PlayerShip *player, main_barrier *Pbarr)
                     {
                         Pbarr->main_bar[i].life_down--;
                         remove_player_laser_fired(player, j);
+
+                        al_play_sample((*game).Audio.barrier_collision, 1.5, 0.0, 1.0, ALLEGRO_PLAYMODE_ONCE, NULL);
                     }
            }
         }
     }
 }
 
-//Carrega as imagens que vao ser usadas na barreira 
+//Carrega as imagens que vao ser usadas na barreira
 bool init_barrier_resources(main_barrier *Pbarr){
     //imagem das barreiras:
     Pbarr->img_bar[0] = al_load_bitmap("assets/images/barrier00.png");
@@ -193,7 +198,7 @@ bool init_barrier_resources(main_barrier *Pbarr){
     return true;
 }
 
-//Libera os recursos usado pela barreira 
+//Libera os recursos usado pela barreira
 void free_barrier_resources(main_barrier *Pbarr){
     //liberando os recursos usados no programa:
     al_destroy_bitmap(Pbarr->img_exp_bar);

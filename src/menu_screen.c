@@ -21,7 +21,7 @@ bool init_game_menu(GameMenu *menu) {
     }
 
     // Opção selecionada inicialmente no menu
-    menu->selection = GAME_SCREEN;
+    menu->selection = TUTORIAL_SCREEN;
 
     //imagens do esc menu:
         (*menu).Esc_menu.esc_img_1 = al_load_bitmap("assets/images/esc_img_1.png");
@@ -66,6 +66,7 @@ bool init_game_menu(GameMenu *menu) {
     (*menu).Endgame_menu.start_v = false;  //indica quando a tela de vitoria deve aparecer;
     (*menu).Endgame_menu.start_d = false;  //indica quando a tela de derrota deve aparecer;
     (*menu).Endgame_menu.ignore_main_menu = false;
+
     return true;
 }
 
@@ -85,6 +86,9 @@ void update_menu_screen(GameMenu *menu) {
 
 // Altera a opção selecionada no menu
 void wait_menu_selection(GameMenu *menu, GameState *game) {
+    //toca o audio de fundo do menu:
+    al_set_audio_stream_playing((*game).Audio.UI_background, true);
+
     update_menu_screen(menu);
     DEBUG_PRINT("Menu draw finished...\n");
 
@@ -98,15 +102,18 @@ void wait_menu_selection(GameMenu *menu, GameState *game) {
             if(game->keys_pressed[DOWN] && menu->selection < EXIT_SCREEN) {
                 menu->selection++;
                 update_menu_screen(menu);
+                al_play_sample((*game).Audio.changing_option, 1.5, -1.0, 1.0, ALLEGRO_PLAYMODE_ONCE, NULL);
             }
             if(game->keys_pressed[UP] && menu->selection > GAME_SCREEN) {
                 menu->selection--;
                 update_menu_screen(menu);
+                al_play_sample((*game).Audio.changing_option, 1.5, -1.0, 1.0, ALLEGRO_PLAYMODE_ONCE, NULL);
             }
 
             if(game->keys_pressed[ENTER]) {
                 game->current_screen = menu->selection;
                 option_selected = true;
+                al_play_sample((*game).Audio.selecting_option, 1.5, -1.0, 1.0, ALLEGRO_PLAYMODE_ONCE, NULL);
 
                 // Sai do jogo ao escolher a opção "sair"
                 if(game->current_screen == EXIT_SCREEN)
@@ -121,6 +128,7 @@ void wait_menu_selection(GameMenu *menu, GameState *game) {
             if(game->keys_pressed[ESC]) {
                 game->running = false;
                 option_selected = true;
+                al_play_sample((*game).Audio.back_option, 3.0, 0.0, 1.0, ALLEGRO_PLAYMODE_ONCE, NULL);
             }
         }
     }

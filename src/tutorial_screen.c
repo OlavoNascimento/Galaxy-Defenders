@@ -33,6 +33,7 @@ void draw_tutorial_screen(GameState *game) {
         process_events(game, &event);
     }
     DEBUG_PRINT("Exiting tutorial screen!\n");
+    al_play_sample((*game).Audio.back_option, 3.0, -1.0, 1.0, ALLEGRO_PLAYMODE_ONCE, NULL);
 
     game->current_screen = MENU_SCREEN;
     al_destroy_bitmap(bg.bitmap);

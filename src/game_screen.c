@@ -65,7 +65,7 @@ bool detect_player_collision_barrier(PlayerShip *player, main_barrier *pbarr, ch
 }
 
 // Detecta a colisão entre um disparo dos aliens com a nave do jogador
-void detect_alien_bullet_collision_player(PlayerShip *player, enemies *p_enemies) {
+void detect_alien_bullet_collision_player(PlayerShip *player, enemies *p_enemies , GameState *game) {
     for(int i=0; i<NUM_aBULLETS; i++) {
         if(p_enemies->alienShots.aBullet[i].live) {
             if(p_enemies->alienShots.aBullet[i].y + p_enemies->alienShots.aBullet[i].height >= player->pos_y &&
@@ -74,6 +74,9 @@ void detect_alien_bullet_collision_player(PlayerShip *player, enemies *p_enemies
                p_enemies->alienShots.aBullet[i].x <= player->pos_x + player->sprite.width) {
                 player->lives--;
                 p_enemies->alienShots.aBullet[i].live = false;
+
+                al_play_sample((*game).Audio.player_explosion, 1.5, 0.0, 1.0, ALLEGRO_PLAYMODE_ONCE, NULL);
+
                 DEBUG_PRINT("Collision! Current lifes: %d...\n", player->lives);
             }
         }
@@ -117,6 +120,7 @@ void process_player_firing(GameState *game, PlayerShip *player) {
     if(game->keys_pressed[SPACE] && fire) {
         add_player_laser_fired(player);
         game->draw = true;
+        al_play_sample((*game).Audio.player_shot, 1.0, 0.0, 1.0, ALLEGRO_PLAYMODE_ONCE, NULL);
     }
 
 }
@@ -207,6 +211,8 @@ void update_game_screen(PlayerShip *player, enemies *p_enemies, main_barrier *Pb
 
 // Modifica a posição dos sprites na tela
 void process_game_events(GameState *game, GameMenu *menu, PlayerShip *player, enemies *p_enemies, main_barrier *Pbarr) {
+
+
     ALLEGRO_EVENT event;
     al_wait_for_event(game->event_queue, &event);
 
@@ -216,15 +222,15 @@ void process_game_events(GameState *game, GameMenu *menu, PlayerShip *player, en
 
         update_player_lasers(player);
 
-        detect_alien_bullet_collision_player(player, p_enemies);
+        detect_alien_bullet_collision_player(player, p_enemies, game);
 
 
 
-        detectBulletCollision_alien1(p_enemies, player);
+        detectBulletCollision_alien1(p_enemies, player, game);
 
-        detectBulletCollision_alien2(p_enemies, player);
+        detectBulletCollision_alien2(p_enemies, player, game);
 
-        detectBulletCollision_alien3(p_enemies, player);
+        detectBulletCollision_alien3(p_enemies, player, game);
 
 
         update_explosion_alien1(p_enemies);
@@ -237,12 +243,12 @@ void process_game_events(GameState *game, GameMenu *menu, PlayerShip *player, en
 
         //barreira:
 
-            colision_Alien_shot_barrier(Pbarr, p_enemies);
+            colision_Alien_shot_barrier(Pbarr, p_enemies, game);
 
-            colision_Player_shot_barrier(player, Pbarr);
+            colision_Player_shot_barrier(player, Pbarr, game);
 
 
-            lifeBarrier(Pbarr);
+            lifeBarrier(Pbarr, game);
 
             update_explosion_barrier(Pbarr);
 
@@ -284,6 +290,8 @@ void process_game_events(GameState *game, GameMenu *menu, PlayerShip *player, en
 
                 fire_aBullet(p_enemies);
 
+                al_play_sample((*game).Audio.alien_shot, 1.0, 0.0, 1.0, ALLEGRO_PLAYMODE_ONCE, NULL);
+
                 (*p_enemies).alienShots.alien_shot_delay = 0;
             }
 
@@ -294,6 +302,11 @@ void process_game_events(GameState *game, GameMenu *menu, PlayerShip *player, en
         //end-game logic:
             //victory:
         if((*p_enemies).aliens_defeated >= 50 && (*player).lives > 0){
+
+            //desliga o audio de fundo do jogo:
+            al_set_audio_stream_playing((*game).Audio.ingame_background, false);
+
+            al_play_sample((*game).Audio.victory_song, 3.0, 0.0, 1.0, ALLEGRO_PLAYMODE_ONCE, NULL);
 
             (*menu).Endgame_menu.start_v = true;
 
@@ -310,6 +323,7 @@ void process_game_events(GameState *game, GameMenu *menu, PlayerShip *player, en
                 if(event_v.type == ALLEGRO_EVENT_KEY_DOWN){
 
                     if(game->keys_pressed[DOWN]){
+                        al_play_sample((*game).Audio.changing_option, 1.5, 0.0, 1.0, ALLEGRO_PLAYMODE_ONCE, NULL);
                         if((*menu).Endgame_menu.current_option_bitmap == 0){
                             (*menu).Endgame_menu.current_option_bitmap = 1;
                             update_game_screen(player, p_enemies, Pbarr, menu, game);
@@ -321,6 +335,7 @@ void process_game_events(GameState *game, GameMenu *menu, PlayerShip *player, en
                     }
 
                     if(game->keys_pressed[UP]){
+                        al_play_sample((*game).Audio.changing_option, 1.5, 0.0, 1.0, ALLEGRO_PLAYMODE_ONCE, NULL);
                         if((*menu).Endgame_menu.current_option_bitmap == 0){
                             (*menu).Endgame_menu.current_option_bitmap = 1;
                             update_game_screen(player, p_enemies, Pbarr, menu, game);
@@ -332,6 +347,8 @@ void process_game_events(GameState *game, GameMenu *menu, PlayerShip *player, en
 
                     if(game->keys_pressed[ENTER]){
                         victory_menu_option_selected = true;
+
+                        al_play_sample((*game).Audio.selecting_option, 1.5, 0.0, 1.0, ALLEGRO_PLAYMODE_ONCE, NULL);
 
                         if((*menu).Endgame_menu.current_option_bitmap == 0){
                             player->lives = 0;
@@ -352,6 +369,11 @@ void process_game_events(GameState *game, GameMenu *menu, PlayerShip *player, en
             //defeat:
         }else if((*p_enemies).aliens_defeated < 50 && (*player).lives <= 0){
 
+            //desliga o audio de fundo do jogo:
+            al_set_audio_stream_playing((*game).Audio.ingame_background, false);
+
+            al_play_sample((*game).Audio.defeat_song, 3.0, 0.0, 1.0, ALLEGRO_PLAYMODE_ONCE, NULL);
+
             (*menu).Endgame_menu.start_d = true;
 
             (*menu).Endgame_menu.current_option_bitmap = 0;
@@ -367,6 +389,9 @@ void process_game_events(GameState *game, GameMenu *menu, PlayerShip *player, en
                 if(event_d.type == ALLEGRO_EVENT_KEY_DOWN){
 
                     if(game->keys_pressed[DOWN]){
+
+                        al_play_sample((*game).Audio.changing_option, 1.5, 0.0, 1.0, ALLEGRO_PLAYMODE_ONCE, NULL);
+
                         if((*menu).Endgame_menu.current_option_bitmap == 0){
                             (*menu).Endgame_menu.current_option_bitmap = 1;
                             update_game_screen(player, p_enemies, Pbarr, menu, game);
@@ -378,6 +403,9 @@ void process_game_events(GameState *game, GameMenu *menu, PlayerShip *player, en
                     }
 
                     if(game->keys_pressed[UP]){
+
+                        al_play_sample((*game).Audio.changing_option, 1.5, 0.0, 1.0, ALLEGRO_PLAYMODE_ONCE, NULL);
+
                         if((*menu).Endgame_menu.current_option_bitmap == 0){
                             (*menu).Endgame_menu.current_option_bitmap = 1;
                             update_game_screen(player, p_enemies, Pbarr, menu, game);
@@ -389,6 +417,8 @@ void process_game_events(GameState *game, GameMenu *menu, PlayerShip *player, en
 
                     if(game->keys_pressed[ENTER]){
                         defeat_menu_option_selected = true;
+
+                        al_play_sample((*game).Audio.selecting_option, 1.5, 0.0, 1.0, ALLEGRO_PLAYMODE_ONCE, NULL);
 
                         if((*menu).Endgame_menu.current_option_bitmap == 0){
                             player->lives = 0;
@@ -416,6 +446,8 @@ void process_game_events(GameState *game, GameMenu *menu, PlayerShip *player, en
         (*menu).Esc_menu.back_option_selected = true;       //indica quando não queremos printar o menu 'esc' dentro do jogo
         if(game->keys_pressed[ESC]) {
 
+            al_play_sample((*game).Audio.esc_midgame, 3.0, 0.0, 1.0, ALLEGRO_PLAYMODE_ONCE, NULL);
+
             (*menu).Esc_menu.back_option_selected = false;
             (*menu).Esc_menu.current_esc_bitmap = 0;       // indica qual das duas imagens do menu esc esta sendo
                                                           //printada atualmente na tela;
@@ -431,9 +463,11 @@ void process_game_events(GameState *game, GameMenu *menu, PlayerShip *player, en
                 if(Event.type == ALLEGRO_EVENT_KEY_DOWN){
 
                     if(game->keys_pressed[DOWN]){
+                        al_play_sample((*game).Audio.changing_option, 1.5, 0.0, 1.0, ALLEGRO_PLAYMODE_ONCE, NULL);
                         if((*menu).Esc_menu.current_esc_bitmap == 0){
                             (*menu).Esc_menu.current_esc_bitmap = 1;
                             update_game_screen(player, p_enemies, Pbarr, menu, game);
+
                         }else if((*menu).Esc_menu.current_esc_bitmap == 1){
                             (*menu).Esc_menu.current_esc_bitmap = 0;
                             update_game_screen(player, p_enemies, Pbarr, menu, game);
@@ -441,6 +475,7 @@ void process_game_events(GameState *game, GameMenu *menu, PlayerShip *player, en
                     }
 
                     if(game->keys_pressed[UP]){
+                        al_play_sample((*game).Audio.changing_option, 1.5, 0.0, 1.0, ALLEGRO_PLAYMODE_ONCE, NULL);
                         if((*menu).Esc_menu.current_esc_bitmap == 0){
                             (*menu).Esc_menu.current_esc_bitmap = 1;
                             update_game_screen(player, p_enemies, Pbarr, menu, game);
@@ -454,9 +489,13 @@ void process_game_events(GameState *game, GameMenu *menu, PlayerShip *player, en
                         esc_menu_option_selected = true;
 
                         if((*menu).Esc_menu.current_esc_bitmap == 0){
+                            al_play_sample((*game).Audio.selecting_option, 1.5, 0.0, 1.0, ALLEGRO_PLAYMODE_ONCE, NULL);
                             player->lives = 0;
                             game->current_screen = MENU_SCREEN;
+                            //desliga o audio de fundo do jogo:
+                            al_set_audio_stream_playing((*game).Audio.ingame_background, false);
                         }else if((*menu).Esc_menu.current_esc_bitmap == 1){
+                            al_play_sample((*game).Audio.back_option, 3.0, 0.0, 1.0, ALLEGRO_PLAYMODE_ONCE, NULL);
                             (*menu).Esc_menu.back_option_selected = true;
                         }
                     }

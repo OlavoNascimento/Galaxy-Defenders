@@ -110,11 +110,11 @@ void draw_alien3(enemies *p_enemies);
 
 
 //verificando se houve a colisao entre as balas e os inimigos:
-void detectBulletCollision_alien1(enemies *p_enemies, PlayerShip *player);
+void detectBulletCollision_alien1(enemies *p_enemies, PlayerShip *player, GameState *game);
 
-void detectBulletCollision_alien2(enemies *p_enemies, PlayerShip *player);
+void detectBulletCollision_alien2(enemies *p_enemies, PlayerShip *player, GameState *game);
 
-void detectBulletCollision_alien3(enemies *p_enemies, PlayerShip *player);
+void detectBulletCollision_alien3(enemies *p_enemies, PlayerShip *player, GameState *game);
 
 
 

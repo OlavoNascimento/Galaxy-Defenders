@@ -12,7 +12,7 @@ void InitAlien1(enemies *p_enemies){
 
         (*p_enemies).alien1[i].x = 256 + i*75;
         (*p_enemies).alien1[i].y = 60;
-        (*p_enemies).alien1[i].velx = 2.5;
+        (*p_enemies).alien1[i].velx = 3;
         (*p_enemies).alien1[i].vely = 15;
         (*p_enemies).alien1[i].live = true;
         (*p_enemies).alien1[i].sprite.totalframes = 2;
@@ -39,7 +39,7 @@ void InitAlien2(enemies *p_enemies){
 
             (*p_enemies).alien2[i][j].x = 256 + j*75;
             (*p_enemies).alien2[i][j].y = (i+1)*62 + 60;
-            (*p_enemies).alien2[i][j].velx = 2.5;
+            (*p_enemies).alien2[i][j].velx = 3;
             (*p_enemies).alien2[i][j].vely = 7.5;
             (*p_enemies).alien2[i][j].live = true;
             (*p_enemies).alien2[i][j].sprite.totalframes = 2;
@@ -68,7 +68,7 @@ void InitAlien3(enemies *p_enemies){
 
             (*p_enemies).alien3[i][j].x = 256 + j*75;
             (*p_enemies).alien3[i][j].y = (i+3)*62 + 60;
-            (*p_enemies).alien3[i][j].velx = 2.5;
+            (*p_enemies).alien3[i][j].velx = 3;
             (*p_enemies).alien3[i][j].vely = 7.5;
             (*p_enemies).alien3[i][j].live = true;
             (*p_enemies).alien3[i][j].sprite.totalframes = 2;
@@ -97,13 +97,13 @@ void InitAlien3(enemies *p_enemies){
 void limitXmoveY_alien1(enemies *p_enemies){
     for(int i = 0; i<NUM_ALIEN; ++i){
         if((*p_enemies).alien1[9].x + (*p_enemies).alien1[9].sprite.width >= 1200){
-            (*p_enemies).alien1[i].velx = -2.5;
+            (*p_enemies).alien1[i].velx = -3;
             if((*p_enemies).alien1[9].y + (*p_enemies).alien1[9].sprite.height <= 245)
                 (*p_enemies).alien1[i].y += (*p_enemies).alien1[i].vely;
         }
 
         if((*p_enemies).alien1[0].x <= 80){
-            (*p_enemies).alien1[i].velx = 2.5;
+            (*p_enemies).alien1[i].velx = 3;
             if((*p_enemies).alien1[0].y + (*p_enemies).alien1[i].sprite.height <= 245)
                 (*p_enemies).alien1[i].y += (*p_enemies).alien1[i].vely;
         }
@@ -115,7 +115,7 @@ void limitXmoveY_alien2(enemies *p_enemies){
     for(int i = 0; i<NUM_ALIEN_i; ++i){
         for(int j = 0; j<NUM_ALIEN; ++j){
             if((*p_enemies).alien2[i][9].x + (*p_enemies).alien2[1][j].sprite.width >= 1200){
-                (*p_enemies).alien2[i][j].velx = -2.5;
+                (*p_enemies).alien2[i][j].velx = -3;
                 if((*p_enemies).alien2[1][j].y + (*p_enemies).alien2[1][j].sprite.height <= 369)
                     (*p_enemies).alien2[1][j].y += (*p_enemies).alien2[i][j].vely;
                 if((*p_enemies).alien2[0][j].y + (*p_enemies).alien2[0][j].sprite.height <= 307)
@@ -123,7 +123,7 @@ void limitXmoveY_alien2(enemies *p_enemies){
             }
 
             if((*p_enemies).alien2[i][0].x <= 80){
-                (*p_enemies).alien2[i][j].velx = 2.5;
+                (*p_enemies).alien2[i][j].velx = 3;
                 if((*p_enemies).alien2[1][j].y + (*p_enemies).alien2[1][j].sprite.height <= 369)
                     (*p_enemies).alien2[1][j].y += (*p_enemies).alien2[i][j].vely;
                 if((*p_enemies).alien2[0][j].y + (*p_enemies).alien2[0][j].sprite.height <= 307)
@@ -139,7 +139,7 @@ void limitXmoveY_alien3(enemies *p_enemies){
     for(int i = 0; i<NUM_ALIEN_i; ++i){
         for(int j = 0; j<NUM_ALIEN; ++j){
             if((*p_enemies).alien3[i][9].x + (*p_enemies).alien3[i][9].sprite.width >= 1200){
-                (*p_enemies).alien3[i][j].velx = -2.5;
+                (*p_enemies).alien3[i][j].velx = -3;
                 if((*p_enemies).alien3[1][j].y + (*p_enemies).alien3[1][j].sprite.height <= 493)
                     (*p_enemies).alien3[1][j].y += (*p_enemies).alien3[i][j].vely;
                 if((*p_enemies).alien3[0][j].y + (*p_enemies).alien3[0][j].sprite.height<= 431)
@@ -147,7 +147,7 @@ void limitXmoveY_alien3(enemies *p_enemies){
             }
 
             if((*p_enemies).alien3[i][0].x <=80){
-                (*p_enemies).alien3[i][j].velx = 2.5;
+                (*p_enemies).alien3[i][j].velx = 3;
                 if((*p_enemies).alien3[1][j].y + (*p_enemies).alien3[1][j].sprite.height <= 493)
                     (*p_enemies).alien3[1][j].y += (*p_enemies).alien3[i][j].vely;
                 if((*p_enemies).alien3[0][j].y + (*p_enemies).alien3[0][j].sprite.height<= 431)
@@ -277,7 +277,7 @@ void draw_alien3(enemies *p_enemies){
 
 }
 
-void detectBulletCollision_alien1(enemies *p_enemies, PlayerShip *player){
+void detectBulletCollision_alien1(enemies *p_enemies, PlayerShip *player, GameState *game){
     for(int i = 0; i<NUM_ALIEN; ++i){
         if((*p_enemies).alien1[i].live){
             for(int j = 0; j<player->lasers.alive; j++){
@@ -290,6 +290,8 @@ void detectBulletCollision_alien1(enemies *p_enemies, PlayerShip *player){
                     (*p_enemies).alien1[i].exp.start = true;
                     ++(*p_enemies).aliens_defeated;
                     (*player).cont_score += 10;
+
+                    al_play_sample((*game).Audio.alien_explosion, 2.0, 0.0, 1.0, ALLEGRO_PLAYMODE_ONCE, NULL);
                 }
             }
         }
@@ -298,7 +300,7 @@ void detectBulletCollision_alien1(enemies *p_enemies, PlayerShip *player){
 }
 
 
-void detectBulletCollision_alien2(enemies *p_enemies, PlayerShip *player){
+void detectBulletCollision_alien2(enemies *p_enemies, PlayerShip *player, GameState *game){
     for(int i = 0; i<NUM_ALIEN_i; ++i){
         for(int j = 0; j<NUM_ALIEN; ++j){
             if((*p_enemies).alien2[i][j].live){
@@ -312,6 +314,8 @@ void detectBulletCollision_alien2(enemies *p_enemies, PlayerShip *player){
                         (*p_enemies).alien2[i][j].exp.start = true;
                         ++(*p_enemies).aliens_defeated;
                         (*player).cont_score += 8;
+
+                        al_play_sample((*game).Audio.alien_explosion, 2.0, 0.0, 1.0, ALLEGRO_PLAYMODE_ONCE, NULL);
                     }
                 }
             }
@@ -319,7 +323,7 @@ void detectBulletCollision_alien2(enemies *p_enemies, PlayerShip *player){
     }
 }
 
-void detectBulletCollision_alien3(enemies *p_enemies, PlayerShip *player){
+void detectBulletCollision_alien3(enemies *p_enemies, PlayerShip *player, GameState *game){
     for(int i = 0; i<NUM_ALIEN_i; ++i){
         for(int j = 0; j<NUM_ALIEN; ++j){
             if((*p_enemies).alien3[i][j].live){
@@ -333,6 +337,8 @@ void detectBulletCollision_alien3(enemies *p_enemies, PlayerShip *player){
                         (*p_enemies).alien3[i][j].exp.start = true;
                         ++(*p_enemies).aliens_defeated;
                         (*player).cont_score += 5;
+
+                        al_play_sample((*game).Audio.alien_explosion, 2.0, 0.0, 1.0, ALLEGRO_PLAYMODE_ONCE, NULL);
                     }
                 }
             }
