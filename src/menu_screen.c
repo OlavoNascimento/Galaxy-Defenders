@@ -102,12 +102,12 @@ void wait_menu_selection(GameMenu *menu, GameState *game) {
             if(game->keys_pressed[DOWN] && menu->selection < EXIT_SCREEN) {
                 menu->selection++;
                 update_menu_screen(menu);
-                al_play_sample((*game).Audio.changing_option, 1.5, -1.0, 1.0, ALLEGRO_PLAYMODE_ONCE, NULL);
+                al_play_sample((*game).Audio.changing_option, 1.5, 0, 1.0, ALLEGRO_PLAYMODE_ONCE, NULL);
             }
             if(game->keys_pressed[UP] && menu->selection > GAME_SCREEN) {
                 menu->selection--;
                 update_menu_screen(menu);
-                al_play_sample((*game).Audio.changing_option, 1.5, -1.0, 1.0, ALLEGRO_PLAYMODE_ONCE, NULL);
+                al_play_sample((*game).Audio.changing_option, 1.5, 0, 1.0, ALLEGRO_PLAYMODE_ONCE, NULL);
             }
 
             if(game->keys_pressed[ENTER]) {

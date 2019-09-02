@@ -1,6 +1,6 @@
 CC = gcc
 CFLAGS = -W -Wall
-LDFLAGS = -lallegro -lallegro_image -lallegro_font -lallegro_ttf
+LDFLAGS = -lallegro -lallegro_image -lallegro_font -lallegro_ttf -lallegro_audio -lallegro_acodec
 
 BIN_DIR = bin
 OBJ_DIR = obj
