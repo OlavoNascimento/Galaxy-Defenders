@@ -99,6 +99,7 @@ typedef struct {
     bool running;
     // Array indicando os botões pressionados pelo jogador
     bool *keys_pressed;
+    // Ponteiro de controle da fonte do score
     ALLEGRO_FONT *font_score;
     //variavel de audio:
     audio Audio;
