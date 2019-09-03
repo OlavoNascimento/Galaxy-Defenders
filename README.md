@@ -7,15 +7,18 @@ Galaxy Defenders é um projeto, inspirado no jogo Space Invaders, entregue a dis
 
 - API: allegro 5.
 
-- Discentes:     Vitor G.S Ruffo.
-                 (vitorruffo19cc@gmail.com)
+- Discentes:
 
-                 Olavo Nascimento.
-
-                 Wellinton Piassa.
-                (wellintonpiassa@hotmail.com)
-
-
+    Olavo Nascimento.
+   (olavo.nascimento4@gmail.com)
+    
+    Vitor G.S Ruffo.
+   (vitorruffo19cc@gmail.com) 
+   
+   Wellinton Piassa.
+   (wellintonpiassa@hotmail.com)
+                
+                 
 - Doscente: Jandira guenka palma.
 
 
