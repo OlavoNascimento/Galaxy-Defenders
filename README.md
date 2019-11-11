@@ -5,7 +5,7 @@ Galaxy Defenders é um projeto, inspirado no jogo Space Invaders, entregue a dis
 
 - Linguagem: C.
 
-- API: allegro 5.
+- Biblioteca: Allegro 5.
 
 - Discentes:
 
